@@ -1,12 +1,9 @@
 import aiohttp
 import asyncio
-from datetime import datetime
+import random
+from datetime import datetime, timezone
+import pytz
 from groq import Groq
-import xml.etree.ElementTree as ET
-
-
-class NewsAnalyzer:
-    def __init__(self, groq_api_key: str):
         self.groq = Groq(api_key=groq_api_key)
         self.rss_feeds = [
             "https://feeds.reuters.com/reuters/businessNews",
