@@ -3,7 +3,9 @@ import asyncio
 import random
 from datetime import datetime, timezone
 import pytz
-from groq import Groq
+from groq
+import Groq
+
         self.groq = Groq(api_key=groq_api_key)
         self.rss_feeds = [
             "https://feeds.reuters.com/reuters/businessNews",
