@@ -1,633 +1,501 @@
-#!/usr/bin/env python3
-"""
-BSEB 12th 2027 Telegram Bot – High‑Probability Question Bank
-Made by DEV
-"""
-
-import asyncio, logging, random
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+import asyncio
+import random
+from telegram import (
+    Update, InlineKeyboardButton, InlineKeyboardMarkup
+)
+from telegram.ext import (
+    Application, CommandHandler, CallbackQueryHandler,
+    ContextTypes
+)
 
 BOT_TOKEN = "8792779625:AAEyyDTvoO1jTqgvha6GKvO2u64AwJGPFBw"
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# ===================== QUESTION DATA (Real BSEB Questions) =====================
-# Objective: list of dicts with "text","options","correct"
-# Short/Long: lists of strings (questions and answers)
-
-HINDI_OBJ = [
-    {"text":"सूरदास के पदों की भाषा है –","options":["ब्रज","अवधी","मैथिली","खड़ी बोली"],"correct":0},
-    {"text":"‘मधुर-मधुर मुस्कान’ में कवि ने किसे सम्बोधित किया?","options":["बच्चे को","माँ को","प्रकृति को","ईश्वर को"],"correct":0},
-    {"text":"तुलसीदास रचित ‘रामचरितमानस’ की भाषा –","options":["संस्कृत","ब्रज","अवधी","हिंदी"],"correct":2},
-    {"text":"‘कैदी और कोकिला’ के रचयिता –","options":["माखनलाल चतुर्वेदी","सुमित्रानंदन पंत","महादेवी वर्मा","निराला"],"correct":0},
-    {"text":"जयशंकर प्रसाद की ‘आँसू’ किस विधा की रचना है?","options":["खण्डकाव्य","महाकाव्य","गीतिकाव्य","मुक्तक काव्य"],"correct":2},
-    {"text":"महादेवी वर्मा किस युग की कवयित्री हैं?","options":["भारतेन्दु","द्विवेदी","छायावाद","प्रगतिवाद"],"correct":2},
-    {"text":"‘उत्साह’ कविता में बादल किसके प्रतीक हैं?","options":["विनाश","क्रान्ति","सृजन","शान्ति"],"correct":1},
-    {"text":"‘अट नहीं रही है’ कविता किस ऋतु का वर्णन करती है?","options":["वसन्त","वर्षा","ग्रीष्म","शीत"],"correct":0},
-    {"text":"निराला की ‘बादल राग’ में बादल किनके प्रतीक हैं?","options":["किसान","मजदूर","क्रान्तिकारी","बालक"],"correct":2},
-    {"text":"रस का स्थायी भाव ‘रति’ किस रस में है?","options":["शृंगार","वीर","करुण","हास्य"],"correct":0},
-    {"text":"‘रामचरितमानस’ में प्रधान रस है –","options":["शान्त","वीर","भक्ति","करुण"],"correct":2},
-    {"text":"हिंदी साहित्य के ‘भारतेन्दु युग’ के प्रवर्तक –","options":["भारतेन्दु हरिश्चन्द्र","द्विवेदी","अयोध्या सिंह","प्रेमचन्द"],"correct":0},
-    {"text":"‘अनुप्रास’ अलंकार का सम्बन्ध है –","options":["अर्थ से","शब्द से","भाव से","रस से"],"correct":1},
-    {"text":"‘नीलाम्बर परिधान…’ में अलंकार –","options":["उपमा","रूपक","उत्प्रेक्षा","अनुप्रास"],"correct":2},
-    {"text":"दोहा छन्द में प्रति चरण मात्राएँ –","options":["13,11","16,12","24,22","11,13"],"correct":0},
-    {"text":"प्रेमचन्द का जन्म –","options":["1880","1881","1882","1883"],"correct":0},
-    {"text":"‘गोदान’ के लेखक –","options":["प्रेमचन्द","जैनेन्द्र","अज्ञेय","निराला"],"correct":0},
-    {"text":"‘मैला आँचल’ के लेखक –","options":["रेणु","प्रेमचन्द","निराला","महादेवी"],"correct":0},
-    {"text":"रीतिकाल का प्रमुख कवि –","options":["बिहारी","कबीर","तुलसी","सूरदास"],"correct":0},
-    {"text":"‘साकेत’ के रचयिता –","options":["मैथिलीशरण गुप्त","प्रसाद","निराला","पंत"],"correct":0},
-]
-# Pad to 100 by repeating with small variation (unique text)
-def pad_questions(lst, target=100):
-    if not lst: return []
-    original_len = len(lst)
-    while len(lst) < target:
-        for i in range(original_len):
-            new_q = dict(lst[i])  # copy
-            new_q["text"] = f"{lst[i]['text']} (Set {len(lst)//original_len + 1})"
-            lst.append(new_q)
-            if len(lst) >= target:
-                break
-    return lst[:target]
-
-HINDI_OBJ = pad_questions(HINDI_OBJ, 100)
-
-HINDI_SHORT = [
-    "कवि ने बच्चे की मुस्कान को किसका प्रतीक माना है?",
-    "सूरदास के पदों का प्रतिपाद्य लिखिए।",
-    "तुलसीदास की भक्ति-भावना पर संक्षिप्त टिप्पणी।",
-    "रस की परिभाषा एवं भेद।",
-    "अलंकार की परिभाषा उदाहरण सहित।",
-    "छन्द के प्रकारों का संक्षिप्त वर्णन।",
-    "रेणु की भाषा-शैली की विशेषताएँ।",
-    "प्रेमचन्द की साहित्यिक विशेषताएँ।",
-    "निबन्ध और कहानी में अन्तर।",
-    "रिपोर्ताज किसे कहते हैं?",
-    "मुहावरे और लोकोक्ति में अन्तर।",
-    "उपसर्ग और प्रत्यय में अन्तर।",
-    "तत्सम और तद्भव शब्दों में अन्तर।",
-    "क्रिया के भेद उदाहरण सहित।",
-    "विशेषण और विशेष्य का सम्बन्ध।",
-    "संज्ञा के भेद परिभाषा एवं उदाहरण।",
-    "कारक के प्रकार।",
-    "वाक्य शुद्धि उदाहरण।",
-    "पल्लवन किसे कहते हैं?",
-    "संक्षेपण की परिभाषा।",
-    "पत्र लेखन के प्रकार।",
-    "सूचना लेखन का प्रारूप।",
-    "विज्ञापन लेखन की विशेषताएँ।",
-    "जनसंचार माध्यम।",
-    "फीचर लेखन क्या है?",
-    "सम्पादकीय लेखन।",
-    "आत्मकथा और जीवनी में अन्तर।",
-    "यात्रा-वृत्तान्त की विशेषताएँ।",
-    "डायरी लेखन का महत्त्व।",
-    "गाँधी जी के अनुसार सच्चा सुख क्या है?",
-]
-# Short answers (concise)
-HINDI_SHORT_ANSWERS = [
-    "निर्दोषता और सहज आनंद का प्रतीक।",
-    "भगवान कृष्ण की बाल लीलाएँ, वात्सल्य रस।",
-    "राम के प्रति अनन्य भक्ति, मर्यादा।",
-    "काव्य पढ़ने से उत्पन्न आनन्द; शृंगार, वीर, करुण आदि।",
-    "शब्दार्थ को सजाने वाले तत्व; उपमा, रूपक आदि।",
-    "मात्रिक (दोहा) और वर्णिक (इंद्रवज्रा) छंद।",
-    "आंचलिकता, लोकभाषा, ग्रामीण यथार्थ।",
-    "यथार्थवाद, सामाजिक कुरीतियों पर प्रहार, सरल भाषा।",
-    "निबंध विचार प्रधान, कहानी कथानक प्रधान।",
-    "किसी घटना/स्थान का आँखों देखा वर्णन।",
-    "मुहावरा वाक्य में प्रयुक्त, लोकोक्ति पूर्ण कहावत।",
-    "उपसर्ग शब्द के पहले, प्रत्यय अंत में जुड़ता है।",
-    "तत्सम संस्कृत से ज्यों का त्यों, तद्भव परिवर्तित।",
-    "सकर्मक (रोटी खाता), अकर्मक (हँसता)।",
-    "विशेषण संज्ञा की विशेषता, विशेष्य वह शब्द।",
-    "व्यक्तिवाचक, जातिवाचक, भाववाचक आदि।",
-    "कर्ता, कर्म, करण, सम्प्रदान, अपादान आदि।",
-    "व्याकरणिक अशुद्धियों को ठीक करना।",
-    "वाक्य या विचार का विस्तारपूर्वक स्पष्टीकरण।",
-    "लेख/पत्र का सारांश, मूल भाव बनाए रखना।",
-    "औपचारिक (प्रार्थना), अनौपचारिक (परिवार)।",
-    "प्रेषक, दिनांक, प्राप्तकर्ता, विषय, मुख्य भाग।",
-    "आकर्षक, संक्षिप्त, उत्पाद विशेषता।",
-    "प्रिंट, रेडियो, टीवी, इंटरनेट।",
-    "किसी व्यक्ति/स्थान पर रोचक लेख।",
-    "समाचार पत्र में संपादक के विचार।",
-    "आत्मकथा स्वयं लिखी, जीवनी अन्य द्वारा।",
-    "यात्रा के अनुभवों का सजीव वर्णन।",
-    "दैनिक अनुभव, विचार, भावनाओं का लेखा।",
-    "त्याग और सादगी का जीवन।",
-]
-HINDI_LONG = [
-    "सूरदास के पदों की विशेषताएँ एवं भक्ति-भावना का विश्लेषण।",
-    "प्रसाद जी के काव्य की विशेषताएँ।",
-    "महादेवी वर्मा की काव्यगत विशेषताएँ।",
-    "निराला की कविता की भावपक्षीय विशेषताएँ।",
-    "हजारी प्रसाद द्विवेदी की निबन्ध-कला।",
-    "प्रेमचन्द की साहित्यिक विशेषताएँ।",
-    "हिन्दी उपन्यास का विकास।",
-    "‘स्वच्छ भारत अभियान’ पर निबन्ध।",
-    "‘पुस्तकालय का महत्त्व’ निबन्ध।",
-    "‘जनसंख्या वृद्धि : समस्या और समाधान’ निबन्ध।",
-    "नगर निगम अध्यक्ष को सफाई शिकायती पत्र।",
-    "सूरदास और तुलसीदास की तुलना।",
-    "छायावाद की प्रमुख विशेषताएँ।",
-    "‘बाजार दर्शन’ पाठ का सारांश।",
-    "‘भारतीय किसान’ फीचर लेख।",
-    "विज्ञापन और समाचार में अन्तर।",
-    "‘रस’ का सोदाहरण विस्तृत वर्णन।",
-    "प्रयोजनमूलक हिन्दी के क्षेत्र।",
-    "पर्यावरण संरक्षण में जनसामान्य की भूमिका।",
-    "सोशल मीडिया के लाभ और हानियाँ।",
-]
-HINDI_LONG_ANSWERS = [
-    "वात्सल्य और श्रृंगार रस, ब्रज भाषा, अलंकार, भक्त-भगवान सम्बन्ध।",
-    "प्रकृति प्रेम, रहस्यवाद, सौंदर्य चित्रण, ‘कामायनी’।",
-    "वेदना और करुणा की कवयित्री, रहस्यवाद, प्रतीक योजना।",
-    "क्रान्ति, विद्रोह, प्रकृति प्रेम, मुक्त छंद, ओजस्वी भाषा।",
-    "सरस, गहराई, ऐतिहासिक-सांस्कृतिक दृष्टि, ‘कुटज’।",
-    "यथार्थवाद, समाज सुधारक, ‘गोदान’, सरल भाषा।",
-    "भारतेन्दु युग से शुरुआत, ‘गोदान’ मील का पत्थर।",
-    "भूमिका – महत्व – सरकारी प्रयास – जनभागीदारी – निष्कर्ष।",
-    "पुस्तकालय ज्ञान का भण्डार – विद्यार्थी उपयोगिता।",
-    "बढ़ती जनसंख्या – बेरोजगारी, गरीबी – शिक्षा, परिवार नियोजन।",
-    "प्रेषक, दिनांक, सेवा में, विषय, गंदगी की शिकायत।",
-    "सूरदास: वात्सल्य; तुलसी: मर्यादा; ब्रज बनाम अवधी।",
-    "प्रकृति प्रेम, व्यक्तिवाद, रहस्यवाद, कल्पना प्रधानता।",
-    "बाजार के आकर्षण और उपभोक्तावादी संस्कृति पर व्यंग्य।",
-    "भारतीय किसान की दुर्दशा, ऋणग्रस्तता, सरकारी योजनाएँ।",
-    "विज्ञापन: उत्पाद बिक्री; समाचार: सूचना, तटस्थता।",
-    "रस: स्थायी भाव, संचारी भाव, विभाव, अनुभाव; शृंगार रस उदाहरण।",
-    "प्रशासनिक, वाणिज्यिक, तकनीकी, पत्रकारिता, विधि।",
-    "प्रदूषण, वृक्षारोपण, कचरा प्रबंधन, जनभागीदारी।",
-    "जुड़ाव, सूचना, शिक्षा – लाभ; समय बर्बादी, फेक न्यूज – हानि।",
+PHY_OBJ = [
+    {"q": "विद्युत क्षेत्र की SI इकाई है:", "opts": ["N/C", "C/N", "V·m", "J/C"], "ans": 0},
+    {"q": "कूलॉम के नियम में बल किसके व्युत्क्रमानुपाती है?", "opts": ["r", "r²", "r³", "√r"], "ans": 1},
+    {"q": "गाउस नियम: ΦE = ?", "opts": ["q/ε₀", "ε₀/q", "q·ε₀", "q²/ε₀"], "ans": 0},
+    {"q": "विद्युत विभव V = ?", "opts": ["kq/r²", "kq/r", "kq·r", "k/qr"], "ans": 1},
+    {"q": "समविभव पृष्ठ पर कार्य होता है:", "opts": ["अधिकतम", "न्यूनतम", "शून्य", "अनंत"], "ans": 2},
+    {"q": "संधारित्र की ऊर्जा U = ?", "opts": ["CV", "CV²", "½CV²", "2CV"], "ans": 2},
+    {"q": "ε₀ = ?", "opts": ["8.85×10⁻¹²", "9×10⁹", "6.67×10⁻¹¹", "1.6×10⁻¹⁹"], "ans": 0},
+    {"q": "ओम नियम में R किस पर निर्भर नहीं?", "opts": ["तापमान", "V और I दोनों पर", "लंबाई", "क्षेत्रफल"], "ans": 1},
+    {"q": "विद्युत शक्ति P = ?", "opts": ["VI", "V/I", "I/V", "V+I"], "ans": 0},
+    {"q": "किर्चहॉफ प्रथम नियम का आधार:", "opts": ["ऊर्जा संरक्षण", "आवेश संरक्षण", "संवेग", "द्रव्यमान"], "ans": 1},
+    {"q": "व्हीटस्टोन ब्रिज: P/Q = ?", "opts": ["R/S", "S/R", "P·Q", "P+Q"], "ans": 0},
+    {"q": "लॉरेन्ज बल F = ?", "opts": ["qE", "q(v×B)", "qvB", "q(E+v×B)"], "ans": 3},
+    {"q": "साइक्लोट्रॉन में आवृत्ति किस पर निर्भर नहीं?", "opts": ["आवेश q", "द्रव्यमान m", "वेग v", "चुंबकीय क्षेत्र B"], "ans": 2},
+    {"q": "∮B·dl = ?", "opts": ["μ₀I", "μ₀/I", "I/μ₀", "μ₀I²"], "ans": 0},
+    {"q": "वृत्ताकार लूप के केंद्र पर B = ?", "opts": ["μ₀I/2R", "μ₀I/R", "μ₀I/4πR", "2μ₀I/R"], "ans": 0},
+    {"q": "चुंबकीय फ्लक्स का SI मात्रक:", "opts": ["टेस्ला", "हेनरी", "वेबर", "एम्पियर"], "ans": 2},
+    {"q": "फैराडे नियम: ε = ?", "opts": ["dΦ/dt", "-dΦ/dt", "Φ/t", "-Φ·t"], "ans": 1},
+    {"q": "स्व-प्रेरकत्व SI मात्रक:", "opts": ["वेबर", "हेनरी", "टेस्ला", "फैराड"], "ans": 1},
+    {"q": "AC परिपथ में Z = ?", "opts": ["R+XL+XC", "√(R²+(XL-XC)²)", "R·XL", "XL-XC"], "ans": 1},
+    {"q": "Power factor = ?", "opts": ["R/Z", "Z/R", "XL/Z", "XC/R"], "ans": 0},
+    {"q": "AC का rms मान = ?", "opts": ["I₀", "I₀/2", "I₀/√2", "√2·I₀"], "ans": 2},
+    {"q": "EM तरंगों की खोज किसने की?", "opts": ["फैराडे", "मैक्सवेल", "हर्ट्ज", "न्यूटन"], "ans": 1},
+    {"q": "सबसे कम तरंगदैर्ध्य किसकी?", "opts": ["रेडियो", "X-Ray", "दृश्य", "गामा किरण"], "ans": 3},
+    {"q": "स्नेल का नियम:", "opts": ["n₁sinθ₁=n₂sinθ₂", "n₁cosθ₁=n₂cosθ₂", "n₁θ₁=n₂θ₂", "n₁/sinθ₁=n₂"], "ans": 0},
+    {"q": "दर्पण सूत्र:", "opts": ["1/v+1/u=1/f", "1/f=1/v-1/u", "v+u=f", "f=u·v"], "ans": 0},
+    {"q": "पूर्ण आंतरिक परावर्तन:", "opts": ["θ < θc", "θ > θc", "θ = 0", "n₁ < n₂"], "ans": 1},
+    {"q": "मानव नेत्र की निकट दृष्टि दूरी:", "opts": ["10cm", "25cm", "50cm", "100cm"], "ans": 1},
+    {"q": "यंग के प्रयोग में β = ?", "opts": ["λD/d", "λd/D", "Dd/λ", "D/λd"], "ans": 0},
+    {"q": "प्रकाश विद्युत प्रभाव: KEmax = ?", "opts": ["hν + φ", "hν - φ", "hν/φ", "φ - hν"], "ans": 1},
+    {"q": "डी-ब्रॉयली: λ = ?", "opts": ["h/mv", "mv/h", "h·mv", "m/hv"], "ans": 0},
+    {"q": "बोर मॉडल: कोणीय संवेग = ?", "opts": ["nh/2π", "h/2πn", "2πn/h", "nh"], "ans": 0},
+    {"q": "हाइड्रोजन की आयनन ऊर्जा:", "opts": ["13.6eV", "3.4eV", "1.51eV", "0.85eV"], "ans": 0},
+    {"q": "बाल्मर श्रेणी किस क्षेत्र में?", "opts": ["पराबैंगनी", "दृश्य", "अवरक्त", "X-ray"], "ans": 1},
+    {"q": "अर्ध-आयु T₁/₂ = ?", "opts": ["λ/0.693", "0.693/λ", "0.693·λ", "1/λ"], "ans": 1},
+    {"q": "p-n जंक्शन अग्र अभिनति में धारा:", "opts": ["शून्य", "अत्यल्प", "अधिक", "असीमित"], "ans": 2},
+    {"q": "n-type में डोपेंट:", "opts": ["त्रिसंयोजी", "पंचसंयोजी", "द्विसंयोजी", "शून्यसंयोजी"], "ans": 1},
+    {"q": "NAND गेट = AND + ?", "opts": ["OR", "NOT", "NOR", "XOR"], "ans": 1},
+    {"q": "OR गेट का Boolean: Y = ?", "opts": ["A·B", "A+B", "Ā", "A⊕B"], "ans": 1},
+    {"q": "1 eV = ?", "opts": ["1.6×10⁻¹⁹ J", "1.6×10⁻¹⁰ J", "9.1×10⁻³¹ J", "6.67×10⁻¹¹ J"], "ans": 0},
+    {"q": "प्रकाश की चाल = ?", "opts": ["3×10⁸ m/s", "3×10⁶ m/s", "3×10¹⁰ m/s", "3×10⁴ m/s"], "ans": 0},
 ]
 
-# --- ENGLISH (similarly) ---
-ENGLISH_OBJ = [
-    {"text":"Who wrote 'The Last Lesson'?","options":["Alphonse Daudet","Anees Jung","William Douglas","Selma Lagerlof"],"correct":0},
-    {"text":"Theme of 'Lost Spring'?","options":["Poverty/exploitation","Education","Sports","Science"],"correct":0},
-    {"text":"In 'Deep Water', fear was of –","options":["Water","Fire","Heights","Darkness"],"correct":0},
-    {"text":"The rattrap seller was a –","options":["beggar","thief","businessman","teacher"],"correct":0},
-    {"text":"Author of 'Indigo'?","options":["Louis Fischer","Gandhi","Nehru","Tagore"],"correct":0},
-    {"text":"Who wrote 'My Mother at Sixty-Six'?","options":["Kamala Das","Neruda","Keats","Frost"],"correct":0},
-    {"text":"'Keeping Quiet' poet –","options":["Pablo Neruda","Kamala Das","Frost","Keats"],"correct":0},
-    {"text":"'A Thing of Beauty' gives us –","options":["Joy forever","Sadness","Pain","Wealth"],"correct":0},
-    {"text":"'A Roadside Stand' poem about –","options":["rural-urban divide","nature","love","travel"],"correct":0},
-    {"text":"Aunt Jennifer's tigers are –","options":["embroidered","real","painted","carved"],"correct":0},
-]
-ENGLISH_OBJ = pad_questions(ENGLISH_OBJ, 100)
-
-ENGLISH_SHORT = [
-    "Why did Douglas fear water?",
-    "Condition of bangle makers?",
-    "Why did peddler sign Captain?",
-    "What did Gandhi do for sharecroppers?",
-    "Describe poet's mother in 'My Mother at Sixty-Six'.",
-    "What does 'Keeping Quiet' ask?",
-    "Why a thing of beauty is joy forever?",
-    "What does roadside stand symbolise?",
-    "What are Aunt Jennifer's tigers doing?",
-    "Theme of 'The Third Level'.",
-    "Why did Maharaja kill tigers?",
-    "Write a letter to editor about stray dogs.",
-    "Draft a notice for blood donation.",
-    "Write an advertisement for a bicycle.",
-    "Format of report writing.",
-    "Change voice: 'The boy is flying a kite.'",
-    "Transform: 'He is too weak to walk.' (Remove 'too')",
-    "Use 'break down' in a sentence.",
-    "Two synonyms of 'beautiful'.",
-    "Correct: 'He do not know the answer.'",
-    "Explain: 'Actions speak louder than words.'",
-    "Message of 'The Last Lesson'.",
-    "How did Douglas overcome fear?",
-    "Significance of title 'Lost Spring'.",
-    "Character of rattrap peddler.",
-    "Central idea of 'A Roadside Stand'.",
-    "Why Aunt Jennifer's fingers flutter?",
-    "Summary of 'The Enemy'.",
-    "Theme of 'Should Wizard Hit Mommy'?",
-    "Irony in 'The Tiger King'.",
-]
-ENGLISH_SHORT_ANSWERS = [
-    "A childhood incident at a beach.",
-    "Poverty, bonded labour, losing eyesight.",
-    "To show the ironmaster his kindness.",
-    "Fought for their rights, refund.",
-    "Old, pale, ashen face like a corpse.",
-    "To be still, introspect.",
-    "Its beauty never fades; peace, happy memories.",
-    "Exploitation of rural India by urban rich.",
-    "Prancing proudly, free from fear.",
-    "Escape from reality, nostalgia.",
-    "An astrologer predicted death by tiger.",
-    "Formal letter, complaint about stray dogs.",
-    "Heading, date, venue, appeal to donate.",
-    "Lightweight, durable, affordable price.",
-    "Title, date, place, introduction, body, conclusion.",
-    "A kite is being flown by the boy.",
-    "He is so weak that he cannot walk.",
-    "The car broke down on the highway.",
-    "Lovely, gorgeous.",
-    "He does not know the answer.",
-    "Actions are more important than words.",
-    "Love for one's language, pain of losing it.",
-    "Took swimming lessons, gradually overcame.",
-    "Lost Spring = lost childhood of child labourers.",
-    "A poor peddler who transforms after kindness.",
-    "Divide between city and village, neglect of rural.",
-    "She is nervous; tigers represent suppressed desires.",
-    "Dr. Sadao helps enemy soldier, humanity wins.",
-    "Conflict between child's imagination and adult rationality.",
-    "King kills 99 tigers, dies because of wooden tiger.",
-]
-ENGLISH_LONG = [
-    "Describe drowning experience in 'Deep Water' and how fear was overcome.",
-    "Analyse title 'Lost Spring' and portrayal of poverty.",
-    "Character sketch of rattrap peddler.",
-    "Theme of 'Keeping Quiet' and relevance.",
-    "Central idea of 'A Thing of Beauty'.",
-    "Essay: 'Importance of Education in Modern India'.",
-    "Letter to Municipal Commissioner about poor drainage.",
-    "Report on 'Science Exhibition in Your School'.",
-    "Character of Aunt Jennifer and message.",
-    "Theme of 'The Enemy' and duty vs humanity.",
-    "Character of Dr. Sadao.",
-    "Significance of third level in 'The Third Level'.",
-    "Speech on 'Clean India, Green India'.",
-    "Advertisement for a coaching institute.",
-    "Film review you have watched.",
-    "Poetic devices in 'My Mother at Sixty-Six'.",
-    "How 'Aunt Jennifer's Tigers' portrays women's plight.",
-    "Factual description of school library.",
-    "Summarize 'The Tiger King' and its satire.",
-    "Article on 'Role of Youth in Nation Building'.",
-]
-ENGLISH_LONG_ANSWERS = [
-    "He nearly drowned twice; took lessons; gradually overcame.",
-    "Lost Spring = lost childhood; bangle makers work from age 7-8.",
-    "Poor man, steals, later transformed by Edla's kindness.",
-    "People rush for material gains; poet asks to introspect.",
-    "Beauty never fades; gives peace, sweet dreams, health.",
-    "Education key to progress; empowers individuals, reduces poverty.",
-    "Formal letter: address, date, subject – poor drainage.",
-    "Title, place, date; describe exhibits, chief guest, prizes.",
-    "Aunt Jennifer weak; creates bold tigers in art; women's oppression.",
-    "Dr. Sadao saves enemy soldier; humanity wins.",
-    "Skilled surgeon, compassionate, strong moral compass.",
-    "Escape from modern stress, nostalgia, simpler life.",
-    "Speech: cleanliness, planting trees, pollution reduction.",
-    "Name, subjects, experienced faculty, success rate.",
-    "Name, director, plot summary, acting, music, opinion.",
-    "Simile, imagery, contrast, personification.",
-    "Tigers strong/fearless; Aunt weak/oppressed; suppressed desires.",
-    "Location, size, number of books, sections, seating.",
-    "Maharaja kills 99 tigers; dies from wooden tiger – irony.",
-    "Youth bring energy, innovation; role in politics, social reforms.",
+PHY_S2 = [
+    {"q": "1. कूलॉम के नियम को लिखिए। k का मान बताइए।", "a": "F = kq₁q₂/r² जहाँ k = 9×10⁹ N·m²/C²\nयह बल दोनों आवेशों के गुणनफल के समानुपाती और दूरी के वर्ग के व्युत्क्रमानुपाती होता है।"},
+    {"q": "2. समविभव पृष्ठ किसे कहते हैं? दो गुण लिखिए।", "a": "वह पृष्ठ जिस पर सभी बिंदुओं का विभव समान हो।\n(1) इस पर कार्य शून्य होता है।\n(2) क्षेत्र रेखाएँ इसके लंबवत होती हैं।"},
+    {"q": "3. ओम का नियम लिखिए और दो सीमाएँ बताइए।", "a": "V = IR — स्थिर ताप पर धारा विभवांतर के समानुपाती।\nसीमाएँ:\n(1) अर्धचालकों में लागू नहीं।\n(2) गैसों में लागू नहीं।"},
+    {"q": "4. किर्चहॉफ के दोनों नियम लिखिए।", "a": "(1) KCL: किसी जंक्शन पर ΣI = 0\n(2) KVL: किसी बंद पाश में ΣV = 0"},
+    {"q": "5. लेंज का नियम लिखिए।", "a": "प्रेरित धारा की दिशा उस कारण का विरोध करती है जिससे वह उत्पन्न हुई।\nयह ऊर्जा संरक्षण पर आधारित है।"},
+    {"q": "6. AC और DC में दो अंतर लिखिए।", "a": "(1) AC की दिशा बदलती है; DC स्थिर।\n(2) AC को ट्रांसफॉर्मर से घटाया-बढ़ाया जा सकता है।"},
+    {"q": "7. पूर्ण आंतरिक परावर्तन की शर्तें।", "a": "(1) प्रकाश सघन से विरल माध्यम में जाए।\n(2) आपतन कोण क्रांतिक कोण से अधिक हो।"},
+    {"q": "8. प्रकाश विद्युत प्रभाव — आइंस्टीन का समीकरण।", "a": "KEmax = hν - φ = h(ν - ν₀)\nजब धातु पर उचित आवृत्ति का प्रकाश पड़े तो इलेक्ट्रॉन निकलते हैं।"},
+    {"q": "9. बोर के परमाणु मॉडल की दो अभिधारणाएँ।", "a": "(1) इलेक्ट्रॉन निश्चित कक्षाओं में घूमते हैं।\n(2) L = nh/2π का गुणज होता है।"},
+    {"q": "10. p-n जंक्शन में अग्र और पश्च अभिनति।", "a": "अग्र: p को + और n को − → अधिक धारा।\nपश्च: विपरीत → धारा नहीं बहती।"},
 ]
 
-# --- PHYSICS (sample, padded) ---
-PHYSICS_OBJ = [
-    {"text":"1 कूलॉम में इलेक्ट्रॉन –","options":["6.25×10¹⁸","1.6×10¹⁹","6.25×10¹⁹","1.6×10⁻¹⁹"],"correct":0},
-    {"text":"गॉस का नियम लागू –","options":["केवल बंद पृष्ठ","खुले पृष्ठ","सभी पृष्ठ","गोलीय पृष्ठ"],"correct":0},
-    {"text":"समान्तर प्लेट संधारित्र की धारिता –","options":["ε₀A/d","ε₀d/A","A/ε₀d","d/ε₀A"],"correct":0},
-    {"text":"किरचॉफ का प्रथम नियम आधारित –","options":["आवेश संरक्षण","ऊर्जा संरक्षण","द्रव्यमान","संवेग"],"correct":0},
-]
-PHYSICS_OBJ = pad_questions(PHYSICS_OBJ, 100)
-
-PHYSICS_SHORT = [
-    "कूलॉम के नियम का सदिश रूप।",
-    "गॉस के नियम से गोलीय कोश का क्षेत्र।",
-    "ओम के नियम की सीमाएँ।",
-    "हीटस्टोन सेतु का सिद्धान्त।",
-    "बायो-सेवार्ट नियम।",
-    "एम्पियर का परिपथीय नियम।",
-    "लेंज का नियम।",
-    "फैराडे का प्रेरण नियम।",
-    "प्रत्यावर्ती एवं दिष्ट धारा में अन्तर।",
-    "प्रकाश के परावर्तन के नियम।",
-    "लेंस मेकर सूत्र।",
-    "पूर्ण आन्तरिक परावर्तन।",
-    "यंग का द्विझिरी प्रयोग।",
-    "प्रकाश विद्युत प्रभाव।",
-    "डी-ब्रॉग्ली तरंगदैर्ध्य।",
-    "नाभिकीय संलयन एवं विखण्डन।",
-    "द्रव्यमान क्षति एवं बन्धन ऊर्जा।",
-    "N-type एवं P-type अर्धचालक।",
-    "P-N सन्धि डायोड अग्र अभिनति।",
-    "NOT गेट प्रतीक एवं सत्यता सारणी।",
-    "ट्रांजिस्टर के उपयोग।",
-    "मॉडुलन की आवश्यकता।",
-    "पृथ्वी के चुम्बकीय क्षेत्र के अवयव।",
-    "विद्युत अनुनाद।",
-    "संधारित्र की प्रतिघात।",
-    "शक्ति गुणांक।",
-    "दो समान्तर धारावाही चालकों के बीच बल।",
-    "साइक्लोट्रॉन का सिद्धान्त।",
-    "ऊर्जा बैण्ड सिद्धान्त से चालक/अर्धचालक/रोधी।",
-    "मैक्सवेल के विद्युत चुम्बकीय तरंगें।",
-]
-PHYSICS_SHORT_ANSWERS = [
-    "F = k q1 q2 / r² * r̂",
-    "E=0 (r<R), E=Q/(4πε₀r²) (r>R)",
-    "ताप, चुम्बकीय क्षेत्र, अर्धचालकों में लागू नहीं।",
-    "चार प्रतिरोधों का संतुलित सेतु।",
-    "dB = (μ₀/4π)(Idl sinθ/r²)",
-    "∮B.dl = μ₀I",
-    "प्रेरित धारा कारण का विरोध करती है।",
-    "ε = -dΦ/dt",
-    "AC परिमाण बदलता, DC एक दिशा।",
-    "आपतन कोण = परावर्तन कोण",
-    "1/f = (μ-1)(1/R₁-1/R₂)",
-    "सघन→विरल, आपतन कोण > क्रान्तिक कोण",
-    "फ्रिंज चौड़ाई β = λD/d",
-    "धातु से इलेक्ट्रॉन उत्सर्जन प्रकाश से।",
-    "λ = h/mv",
-    "संलयन: हल्के नाभिक जुड़ते; विखण्डन: भारी नाभिक टूटते।",
-    "बन्धन ऊर्जा = Δm c²",
-    "N: इलेक्ट्रॉन बहुल; P: होल बहुल",
-    "अग्र अभिनति में धारा प्रवाहित होती है।",
-    "प्रतीक, A=1→0, A=0→1",
-    "प्रवर्धक, स्विच।",
-    "संकेत को दूर संचरण हेतु उच्च आवृत्ति पर स्थानांतरित करना।",
-    "दिक्पात, नति, क्षैतिज तीव्रता।",
-    "L-C परिपथ में प्रतिबाधा न्यूनतम।",
-    "Xc = 1/ωC",
-    "cos φ = R/Z",
-    "F = (μ₀/2π)(I₁I₂/d)",
-    "आवेशित कणों को त्वरित करने का यंत्र।",
-    "चालक: अतिव्यापी बैण्ड; अर्धचालक: छोटा अन्तराल; रोधी: बड़ा अन्तराल।",
-    "विद्युत-चुम्बकीय तरंगें अनुप्रस्थ, निर्वात में 3×10⁸ m/s।",
-]
-PHYSICS_LONG = [
-    "गॉस के नियम से अनन्त तार का क्षेत्र।",
-    "समान्तर प्लेट संधारित्र की धारिता एवं ऊर्जा।",
-    "किरचॉफ के नियमों से हीटस्टोन सेतु।",
-    "बायो-सेवार्ट से वृत्ताकार पाश का चुम्बकीय क्षेत्र।",
-    "L-C-R श्रेणी परिपथ प्रतिबाधा एवं शक्ति गुणांक।",
-    "ट्रांसफार्मर संरचना, कार्यविधि।",
-    "यंग के द्विझिरी प्रयोग में फ्रिंज चौड़ाई।",
-    "सरल एवं संयुक्त सूक्ष्मदर्शी का आवर्धन।",
-    "प्रकाश विद्युत प्रभाव में आइंस्टीन समीकरण।",
-    "P-N सन्धि डायोड अर्द्ध तरंग दिष्टकारी।",
-    "दो समान्तर धारावाही चालकों के बीच बल।",
-    "समतल अपवर्तक पृष्ठ अपवर्तन।",
-    "नाभिकीय विखण्डन, संलयन, रिएक्टर।",
-    "द्रव्यमान क्षति और बन्धन ऊर्जा।",
-    "P-N सन्धि का V-I अभिलक्षण।",
-    "AND, OR, NOT गेट।",
-    "साइक्लोट्रॉन।",
-    "पारद्युतिक का संधारित्र पर प्रभाव।",
-    "ऊर्जा बैण्ड सिद्धान्त।",
-    "मैक्सवेल विद्युत चुम्बकीय तरंग सिद्धान्त।",
-]
-PHYSICS_LONG_ANSWERS = [
-    "E = λ/(2πε₀r)",
-    "C = ε₀A/d, U = ½CV²",
-    "प्रतिरोध अनुपात सेतु संतुलन।",
-    "B = (μ₀IR²)/(2(R²+x²)^(3/2))",
-    "Z = √(R²+(X_L-X_C)²), cosφ = R/Z",
-    "प्राथमिक/द्वितीयक कुंडली, आपसी प्रेरण।",
-    "β = λD/d",
-    "सूक्ष्मदर्शी: m = 1+D/f; संयुक्त: m = L/f₀ × D/fₑ",
-    "hν = φ + K_max",
-    "डायोड अग्र अभिनति में चालन, धारा एक दिशा।",
-    "F = (μ₀ I₁ I₂ l)/(2πd)",
-    "μ = वास्तविक गहराई/आभासी गहराई",
-    "विखण्डन: श्रृंखला अभिक्रिया; संलयन: उच्च ताप।",
-    "स्थायित्व अधिक बन्धन ऊर्जा प्रति न्यूक्लिऑन।",
-    "अग्र: धारा; उत्क्रम: अल्प धारा।",
-    "AND: Y=A·B; OR: Y=A+B; NOT: Y=Ā",
-    "आवेशित कणों को त्वरित करता है।",
-    "धारिता बढ़ती है, C = K ε₀A/d",
-    "चालक, अर्धचालक, रोधी का अन्तर।",
-    "E और B परस्पर लम्बवत, संचरण।",
+PHY_S5 = [
+    {"q": "1. गाउस का नियम — अनंत आवेशित तार के लिए E ज्ञात कीजिए।", "a": "गाउस नियम: ΦE = q/ε₀\nE × 2πrl = λl/ε₀\n∴ E = λ/(2πε₀r)\nदिशा: तार से त्रिज्य दिशा में।"},
+    {"q": "2. बायो-सावर्ट नियम — वृत्ताकार लूप के केंद्र पर B।", "a": "dB = μ₀Idl sinθ/(4πr²)\nθ=90°, r=R → B = μ₀I/(2R)\nN फेरों के लिए: B = μ₀NI/(2R)"},
+    {"q": "3. LCR श्रेणी परिपथ की अनुनाद आवृत्ति।", "a": "Z = √[R²+(XL-XC)²]\nअनुनाद: XL=XC → ω₀=1/√LC\nf₀ = 1/(2π√LC)\nअनुनाद पर Z=R (न्यूनतम), I अधिकतम।"},
+    {"q": "4. लेंस निर्माता समीकरण व्युत्पन्न कीजिए।", "a": "n₂/v - n₁/u = (n₂-n₁)/R\nदोनों पृष्ठ जोड़ने पर:\n1/f = (n-1)(1/R₁ - 1/R₂)"},
+    {"q": "5. फोटोइलेक्ट्रिक प्रभाव और बोर मॉडल से Eₙ = -13.6/n²।", "a": "KEmax = hν - φ\nबोर: mvr=nh/2π, mv²/r=ke²/r²\nहल: Eₙ = -13.6/n² eV\nn=1: -13.6 eV, n=∞: 0"},
+    {"q": "6. p-n जंक्शन पूर्ण-तरंग दिष्टकारी।", "a": "दो डायोड + केंद्र-नल ट्रांसफॉर्मर।\nधनात्मक चक्र: D₁ → R_L में धारा\nऋणात्मक चक्र: D₂ → R_L में धारा (same direction)\nदक्षता = 81.2%"},
 ]
 
-# (Similarly for Chemistry, Mathematics, Biology – for brevity I'll provide a minimal working set and pad to 100)
-# Because the user's original complaint was about the Hindi/English sections, I'll ensure those are complete.
-# For Chemistry/Math/Biology, I'll generate unique objective using chapter-based generator but with REAL subjects names, not dummy.
-# Let's define them with a simple list and pad.
-
-CHEM_OBJ = [
-    {"text":"राउल्ट का नियम लागू –","options":["आदर्श विलयन","अनादर्श विलयन","सभी","केवल द्रव"],"correct":0},
-    {"text":"मोलरता की इकाई –","options":["mol L⁻¹","mol kg⁻¹","g L⁻¹","N"],"correct":0},
-    {"text":"फैराडे का प्रथम नियम –","options":["W=ZQ","W=ZI","W=Zt","W=Z/Q"],"correct":0},
+CHE_OBJ = [
+    {"q": "NaCl की संरचना है:", "opts": ["Simple cubic", "FCC", "BCC", "HCP"], "ans": 1},
+    {"q": "FCC में परमाणुओं की संख्या:", "opts": ["1", "2", "4", "6"], "ans": 2},
+    {"q": "BCC में परमाणुओं की संख्या:", "opts": ["1", "2", "4", "3"], "ans": 1},
+    {"q": "FCC packing efficiency:", "opts": ["52%", "68%", "74%", "26%"], "ans": 2},
+    {"q": "राउल्ट नियम: ΔP/P° = ?", "opts": ["n₂/(n₁+n₂)", "n₁/(n₁+n₂)", "n₁·n₂", "n₁/n₂"], "ans": 0},
+    {"q": "परासरण दाब π = ?", "opts": ["MRT", "nRT/V", "CRT", "RT/C"], "ans": 2},
+    {"q": "एनोड पर होती है:", "opts": ["अपचयन", "ऑक्सीकरण", "कोई नहीं", "दोनों"], "ans": 1},
+    {"q": "फैराडे I नियम: m = ?", "opts": ["ZIt", "ZI/t", "It/Z", "Z/It"], "ans": 0},
+    {"q": "अभिक्रिया वेग r = ?", "opts": ["k[A]ⁿ", "k/[A]ⁿ", "k·t", "[A]/k"], "ans": 0},
+    {"q": "t₁/₂ = 0.693/k — किस कोटि?", "opts": ["0", "1st", "2nd", "3rd"], "ans": 1},
+    {"q": "KMnO₄ में Mn की ऑक्सीकरण अवस्था:", "opts": ["+4", "+6", "+7", "+2"], "ans": 2},
+    {"q": "[Co(NH₃)₆]³⁺ में Co की ऑक्सीकरण अवस्था:", "opts": ["+1", "+2", "+3", "+6"], "ans": 2},
+    {"q": "SN2 में होता है:", "opts": ["Retention", "Racemisation", "Walden Inversion", "Elimination"], "ans": 2},
+    {"q": "Fehling's test: positive किसके लिए?", "opts": ["दोनों", "Aldehyde", "Ketone", "दोनों ऋणात्मक"], "ans": 1},
+    {"q": "Tollens test: positive किसके लिए?", "opts": ["Ketone", "Aldehyde", "Alcohol", "Ether"], "ans": 1},
+    {"q": "Glucose का अणुसूत्र:", "opts": ["C₆H₁₂O₆", "C₁₂H₂₂O₁₁", "C₆H₁₀O₅", "C₅H₁₀O₅"], "ans": 0},
+    {"q": "DNA में Thymine का जोड़ा:", "opts": ["Adenine", "Guanine", "Cytosine", "Uracil"], "ans": 0},
+    {"q": "Nylon-6,6 है:", "opts": ["Addition polymer", "Condensation polymer", "Elastomer", "Plastic"], "ans": 1},
+    {"q": "Aspirin है:", "opts": ["Analgesic", "Antiseptic", "Antacid", "Antibiotic"], "ans": 0},
+    {"q": "Molarity का मात्रक:", "opts": ["mol/kg", "mol/L", "g/L", "mol/mol"], "ans": 1},
 ]
-CHEM_OBJ = pad_questions(CHEM_OBJ, 100)
 
-CHEM_SHORT = [f"रसायन विज्ञान लघु प्रश्न {i+1}" for i in range(30)]
-CHEM_SHORT_ANSWERS = [f"रसायन उत्तर {i+1}" for i in range(30)]
-CHEM_LONG = [f"रसायन दीर्घ प्रश्न {i+1}" for i in range(20)]
-CHEM_LONG_ANSWERS = [f"रसायन विस्तृत उत्तर {i+1}" for i in range(20)]
-
-MATH_OBJ = [
-    {"text":"f(x)=x²+1, f(-1)=?","options":["2","1","0","-1"],"correct":0},
-    {"text":"sin⁻¹(1/2) मुख्य मान –","options":["π/6","π/3","π/4","π/2"],"correct":0},
+CHE_S2 = [
+    {"q": "1. राउल्ट के नियम और परासरण दाब का सूत्र।", "a": "राउल्ट: P = x_solvent × P°\nΔP/P° = n₂/(n₁+n₂)\nπ = CRT"},
+    {"q": "2. प्रथम कोटि अभिक्रिया की अर्ध-आयु।", "a": "t₁/₂ = 0.693/k\nk पर निर्भर, [A] पर नहीं।\nk = Ae^(-Ea/RT)"},
+    {"q": "3. नेर्न्स्ट समीकरण।", "a": "E = E° - (RT/nF)·lnQ\n298K: E = E° - (0.0592/n)·logQ"},
+    {"q": "4. d-ब्लॉक में रंगीन आयन क्यों?", "a": "अपूर्ण d-कक्षक → d-d transition\nदृश्य प्रकाश अवशोषण → रंग दिखता है।"},
+    {"q": "5. SN1 और SN2 में अंतर।", "a": "SN1: 2 चरण, carbocation, 3°>2°>1°\nSN2: 1 चरण, Walden Inversion, 1°>2°>3°"},
+    {"q": "6. Fehling's और Tollens test।", "a": "Fehling's: Aldehyde → ईंट-लाल Cu₂O\nTollens: Aldehyde → चाँदी का दर्पण"},
+    {"q": "7. Van't Hoff गुणांक i।", "a": "NaCl → Na⁺+Cl⁻, i≈2\nΔTb = i·Kb·m\nπ = i·CRT"},
+    {"q": "8. Gabriel synthesis।", "a": "Phthalimide से शुद्ध 1° amine बनती है।\n2° और 3° amine नहीं बनते।"},
+    {"q": "9. DNA और RNA में अंतर।", "a": "DNA: Deoxyribose, Thymine, Double helix\nRNA: Ribose, Uracil, Single strand"},
+    {"q": "10. Addition और Condensation polymer।", "a": "Addition: PVC, Teflon — उप-उत्पाद नहीं।\nCondensation: Nylon — H₂O निकलती है।"},
 ]
-MATH_OBJ = pad_questions(MATH_OBJ, 100)
-MATH_SHORT = [f"गणित लघु प्रश्न {i+1}" for i in range(30)]
-MATH_SHORT_ANSWERS = [f"गणित उत्तर {i+1}" for i in range(30)]
-MATH_LONG = [f"गणित दीर्घ प्रश्न {i+1}" for i in range(20)]
-MATH_LONG_ANSWERS = [f"गणित विस्तृत उत्तर {i+1}" for i in range(20)]
+
+CHE_S5 = [
+    {"q": "1. फैराडे के नियम और विद्युत रासायनिक श्रेणी।", "a": "m=ZIt, Z=E/96500\nE°cell = E°cathode - E°anode\nΔG° = -nFE°cell"},
+    {"q": "2. उत्प्रेरण के प्रकार और एंजाइम।", "a": "समांगी: एक प्रावस्था\nविषमांगी: अलग प्रावस्था\nएंजाइम: Lock-and-key model, 37°C पर अधिकतम"},
+    {"q": "3. Crystal Field Theory — Octahedral complex।", "a": "eg: dx²-y², dz² (+0.6Δo)\nt2g: dxy,dyz,dxz (-0.4Δo)\nStrong field → low spin, Weak field → high spin"},
+    {"q": "4. बहुलकीकरण और जैव-निम्नीकरणीय polymer।", "a": "Addition: PE, PVC\nCondensation: Nylon, PET\nJaiv: PHBV — सूक्ष्मजीव तोड़ सकते हैं"},
+    {"q": "5. अमीनो अम्ल और Zwitter ion।", "a": "H₂N-CHR-COOH\nZwitter: H₃N⁺-CHR-COO⁻\nIsoelectric point पर अधिकतम"},
+    {"q": "6. p-Block Group 15 हाइड्राइड।", "a": "क्षारीयता: NH₃>PH₃>AsH₃\nस्थायित्व: NH₃>PH₃>AsH₃\nNH₃ में H-bond → उच्च क्वथनांक"},
+]
 
 BIO_OBJ = [
-    {"text":"अमीबा में जनन –","options":["द्विविभाजन","बहुविभाजन","मुकुलन","बीजाणु"],"correct":0},
-    {"text":"मानव गुणसूत्र संख्या –","options":["46","23","48","44"],"correct":0},
+    {"q": "द्विनिषेचन में बनता है:", "opts": ["केवल भ्रूण", "केवल भ्रूणपोष", "भ्रूण + भ्रूणपोष", "बीज"], "ans": 2},
+    {"q": "आर्तव चक्र लगभग:", "opts": ["14 दिन", "21 दिन", "28 दिन", "35 दिन"], "ans": 2},
+    {"q": "मेंडल का पृथक्करण नियम:", "opts": ["स्वतंत्र अपव्यूहन", "प्रभाविता", "पृथक्करण", "युग्मन"], "ans": 2},
+    {"q": "DNA में Thymine का जोड़ा:", "opts": ["Adenine", "Guanine", "Cytosine", "Uracil"], "ans": 0},
+    {"q": "AUG कोडॉन:", "opts": ["Leucine", "Methionine (Start)", "Stop", "Alanine"], "ans": 1},
+    {"q": "PCR पूरा नाम:", "opts": ["Protein Chain Reaction", "Polymerase Chain Reaction", "Polymer Code", "None"], "ans": 1},
+    {"q": "Bt toxin मारता है:", "opts": ["Fungi", "Bacteria", "Lepidopteran larvae", "Virus"], "ans": 2},
+    {"q": "मनुष्य में Autosomes:", "opts": ["23 जोड़े", "22 जोड़े", "46", "44"], "ans": 1},
+    {"q": "Down's syndrome में chromosomes:", "opts": ["45", "46", "47", "48"], "ans": 2},
+    {"q": "10% नियम:", "opts": ["10% ऊर्जा अगले level को", "20%", "50%", "100%"], "ans": 0},
+    {"q": "In-situ conservation:", "opts": ["Zoo", "National Park", "Seed Bank", "Botanical Garden"], "ans": 1},
+    {"q": "Light Reaction कहाँ?", "opts": ["Stroma", "Thylakoid membrane", "Mitochondria", "Cytoplasm"], "ans": 1},
+    {"q": "Auxin मुख्य कार्य:", "opts": ["पत्ती रंग", "Cell elongation", "फूल खिलना", "Seed dormancy"], "ans": 1},
+    {"q": "Human heart में chambers:", "opts": ["2", "3", "4", "5"], "ans": 2},
+    {"q": "AIDS कारण:", "opts": ["Bacteria", "HIV (Retrovirus)", "Fungi", "Protozoa"], "ans": 1},
+    {"q": "Hardy-Weinberg: p²+2pq+q² = ?", "opts": ["0", "1", "2", "p+q"], "ans": 1},
+    {"q": "Miller-Urey प्रयोग में बने:", "opts": ["DNA", "Amino acids", "RNA", "Proteins"], "ans": 1},
+    {"q": "t-RNA का काम:", "opts": ["DNA पढ़ना", "Amino acid ribosome तक ले जाना", "mRNA बनाना", "DNA copy"], "ans": 1},
+    {"q": "Golden Rice में अधिकता:", "opts": ["Vitamin C", "Vitamin A (β-carotene)", "Iron", "Protein"], "ans": 1},
+    {"q": "Adaptive radiation उदाहरण:", "opts": ["Darwin's Finches", "Bacteria", "Virus", "Fungi"], "ans": 0},
 ]
-BIO_OBJ = pad_questions(BIO_OBJ, 100)
-BIO_SHORT = [f"जीवविज्ञान लघु प्रश्न {i+1}" for i in range(30)]
-BIO_SHORT_ANSWERS = [f"जीवविज्ञान उत्तर {i+1}" for i in range(30)]
-BIO_LONG = [f"जीवविज्ञान दीर्घ प्रश्न {i+1}" for i in range(20)]
-BIO_LONG_ANSWERS = [f"जीवविज्ञान विस्तृत उत्तर {i+1}" for i in range(20)]
 
-# =============== Subject Registry ===============
+BIO_S2 = [
+    {"q": "1. द्विनिषेचन क्या है?", "a": "(1) नर युग्मक 1 + अंडकोशिका → भ्रूण (2n)\n(2) नर युग्मक 2 + द्वितीयक नाभिक → भ्रूणपोष (3n)\nकेवल Angiosperms में।"},
+    {"q": "2. मेंडल का पृथक्करण नियम।", "a": "Tt×Tt → TT:Tt:tt = 1:2:1\nलंबा:बौना = 3:1\nयुग्मकजनन में alleles अलग होते हैं।"},
+    {"q": "3. lac operon क्या है?", "a": "E. coli में lactose उपस्थित → Repressor निष्क्रिय\nβ-galactosidase बनती है। Inducible operon।"},
+    {"q": "4. PCR के तीन चरण।", "a": "(1) Denaturation 93-96°C\n(2) Annealing 50-65°C\n(3) Extension 72°C — Taq polymerase"},
+    {"q": "5. Bt cotton कैसे कार्य करता है?", "a": "Bacillus thuringiensis का cry gene डाला।\nBollworm खाता है → आँत नष्ट → मरता है।"},
+    {"q": "6. Down's Turner's Klinefelter's।", "a": "Down's: 47 (Trisomy 21)\nTurner's: 45,XO — बाँझ females\nKlinefelter's: 47,XXY — बाँझ male"},
+    {"q": "7. Hardy-Weinberg की शर्तें।", "a": "(1) बड़ी जनसंख्या (2) यादृच्छिक मैथुन\n(3) कोई उत्परिवर्तन नहीं (4) कोई प्रवासन नहीं\n(5) कोई चयन नहीं"},
+    {"q": "8. Auxin और Gibberellin में अंतर।", "a": "Auxin: Cell elongation, apical dominance\nGibberellin: Stem elongation, seed germination"},
+    {"q": "9. Active और Passive immunity।", "a": "Active: Body antibody बनाता है — टीकाकरण\nPassive: Ready antibody दी जाती है — antivenom"},
+    {"q": "10. Miller-Urey प्रयोग।", "a": "CH₄+NH₃+H₂+H₂O + विद्युत स्पार्क → Amino acids\nनिष्कर्ष: जीवन के घटक अजैविक परिस्थितियों में बन सकते हैं।"},
+]
+
+BIO_S5 = [
+    {"q": "1. द्विनिषेचन की पूरी प्रक्रिया।", "a": "परागण → पराग नलिका → बीजांडद्वार\nनर युग्मक 1 + अंड → युग्मनज (2n) → भ्रूण\nनर युग्मक 2 + ध्रुवीय नाभिक → भ्रूणपोष (3n)\nकेवल Angiosperms में।"},
+    {"q": "2. Dihybrid Cross में 9:3:3:1।", "a": "RRYY × rryy → F1: RrYy\nF1×F1: 9 R_Y_ : 3 R_yy : 3 rrY_ : 1 rryy\n9:3:3:1 अनुपात।"},
+    {"q": "3. Recombinant DNA Technology।", "a": "Restriction Enzyme → काटना\nLigation → जोड़ना\nTransformation → Host में डालना\nSelection → Antibiotic में उगाना"},
+    {"q": "4. Darwin का Natural Selection।", "a": "अत्यधिक प्रजनन + संसाधन सीमित → संघर्ष\nउपयुक्त जीवित → वंशानुगति\nIndustrial Melanism: Biston betularia उदाहरण।"},
+    {"q": "5. मानव प्रतिरक्षा और AIDS।", "a": "HIV → CD4⁺ T-cells नष्ट\nCD4 <200/μL → AIDS\nART से नियंत्रण\nAntibody (B-cells) और Cytotoxic (T-cells)।"},
+    {"q": "6. पारितंत्र ऊर्जा प्रवाह।", "a": "10% नियम: 10000J→1000J→100J→10J\nएकदिशीय प्रवाह\nशेष 90% श्वसन+उष्मा\nऊर्जा पिरामिड: हमेशा सीधा।"},
+]
+
+HIN_OBJ = [
+    {"q": "सूरदास के पदों की भाषा है:", "opts": ["ब्रज", "अवधी", "मैथिली", "खड़ीबोली"], "ans": 0},
+    {"q": "'कैदी और कोकिला' के रचयिता:", "opts": ["माखनलाल चतुर्वेदी", "पंत", "महादेवी वर्मा", "निराला"], "ans": 0},
+    {"q": "महादेवी वर्मा किस युग की कवयित्री:", "opts": ["भारतेन्दु", "द्विवेदी", "छायावाद", "प्रगतिवाद"], "ans": 2},
+    {"q": "'उत्साह' में बादल किसका प्रतीक:", "opts": ["विनाश", "क्रान्ति", "सृजन", "शान्ति"], "ans": 1},
+    {"q": "'अट नहीं रही है' में कौन-सी ऋतु:", "opts": ["वसन्त", "वर्षा", "ग्रीष्म", "शीत"], "ans": 0},
+    {"q": "रस का स्थायी भाव 'रति' किस रस में:", "opts": ["शृंगार", "वीर", "करुण", "हास्य"], "ans": 0},
+    {"q": "हिंदी के 'भारतेन्दु युग' के प्रवर्तक:", "opts": ["भारतेन्दु हरिश्चन्द्र", "महावीर प्रसाद द्विवेदी", "अयोध्या सिंह उपाध्याय", "प्रेमचन्द"], "ans": 0},
+    {"q": "अलंकार 'अनुप्रास' का सम्बन्ध:", "opts": ["अर्थ से", "शब्द से", "भाव से", "रस से"], "ans": 1},
+    {"q": "छंद 'दोहा' के विषम चरण में मात्राएँ:", "opts": ["11", "13", "16", "24"], "ans": 1},
+    {"q": "'बाजार दर्शन' पाठ के लेखक:", "opts": ["जैनेन्द्र कुमार", "हजारी प्रसाद द्विवेदी", "अज्ञेय", "धर्मवीर भारती"], "ans": 0},
+    {"q": "'बहादुर' कहानी के लेखक:", "opts": ["प्रेमचन्द", "फणीश्वरनाथ रेणु", "अमरकान्त", "भीष्म साहनी"], "ans": 2},
+    {"q": "'राम ने रोटी खाई' में 'राम' किस कारक में:", "opts": ["कर्ता", "कर्म", "करण", "सम्प्रदान"], "ans": 0},
+    {"q": "'विद्यालय' शब्द में संधि:", "opts": ["यण", "गुण", "वृद्धि", "दीर्घ"], "ans": 1},
+    {"q": "'अग्नि' का पर्यायवाची:", "opts": ["पावक", "अनल", "आग", "उपर्युक्त सभी"], "ans": 3},
+    {"q": "'आम के आम गुठलियों के दाम' का अर्थ:", "opts": ["दोहरा लाभ", "हानि", "कठोर श्रम", "व्यर्थ प्रयास"], "ans": 0},
+    {"q": "निबन्ध के मुख्य अंग:", "opts": ["भूमिका, विषय-विस्तार, उपसंहार", "केवल प्रस्तावना", "केवल निष्कर्ष", "तर्क और उदाहरण"], "ans": 0},
+    {"q": "जयशंकर प्रसाद की 'आँसू' किस विधा की:", "opts": ["खण्डकाव्य", "महाकाव्य", "गीतिकाव्य", "मुक्तक काव्य"], "ans": 2},
+    {"q": "तुलसीदास की रामचरितमानस की भाषा:", "opts": ["संस्कृत", "ब्रज", "अवधी", "हिंदी"], "ans": 2},
+    {"q": "उपसर्ग शब्द के किस स्थान पर जुड़ता है:", "opts": ["अन्त में", "बीच में", "आरम्भ में", "कहीं भी"], "ans": 2},
+    {"q": "'कामायनी' के रचनाकार:", "opts": ["निराला", "जयशंकर प्रसाद", "महादेवी वर्मा", "पंत"], "ans": 1},
+    {"q": "हिंदी का 'स्वर्ण युग':", "opts": ["आदिकाल", "भक्तिकाल", "रीतिकाल", "आधुनिककाल"], "ans": 1},
+    {"q": "'गोदान' उपन्यास के लेखक:", "opts": ["प्रेमचंद", "जैनेंद्र", "यशपाल", "भगवतीचरण"], "ans": 0},
+    {"q": "वीर रस का स्थायी भाव:", "opts": ["भय", "उत्साह", "रति", "क्रोध"], "ans": 1},
+    {"q": "करुण रस का स्थायी भाव:", "opts": ["शोक", "हास", "रति", "विस्मय"], "ans": 0},
+    {"q": "'मधुशाला' के रचयिता:", "opts": ["पंत", "हरिवंशराय बच्चन", "महादेवी वर्मा", "निराला"], "ans": 1},
+    {"q": "छायावाद के प्रमुख कवि नहीं हैं:", "opts": ["प्रसाद", "निराला", "पंत", "भारतेंदु"], "ans": 3},
+    {"q": "मुहावरा 'आँखें चुराना' का अर्थ:", "opts": ["आँख छिपाना", "सामने न आना", "शर्माना", "झूठ बोलना"], "ans": 1},
+    {"q": "हिंदी दिवस:", "opts": ["14 सितंबर", "14 अक्टूबर", "26 जनवरी", "15 अगस्त"], "ans": 0},
+    {"q": "संधि के कितने भेद:", "opts": ["2", "3", "4", "5"], "ans": 1},
+    {"q": "रामचंद्र शुक्ल की प्रसिद्ध आलोचना:", "opts": ["हिंदी साहित्य का इतिहास", "कविता क्या है", "चिंतामणि", "रस मीमांसा"], "ans": 0},
+    {"q": "'तारसप्तक' का संपादन:", "opts": ["निराला", "अज्ञेय", "पंत", "बच्चन"], "ans": 1},
+    {"q": "पृथ्वीराज रासो के रचनाकार:", "opts": ["जयदेव", "चंदबरदाई", "विद्यापति", "अमीर खुसरो"], "ans": 1},
+    {"q": "आदिकाल का दूसरा नाम:", "opts": ["भक्तिकाल", "वीरगाथाकाल", "रीतिकाल", "छायावाद"], "ans": 1},
+    {"q": "कबीर किस शाखा के कवि:", "opts": ["सगुण भक्ति", "निर्गुण ज्ञानमार्गी", "प्रेममार्गी", "रीति"], "ans": 1},
+    {"q": "'पद्मावत' के रचयिता:", "opts": ["कबीर", "तुलसीदास", "मलिक मुहम्मद जायसी", "सूरदास"], "ans": 2},
+    {"q": "प्रेमचंद का मूल नाम:", "opts": ["धनपत राय", "श्रीपत राय", "नवाब राय", "मुंशीलाल"], "ans": 0},
+    {"q": "'साकेत' के रचयिता:", "opts": ["जयशंकर प्रसाद", "मैथिलीशरण गुप्त", "दिनकर", "पंत"], "ans": 1},
+    {"q": "रीतिकाल के प्रमुख कवि:", "opts": ["कबीर", "सूरदास", "बिहारी", "तुलसीदास"], "ans": 2},
+    {"q": "द्वंद्व समास का उदाहरण:", "opts": ["राम-कृष्ण", "राजपुत्र", "नीलकमल", "पंचवटी"], "ans": 0},
+    {"q": "बहुव्रीहि समास का उदाहरण:", "opts": ["चतुर्भुज", "राजमहल", "पीतांबर", "यथाशक्ति"], "ans": 2},
+    {"q": "हिंदी का प्रथम उपन्यास:", "opts": ["गोदान", "परीक्षागुरु", "चंद्रकांता", "भाग्यवती"], "ans": 1},
+    {"q": "कारक के कितने भेद:", "opts": ["6", "7", "8", "9"], "ans": 2},
+    {"q": "मुक्त छंद के प्रवर्तक:", "opts": ["तुलसीदास", "कबीर", "निराला", "प्रसाद"], "ans": 2},
+    {"q": "श्लेष अलंकार में:", "opts": ["एक अर्थ", "एक शब्द के दो अर्थ", "उपमा", "रूपक"], "ans": 1},
+    {"q": "हिंदी साहित्य में 'हालावाद' के प्रवर्तक:", "opts": ["निराला", "बच्चन", "पंत", "प्रसाद"], "ans": 1},
+    {"q": "संप्रदान कारक की विभक्ति:", "opts": ["को/के लिए", "से", "में", "पर"], "ans": 0},
+    {"q": "प्रेमचंद का उपन्यास नहीं:", "opts": ["रंगभूमि", "सेवासदन", "निर्मला", "शेखर: एक जीवनी"], "ans": 3},
+    {"q": "हिंदी भाषा है:", "opts": ["बोली", "भाषा", "उपभाषा", "विभाषा"], "ans": 1},
+    {"q": "कर्ता कारक की विभक्ति:", "opts": ["को", "से", "ने", "के लिए"], "ans": 2},
+    {"q": "'कफन' कहानी के लेखक:", "opts": ["जयशंकर प्रसाद", "प्रेमचंद", "अज्ञेय", "मोहन राकेश"], "ans": 1},
+    {"q": "सूरदास किस भाषा में लिखते थे:", "opts": ["अवधी", "ब्रजभाषा", "खड़ीबोली", "संस्कृत"], "ans": 1},
+    {"q": "अव्ययीभाव समास का उदाहरण:", "opts": ["यथाशक्ति", "राजपुत्र", "नीलकमल", "पंचवटी"], "ans": 0},
+    {"q": "तत्पुरुष समास का उदाहरण:", "opts": ["राजमहल", "नीलकमल", "पंचवटी", "यथाशक्ति"], "ans": 0},
+    {"q": "वाच्य के कितने भेद:", "opts": ["2", "3", "4", "5"], "ans": 1},
+    {"q": "उपमा अलंकार में प्रयुक्त:", "opts": ["जैसे, सा, सी, सम", "मानो", "रूपक", "श्लेष"], "ans": 0},
+    {"q": "रूपक अलंकार में:", "opts": ["उपमेय पर उपमान का आरोप", "तुलना", "विरोधाभास", "श्लेष"], "ans": 0},
+    {"q": "महादेवी वर्मा को 'आधुनिक मीरा' क्यों:", "opts": ["वेदना के काव्य के कारण", "भक्ति", "कृष्ण भक्ति", "प्रकृति"], "ans": 0},
+    {"q": "मुहावरा 'नौ-दो ग्यारह होना' का अर्थ:", "opts": ["गणित करना", "भाग जाना", "लड़ाई करना", "समझाना"], "ans": 1},
+    {"q": "हिंदी वर्णमाला में स्वरों की संख्या:", "opts": ["11", "13", "14", "16"], "ans": 0},
+    {"q": "देवनागरी लिपि किस दिशा में:", "opts": ["दाएँ से बाएँ", "बाएँ से दाएँ", "ऊपर से नीचे", "नीचे से ऊपर"], "ans": 1},
+    {"q": "हिंदी साहित्य में प्रयोगवाद के प्रवर्तक:", "opts": ["निराला", "पंत", "अज्ञेय", "दिनकर"], "ans": 2},
+    {"q": "भक्तिकाल का समय:", "opts": ["1000-1375", "1375-1700", "1700-1900", "1900 के बाद"], "ans": 1},
+    {"q": "आधुनिक हिंदी गद्य के जनक:", "opts": ["प्रेमचंद", "भारतेंदु हरिश्चंद्र", "रामचंद्र शुक्ल", "द्विवेदी"], "ans": 1},
+    {"q": "हिंदी में 8वीं अनुसूची में भाषाएँ:", "opts": ["18", "20", "22", "24"], "ans": 2},
+    {"q": "रेणु की भाषा-शैली:", "opts": ["शुद्ध हिंदी", "आंचलिक भाषा", "संस्कृत मिश्रित", "अंग्रेजी मिश्रित"], "ans": 1},
+    {"q": "गांधी जी के अनुसार सच्चा सुख:", "opts": ["उपभोग में", "त्याग में", "संग्रह में", "भोग में"], "ans": 1},
+    {"q": "द्विगु समास में पहला पद:", "opts": ["संज्ञा", "संख्यावाचक", "विशेषण", "क्रिया"], "ans": 1},
+    {"q": "हिंदी की पहली पत्रिका:", "opts": ["सरस्वती", "उदंत मार्तंड", "माधुरी", "हंस"], "ans": 1},
+    {"q": "रस के कितने अंग:", "opts": ["2", "3", "4", "5"], "ans": 2},
+    {"q": "लोकोक्ति 'अंधे की लाठी' का अर्थ:", "opts": ["एकमात्र सहारा", "कमजोर व्यक्ति", "बेकार वस्तु", "अंधकार"], "ans": 0},
+    {"q": "'उर्वशी' के लिए ज्ञानपीठ:", "opts": ["प्रसाद", "दिनकर", "पंत", "निराला"], "ans": 1},
+    {"q": "'यामा' के लिए ज्ञानपीठ:", "opts": ["महादेवी वर्मा", "सुभद्रा कुमारी", "मीराबाई", "अमृता"], "ans": 0},
+    {"q": "संज्ञा के कितने भेद:", "opts": ["3", "4", "5", "6"], "ans": 2},
+    {"q": "हिंदी भाषा की उत्पत्ति:", "opts": ["पाली", "प्राकृत", "अपभ्रंश", "संस्कृत"], "ans": 2},
+    {"q": "काव्य के प्रमुख भेद:", "opts": ["प्रबंध और मुक्तक", "खंड और महा", "गद्य और पद्य", "सगुण और निर्गुण"], "ans": 0},
+    {"q": "तुलसीदास की भक्ति:", "opts": ["सगुण राम भक्ति", "निर्गुण", "कृष्ण भक्ति", "शक्ति भक्ति"], "ans": 0},
+    {"q": "विदेशी शब्द 'कमीज' किस भाषा से:", "opts": ["अरबी", "फारसी", "पुर्तगाली", "अंग्रेजी"], "ans": 2},
+    {"q": "प्रत्यय कहाँ लगता है:", "opts": ["शब्द के आगे", "शब्द के पीछे", "बीच में", "कहीं भी"], "ans": 1},
+    {"q": "'राम की शक्तिपूजा' के रचनाकार:", "opts": ["तुलसीदास", "निराला", "प्रसाद", "पंत"], "ans": 1},
+    {"q": "छायावाद का समय:", "opts": ["1900-1918", "1918-1936", "1936-1950", "1950 के बाद"], "ans": 1},
+    {"q": "महावीर प्रसाद द्विवेदी की पत्रिका:", "opts": ["हंस", "सरस्वती", "माधुरी", "मतवाला"], "ans": 1},
+    {"q": "हिंदी का राजभाषा अनुच्छेद:", "opts": ["340", "343", "370", "356"], "ans": 1},
+    {"q": "निराला का पूरा नाम:", "opts": ["सूर्यकांत त्रिपाठी", "रामकुमार वर्मा", "भारतेंदु", "हजारीप्रसाद"], "ans": 0},
+    {"q": "'बिहारी सतसई' में दोहों की संख्या:", "opts": ["500", "600", "700", "800"], "ans": 2},
+    {"q": "तद्भव शब्द का अर्थ:", "opts": ["संस्कृत से सीधे", "संस्कृत से बदलकर", "विदेशी से", "देशज"], "ans": 1},
+    {"q": "हिंदी की पहली कहानी:", "opts": ["उसने कहा था", "इंदुमती", "परीक्षा गुरु", "कफन"], "ans": 1},
+    {"q": "पर्यायवाची: 'कमल' का पर्याय:", "opts": ["पद्म", "कुमुद", "नीरज", "सभी"], "ans": 3},
+    {"q": "विलोम: 'सुगम' का विलोम:", "opts": ["दुर्गम", "सरल", "कठिन", "विकट"], "ans": 0},
+    {"q": "शब्द-शक्ति के कितने भेद:", "opts": ["2", "3", "4", "5"], "ans": 1},
+    {"q": "'भारत-दुर्दशा' के लेखक:", "opts": ["प्रेमचंद", "भारतेंदु हरिश्चंद्र", "बालकृष्ण भट्ट", "प्रतापनारायण"], "ans": 1},
+    {"q": "प्रेमचन्द के 'पंच परमेश्वर' का मुख्य पात्र:", "opts": ["जुम्मन शेख", "अलगू चौधरी", "हामिद", "दोनों a और b"], "ans": 3},
+    {"q": "सर्वनाम के कितने भेद:", "opts": ["4", "5", "6", "7"], "ans": 2},
+    {"q": "क्रिया के मुख्यतः कितने भेद:", "opts": ["2", "3", "4", "5"], "ans": 0},
+    {"q": "'आनंदमठ' किस भाषा में:", "opts": ["हिंदी", "बांग्ला", "संस्कृत", "उर्दू"], "ans": 1},
+    {"q": "निबन्ध के कितने प्रकार:", "opts": ["2", "3", "4", "5"], "ans": 1},
+    {"q": "'नमक का दारोगा' के लेखक:", "opts": ["जयशंकर प्रसाद", "प्रेमचंद", "यशपाल", "जैनेंद्र"], "ans": 1},
+    {"q": "रामचरितमानस में कितने काण्ड:", "opts": ["5", "6", "7", "8"], "ans": 2},
+    {"q": "आत्मकथा में लेखक:", "opts": ["दूसरे की कथा", "अपनी कथा", "काल्पनिक", "ऐतिहासिक"], "ans": 1},
+    {"q": "हिंदी साहित्य में 'प्रयोगवाद': 'तारसप्तक' वर्ष:", "opts": ["1940", "1943", "1950", "1955"], "ans": 1},
+    {"q": "'चंद्रकांता' उपन्यास के लेखक:", "opts": ["प्रेमचंद", "देवकीनंदन खत्री", "भगवतीचरण", "यशपाल"], "ans": 1},
+]
+
+HIN_S2 = [
+    {"q": "1. सूरदास के पदों का प्रतिपाद्य लिखिए।", "a": "सूरदास के पदों में कृष्ण की बाल लीलाएँ और वात्सल्य भाव है।\nभाषा: ब्रजभाषा\nविशेषताएँ:\n(1) वात्सल्य और शृंगार रस\n(2) मधुर संगीतात्मकता\n(3) प्रकृति चित्रण\n(4) विरह का मार्मिक वर्णन"},
+    {"q": "2. रस की परिभाषा एवं 9 भेद।", "a": "रस: काव्य से मिलने वाला आनन्द।\n9 रस:\n1.शृंगार(रति) 2.हास्य(हास) 3.करुण(शोक)\n4.रौद्र(क्रोध) 5.वीर(उत्साह) 6.भयानक(भय)\n7.बीभत्स(जुगुप्सा) 8.अद्भुत(विस्मय) 9.शांत(निर्वेद)"},
+    {"q": "3. अलंकार की परिभाषा उदाहरण सहित।", "a": "काव्य की शोभा बढ़ाने वाले तत्त्व अलंकार हैं।\nशब्दालंकार: अनुप्रास, यमक, श्लेष\nअर्थालंकार: उपमा, रूपक, उत्प्रेक्षा\nउदा:\nअनुप्रास: 'चारु चंद्र की चंचल किरणें'\nउपमा: 'सागर सा गंभीर'"},
+    {"q": "4. रेणु की भाषा-शैली की विशेषताएँ।", "a": "(1) आंचलिक भाषा का प्रयोग\n(2) भोजपुरी, मैथिली शब्द\n(3) लोकगीतों का समावेश\n(4) जीवंत संवाद\n(5) ग्रामीण जीवन का सजीव चित्रण"},
+    {"q": "5. प्रेमचन्द की साहित्यिक विशेषताएँ।", "a": "(1) यथार्थवादी लेखन\n(2) किसान, दलित, नारी समस्या\n(3) सरल भाषा\n(4) आदर्शोन्मुखी कथाएँ\n(5) 'गोदान', 'कफन' जैसी कालजयी रचनाएँ"},
+    {"q": "6. निबन्ध और कहानी में अन्तर।", "a": "निबन्ध: विचारात्मक गद्य\nलेखक के विचार प्रधान\nकहानी: कथातत्त्व प्रधान\nपात्र, संवाद, कथावस्तु प्रधान"},
+    {"q": "7. मुहावरे और लोकोक्ति में अन्तर।", "a": "मुहावरा: वाक्यांश, विशेष अर्थ\n'आँखें चुराना' = सामने न आना\nलोकोक्ति: पूर्ण कथन, अनुभव आधारित\n'अब पछताए होत क्या...'\nमुहावरा वाक्य का अंग; लोकोक्ति स्वतंत्र।"},
+    {"q": "8. उपसर्ग और प्रत्यय में अन्तर।", "a": "उपसर्ग: शब्द के आगे\nप्र+गति=प्रगति, अ+सत्य=असत्य\nप्रत्यय: शब्द के पीछे\nमनुष्य+ता=मनुष्यता\nदोनों शब्द का अर्थ बदलते हैं।"},
+    {"q": "9. तत्सम, तद्भव और देशज में अन्तर।", "a": "तत्सम: संस्कृत से सीधे — अग्नि, क्षेत्र\nतद्भव: बदलकर — आग, खेत\nदेशज: स्थानीय — खिड़की, लोटा\nविदेशज: अन्य भाषा — कमीज, कैंची"},
+    {"q": "10. कारक की परिभाषा और 8 कारक।", "a": "संज्ञा/सर्वनाम का क्रिया से सम्बन्ध।\n8 कारक:\nकर्ता(ने), कर्म(को), करण(से)\nसम्प्रदान(के लिए), अपादान(से अलग)\nसम्बन्ध(का/के/की), अधिकरण(में/पर)\nसम्बोधन(हे!)"},
+    {"q": "11. छायावाद की 5 प्रमुख विशेषताएँ।", "a": "(1) व्यक्तिवाद\n(2) प्रकृति का मानवीकरण\n(3) प्रेम और सौंदर्य\n(4) रहस्यवाद\n(5) नई शैली\nकवि: प्रसाद, निराला, पंत, महादेवी"},
+    {"q": "12. पत्र लेखन के दो प्रकार।", "a": "(1) औपचारिक: सरकारी, व्यापारिक\nभाषा: शिष्ट, मानक\n(2) अनौपचारिक: मित्र, परिवार\nभाषा: सरल, भावनात्मक\nBSEB: प्रधानाचार्य को = औपचारिक"},
+    {"q": "13. संक्षेपण की परिभाषा एवं नियम।", "a": "(1) मूल का 1/3 भाग\n(2) मुख्य बातें\n(3) अपने शब्दों में\n(4) तृतीय पुरुष\n(5) एक अनुच्छेद\n(6) उचित शीर्षक"},
+    {"q": "14. रामचरितमानस की भाषाई विशेषताएँ।", "a": "भाषा: अवधी\nशैली: दोहा-चौपाई\n(1) तत्सम शब्द\n(2) मधुर और लयात्मक\n(3) अलंकारों का प्रयोग\n(4) भक्ति और दर्शन का समन्वय"},
+    {"q": "15. आत्मकथा और जीवनी में अन्तर।", "a": "आत्मकथा: स्वयं अपनी कथा, प्रथम पुरुष\nजीवनी: किसी अन्य की, तृतीय पुरुष\nदोनों जीवन आधारित रचनाएँ।"},
+    {"q": "16. वाक्य शुद्धि के नियम।", "a": "(1) कर्ता-क्रिया में वचन-लिंग साम्य\n(2) उचित कारक चिह्न\n(3) सही शब्द प्रयोग\nअशुद्ध: मैंने खाना खाई\nशुद्ध: मैंने खाना खाया"},
+    {"q": "17. सूचना लेखन का प्रारूप।", "a": "──────────\nसूचना\n[संस्था]\n[दिनांक]\n[शीर्षक]\n[विषय: क्या, कब, कहाँ, क्यों]\n[नाम, पद]\n──────────"},
+    {"q": "18. निराला की कविता की विशेषताएँ।", "a": "(1) मुक्त छंद के प्रवर्तक\n(2) क्रांतिकारी विचार\n(3) राष्ट्रीय चेतना\n(4) शोषित वर्ग की आवाज\n(5) 'राम की शक्तिपूजा' प्रमुख रचना"},
+    {"q": "19. हिंदी साहित्य के काल विभाजन।", "a": "आदिकाल (700-1400): चंदबरदाई\nभक्तिकाल (1400-1700): कबीर, तुलसी\nरीतिकाल (1700-1900): बिहारी\nआधुनिककाल (1900-): प्रेमचंद, निराला"},
+    {"q": "20. 'बाजार दर्शन' का सारांश।", "a": "लेखक: जैनेन्द्र कुमार\nमुख्य विचार: बाजार की शक्ति मन की कमजोरी है।\nगांधी: सच्चा सुख त्याग में।\nसंदेश: जरूरत के अनुसार खरीदें, दिखावे के लिए नहीं।"},
+    {"q": "21. 'गोदान' उपन्यास की मुख्य थीम।", "a": "किसान जीवन की त्रासदी।\nपात्र: होरी, धनिया\n(1) कर्ज का बोझ\n(2) जमींदारी शोषण\n(3) ग्रामीण-शहरी अंतर\n(4) नारी की दुर्दशा"},
+    {"q": "22. महादेवी वर्मा की काव्य विशेषताएँ।", "a": "(1) वेदना और करुणा\n(2) रहस्यवादी भावना\n(3) प्रकृति से तादात्म्य\n(4) नारी पीड़ा\n(5) संगीतात्मक भाषा\nरचनाएँ: नीहार, रश्मि, नीरजा, यामा"},
+    {"q": "23. औपचारिक पत्र का प्रारूप।", "a": "सेवा में,\nप्रधानाचार्य महोदय,\n[विद्यालय, पता]\nविषय: [कारण]\nमहोदय,\n[मुख्य बात]\nधन्यवाद।\nआपका शिष्य,\n[नाम, कक्षा, दिनांक]"},
+    {"q": "24. संधि और समास में अन्तर।", "a": "संधि: दो वर्णों का मेल\nराम+ईश्वर = रामेश्वर\nसमास: दो शब्दों का संक्षिप्त रूप\nराजपुत्र = राजा का पुत्र\nसंधि में ध्वनि परिवर्तन; समास में अर्थ संक्षेप।"},
+    {"q": "25. हिंदी में प्रयोगवाद की विशेषताएँ।", "a": "(1) नए भाषाई प्रयोग\n(2) अज्ञेय का 'तारसप्तक' (1943)\n(3) व्यक्तिवाद\n(4) आत्मसंघर्ष\n(5) यथार्थवाद"},
+    {"q": "26. 'कफन' कहानी का सारांश।", "a": "लेखक: प्रेमचंद\nपात्र: घीसू, माधव, बुधिया\nकथावस्तु: मरती पत्नी का कफन न खरीदकर शराब पीना।\nशैली: व्यंग्यात्मक यथार्थवाद"},
+    {"q": "27. यात्रा-वृत्तान्त की विशेषताएँ।", "a": "(1) स्थान का सजीव वर्णन\n(2) व्यक्तिगत अनुभव\n(3) सांस्कृतिक जानकारी\n(4) रोचक शैली\n(5) उत्सुकता जगाना"},
+    {"q": "28. रिपोर्ताज किसे कहते हैं?", "a": "किसी घटना का आँखों देखा वर्णन।\nविशेषताएँ:\n(1) तात्कालिकता\n(2) आँखों देखा विवरण\n(3) भावात्मक और तथ्यात्मक\n(4) पत्रकारिता और साहित्य का मिश्रण"},
+    {"q": "29. जनसंचार माध्यमों के प्रकार।", "a": "1. मुद्रण: समाचार पत्र, पत्रिका\n2. इलेक्ट्रॉनिक: रेडियो, TV\n3. डिजिटल: इंटरनेट, सोशल मीडिया\nसभी जन-जागृति में सहायक।"},
+    {"q": "30. प्रयोजनमूलक हिंदी के प्रकार।", "a": "(1) राजभाषा — सरकारी\n(2) व्यावसायिक — व्यापार\n(3) मीडिया — समाचार\n(4) तकनीकी — विज्ञान"},
+]
+
+HIN_S5 = [
+    {"q": "1. सूरदास की भक्ति-भावना और काव्य विशेषताएँ।", "a": "सूरदास (1478-1583)\nभाषा: ब्रजभाषा, रचना: सूरसागर\nविशेषताएँ:\n(1) वात्सल्य रस: कृष्ण की बाल-लीलाएँ\n(2) शृंगार: राधा-कृष्ण प्रेम\n(3) सगुण कृष्ण भक्ति\n(4) मधुर संगीत\nभक्ति: सख्य और वात्सल्य भाव\nभाषा: ब्रजभाषा का सौंदर्य, लोक-तत्त्व"},
+    {"q": "2. प्रसाद जी के काव्य की विशेषताएँ।", "a": "जयशंकर प्रसाद (1889-1937)\nरचनाएँ: कामायनी, आँसू, लहर\nविशेषताएँ:\n(1) छायावाद के प्रवर्तक\n(2) रहस्यवाद और दर्शन\n(3) प्रकृति का मानवीकरण\n(4) राष्ट्रीय चेतना\nकामायनी: 14 सर्ग, मनु-श्रद्धा\nभाषा: संस्कृतनिष्ठ, अलंकृत"},
+    {"q": "3. महादेवी वर्मा की काव्यगत विशेषताएँ।", "a": "रचनाएँ: नीहार, रश्मि, नीरजा, यामा\nविशेषताएँ:\n(1) वेदना और करुणा\n(2) रहस्यवादी भावना\n(3) प्रकृति से तादात्म्य\n(4) नारी-पीड़ा\n(5) संगीतात्मक भाषा\nपुरस्कार: ज्ञानपीठ (यामा)\n'आधुनिक मीरा' की उपाधि"},
+    {"q": "4. हिन्दी उपन्यास के विकास का इतिहास।", "a": "परीक्षागुरु (1882) — पहला उपन्यास\nप्रेमचंद युग (1900-1936):\nगोदान, सेवासदन — यथार्थवाद\nप्रेमचंदोत्तर: जैनेंद्र, अज्ञेय\nमनोवैज्ञानिक उपन्यास\nआधुनिक: रेणु — आंचलिक\nमहत्त्व: सामाजिक चेतना का दर्पण"},
+    {"q": "5. 'स्वच्छ भारत अभियान' पर निबन्ध।", "a": "प्रस्तावना: 2 अक्टूबर 2014 को शुरू\nउद्देश्य:\n(1) खुले में शौच मुक्ति\n(2) ठोस अपशिष्ट प्रबंधन\n(3) हर घर शौचालय\nउपलब्धियाँ:\n(1) 10 करोड़+ शौचालय\n(2) 600+ जिले ODF\nउपसंहार: स्वच्छता जीवनशैली बने।"},
+    {"q": "6. 'जनसंख्या वृद्धि: समस्या और समाधान' पर निबन्ध।", "a": "प्रस्तावना: भारत — 140 करोड़, विश्व में प्रथम\nकारण:\n(1) अशिक्षा\n(2) बाल विवाह\n(3) गरीबी\nप्रभाव:\n(1) बेरोजगारी\n(2) संसाधन दबाव\nसमाधान:\n(1) शिक्षा\n(2) परिवार नियोजन\n(3) महिला सशक्तीकरण"},
+    {"q": "7. शिकायती पत्र — नगर निगम को।", "a": "सेवा में,\nनगर निगम अध्यक्ष,\n[पता]\nविषय: सफाई व्यवस्था हेतु शिकायत।\nमहोदय,\nवार्ड में सफाई नहीं, कूड़े का ढेर, बीमारी का खतरा।\nनिवेदन:\n(1) नियमित सफाई\n(2) कूड़ेदान\nआपका,\n[नाम, पता, दिनांक]"},
+    {"q": "8. सूरदास और तुलसीदास की तुलना।", "a": "सूरदास: कृष्ण भक्त, वात्सल्य-शृंगार, ब्रजभाषा, सूरसागर\nतुलसीदास: राम भक्त, दास्य-समन्वयवाद, अवधी, रामचरितमानस\nसमानता: दोनों सगुण भक्त, भक्तिकाल, समाज सुधार\nअंतर: सूर=कृष्ण/वात्सल्य; तुलसी=राम/मर्यादा"},
+    {"q": "9. छायावाद की प्रमुख विशेषताएँ।", "a": "समय: 1918-1936\nविशेषताएँ:\n(1) व्यक्तिवाद\n(2) प्रकृति मानवीकरण\n(3) प्रेम और सौंदर्य\n(4) रहस्यवाद\n(5) राष्ट्रीयता\nकवि:\nप्रसाद: कामायनी\nनिराला: मुक्त छंद\nपंत: प्रकृति सौंदर्य\nमहादेवी: वेदना"},
+    {"q": "10. हिन्दी व्याकरण — रस का विस्तृत वर्णन।", "a": "'विभावानुभावव्यभिचारिसंयोगाद्रसनिष्पत्ति'\n9 रस:\nशृंगार(रति), हास्य(हास), करुण(शोक)\nरौद्र(क्रोध), वीर(उत्साह), भयानक(भय)\nबीभत्स(जुगुप्सा), अद्भुत(विस्मय), शांत(निर्वेद)\n4 अंग: स्थायी भाव, विभाव, अनुभाव, संचारी भाव\nउदा: शृंगार: 'बतरस लालच लाल की...'"},
+]
+
+
 SUBJECTS = {
-    "Hindi": {"obj": HINDI_OBJ, "short": HINDI_SHORT, "short_answers": HINDI_SHORT_ANSWERS,
-              "long": HINDI_LONG, "long_answers": HINDI_LONG_ANSWERS},
-    "English": {"obj": ENGLISH_OBJ, "short": ENGLISH_SHORT, "short_answers": ENGLISH_SHORT_ANSWERS,
-                "long": ENGLISH_LONG, "long_answers": ENGLISH_LONG_ANSWERS},
-    "Physics": {"obj": PHYSICS_OBJ, "short": PHYSICS_SHORT, "short_answers": PHYSICS_SHORT_ANSWERS,
-                "long": PHYSICS_LONG, "long_answers": PHYSICS_LONG_ANSWERS},
-    "Chemistry": {"obj": CHEM_OBJ, "short": CHEM_SHORT, "short_answers": CHEM_SHORT_ANSWERS,
-                  "long": CHEM_LONG, "long_answers": CHEM_LONG_ANSWERS},
-    "Mathematics": {"obj": MATH_OBJ, "short": MATH_SHORT, "short_answers": MATH_SHORT_ANSWERS,
-                    "long": MATH_LONG, "long_answers": MATH_LONG_ANSWERS},
-    "Biology": {"obj": BIO_OBJ, "short": BIO_SHORT, "short_answers": BIO_SHORT_ANSWERS,
-                "long": BIO_LONG, "long_answers": BIO_LONG_ANSWERS},
+    "physics":   {"name": "⚛️ Physics",   "emoji": "⚛️", "obj": PHY_OBJ, "s2": PHY_S2, "s5": PHY_S5},
+    "chemistry": {"name": "🧪 Chemistry", "emoji": "🧪", "obj": CHE_OBJ, "s2": CHE_S2, "s5": CHE_S5},
+    "biology":   {"name": "🧬 Biology",   "emoji": "🧬", "obj": BIO_OBJ, "s2": BIO_S2, "s5": BIO_S5},
+    "hindi":     {"name": "📚 Hindi",     "emoji": "📚", "obj": HIN_OBJ, "s2": HIN_S2, "s5": HIN_S5},
 }
 
-# ===================== BOT HANDLERS =====================
+user_state = {}
+
+def main_menu_keyboard():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("⚛️ Physics", callback_data="subj_physics"),
+         InlineKeyboardButton("🧪 Chemistry", callback_data="subj_chemistry")],
+        [InlineKeyboardButton("🧬 Biology", callback_data="subj_biology"),
+         InlineKeyboardButton("📚 Hindi", callback_data="subj_hindi")],
+        [InlineKeyboardButton("📊 My Score", callback_data="score"),
+         InlineKeyboardButton("ℹ️ Help", callback_data="help")],
+    ])
+
+def subject_menu_keyboard(subj):
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("📝 Objective Quiz", callback_data=f"mode_{subj}_obj")],
+        [InlineKeyboardButton("✏️ 2-Mark Short Answer", callback_data=f"mode_{subj}_s2")],
+        [InlineKeyboardButton("📖 5-Mark Long Answer", callback_data=f"mode_{subj}_s5")],
+        [InlineKeyboardButton("🔀 Random Mix Quiz", callback_data=f"mode_{subj}_mix")],
+        [InlineKeyboardButton("🏠 Main Menu", callback_data="home")],
+    ])
+
+def options_keyboard(opts, subj, q_idx):
+    keys = ["🅐", "🅑", "🅒", "🅓"]
+    keyboard = [[InlineKeyboardButton(f"{keys[i]} {opt}", callback_data=f"ans_{subj}_{q_idx}_{i}")] for i, opt in enumerate(opts)]
+    keyboard.append([InlineKeyboardButton("⏭ Skip", callback_data=f"skip_{subj}_{q_idx}")])
+    keyboard.append([InlineKeyboardButton("🏠 Menu", callback_data="home")])
+    return InlineKeyboardMarkup(keyboard)
+
+def next_keyboard(subj, mode, q_idx):
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("➡️ Next Question", callback_data=f"next_{subj}_{mode}_{q_idx}")],
+        [InlineKeyboardButton("📊 Score", callback_data="score"), InlineKeyboardButton("🏠 Menu", callback_data="home")],
+    ])
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    welcome = (
-        "<b>🤖 THIS BOT IS MADE BY DEV</b>\n\n"
-        "📚 <b>BSEB 12th 2027 QUESTION BANK</b>\n"
-        "High‑probability questions based on 2019‑2026 analysis.\n\n"
-        "👇 Select a subject:"
+    user = update.effective_user
+    text = (
+        f"🌿 *PDF BY DEV — BSEB 2027 Quiz Bot*\n\n"
+        f"नमस्ते {user.first_name}! 🙏\n\n"
+        f"*Subjects:*\n"
+        f"⚛️ Physics | 🧪 Chemistry | 🧬 Biology | 📚 Hindi\n\n"
+        f"*Modes:*\n"
+        f"📝 Objective (100Q) | ✏️ 2-Mark (30Q) | 📖 5-Mark (10Q) | 🔀 Mix\n\n"
+        f"Subject चुनो 👇"
     )
-    btns = [[InlineKeyboardButton(sub, callback_data=f"subj|{sub}")] for sub in SUBJECTS]
-    btns.append([InlineKeyboardButton("❓ Help", callback_data="help")])
-    await update.message.reply_text(welcome, reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
+    await update.message.reply_text(text, parse_mode="Markdown", reply_markup=main_menu_keyboard())
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     data = query.data
+    user_id = query.from_user.id
+
+    if data == "home":
+        await query.edit_message_text("🌿 *PDF BY DEV — BSEB 2027*\n\nSubject चुनो 👇", parse_mode="Markdown", reply_markup=main_menu_keyboard())
+        return
 
     if data == "help":
-        txt = (
-            "ℹ️ <b>How to use:</b>\n"
-            "• Choose a subject.\n"
-            "• <b>Objective</b>: 100 MCQs, tap answer → green/red, then Next.\n"
-            "• <b>2/5 Marks</b>: Tap a question to see the answer in a pop‑up.\n\n"
-            "📌 All questions are high‑probability topics."
-        )
-        await query.edit_message_text(txt, parse_mode="HTML",
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data="back_subjects")]]))
-        return
-    if data == "back_subjects":
-        btns = [[InlineKeyboardButton(s, callback_data=f"subj|{s}")] for s in SUBJECTS]
-        await query.edit_message_text("<b>Select a subject:</b>", reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
+        text = ("ℹ️ *Bot कैसे use करें:*\n\n"
+                "1️⃣ Subject चुनो\n2️⃣ Mode चुनो\n"
+                "3️⃣ Objective में ✅ सही = हरा, ❌ गलत = लाल + सही answer\n"
+                "📊 My Score — अपना score देखो")
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
         return
 
-    if data.startswith("subj|"):
-        subject = data.split("|")[1]
-        context.user_data["subject"] = subject
-        btns = [
-            [InlineKeyboardButton("📝 Objective (100 Q)", callback_data=f"mode|obj|{subject}")],
-            [InlineKeyboardButton("📄 2 Marks Questions (30)", callback_data=f"mode|short|{subject}")],
-            [InlineKeyboardButton("📑 5 Marks Questions (20)", callback_data=f"mode|long|{subject}")],
-            [InlineKeyboardButton("🔙 Back", callback_data="back_subjects")],
-        ]
-        await query.edit_message_text(f"<b>{subject}</b>\n\nChoose:", reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
+    if data == "score":
+        s = user_state.get(user_id, {})
+        c = s.get("total_correct", 0)
+        w = s.get("total_wrong", 0)
+        sk = s.get("total_skip", 0)
+        t = c + w + sk
+        pct = round(c/t*100) if t > 0 else 0
+        text = f"📊 *आपका Score*\n\n✅ सही: {c}\n❌ गलत: {w}\n⏭ Skip: {sk}\n📝 कुल: {t}\n🎯 Accuracy: {pct}%\n\n{'🏆 शानदार!' if pct >= 80 else '💪 और practice करो!'}"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
         return
 
-    if data.startswith("mode|"):
-        _, mode, subject = data.split("|")
-        if mode == "obj":
-            questions = SUBJECTS[subject]["obj"]
-            context.user_data["quiz"] = {"questions": questions, "index": 0, "score": 0, "total": len(questions)}
-            await send_quiz_question(query, context)
+    if data.startswith("subj_"):
+        subj = data.split("_")[1]
+        info = SUBJECTS[subj]
+        text = f"{info['name']} — *BSEB 2027*\n\n📝 Objective: {len(info['obj'])}\n✏️ 2-Mark: {len(info['s2'])}\n📖 5-Mark: {len(info['s5'])}\n\nMode चुनो 👇"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=subject_menu_keyboard(subj))
+        return
+
+    if data.startswith("mode_"):
+        parts = data.split("_")
+        subj, mode = parts[1], parts[2]
+        if user_id not in user_state: user_state[user_id] = {}
+        user_state[user_id].update({"subject": subj, "mode": mode, "q_index": 0, "session_correct": 0, "session_wrong": 0})
+        if mode == "mix":
+            mixed = SUBJECTS[subj]["obj"].copy()
+            random.shuffle(mixed)
+            user_state[user_id]["mix_questions"] = mixed
+        await send_question(query, user_id, subj, mode, 0)
+        return
+
+    if data.startswith("ans_"):
+        parts = data.split("_")
+        subj, q_idx, chosen = parts[1], int(parts[2]), int(parts[3])
+        mode = user_state.get(user_id, {}).get("mode", "obj")
+        questions = user_state.get(user_id, {}).get("mix_questions", SUBJECTS[subj]["obj"]) if mode == "mix" else SUBJECTS[subj]["obj"]
+        if q_idx >= len(questions): return
+        q = questions[q_idx]
+        correct = q["ans"]
+        keys = ["🅐", "🅑", "🅒", "🅓"]
+        if user_id not in user_state: user_state[user_id] = {}
+        if chosen == correct:
+            result = f"✅ *बिल्कुल सही!* 🎉\n\n*{keys[correct]} {q['opts'][correct]}*"
+            user_state[user_id]["total_correct"] = user_state[user_id].get("total_correct", 0) + 1
+            user_state[user_id]["session_correct"] = user_state[user_id].get("session_correct", 0) + 1
         else:
-            key = "short" if mode == "short" else "long"
-            q_list = SUBJECTS[subject][key]
-            a_list = SUBJECTS[subject][f"{key}_answers"]
-            context.user_data["list"] = {
-                "questions": q_list,
-                "answers": a_list,
-                "page": 0,
-                "per_page": 10,
-                "subject": subject,
-                "mode": mode
-            }
-            await send_list_page(query, context)
+            result = f"❌ *गलत!*\n\nतुमने चुना: {keys[chosen]} {q['opts'][chosen]}\n\n✅ *सही: {keys[correct]} {q['opts'][correct]}*"
+            user_state[user_id]["total_wrong"] = user_state[user_id].get("total_wrong", 0) + 1
+            user_state[user_id]["session_wrong"] = user_state[user_id].get("session_wrong", 0) + 1
+        sc = user_state[user_id].get("session_correct", 0)
+        sw = user_state[user_id].get("session_wrong", 0)
+        text = f"*Q{q_idx+1}.* {q['q']}\n\n{result}\n\n📊 Session: ✅{sc} ❌{sw}"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=next_keyboard(subj, mode, q_idx))
         return
 
-    if data.startswith("quiz_answer|"):
-        _, user_idx = data.split("|")
-        await handle_quiz_answer(query, context, int(user_idx))
+    if data.startswith("skip_"):
+        parts = data.split("_")
+        subj, q_idx = parts[1], int(parts[2])
+        mode = user_state.get(user_id, {}).get("mode", "obj")
+        if user_id not in user_state: user_state[user_id] = {}
+        user_state[user_id]["total_skip"] = user_state[user_id].get("total_skip", 0) + 1
+        await send_question(query, user_id, subj, mode, q_idx + 1)
         return
 
-    if data == "nextq":
-        quiz = context.user_data.get("quiz")
-        if quiz:
-            quiz["index"] += 1
-            await send_quiz_question(query, context)
+    if data.startswith("next_"):
+        parts = data.split("_")
+        subj, mode, q_idx = parts[1], parts[2], int(parts[3])
+        await send_question(query, user_id, subj, mode, q_idx + 1)
         return
 
-    if data.startswith("list_"):
-        lst = context.user_data.get("list")
-        if not lst:
+async def send_question(query, user_id, subj, mode, q_idx):
+    info = SUBJECTS[subj]
+    if mode in ("obj", "mix"):
+        questions = user_state.get(user_id, {}).get("mix_questions", info["obj"]) if mode == "mix" else info["obj"]
+        if q_idx >= len(questions):
+            sc = user_state.get(user_id, {}).get("session_correct", 0)
+            sw = user_state.get(user_id, {}).get("session_wrong", 0)
+            t = sc + sw
+            pct = round(sc/t*100) if t > 0 else 0
+            text = f"🏆 *Quiz Complete!*\n\n✅ सही: {sc}\n❌ गलत: {sw}\n🎯 Score: {pct}%\n\n{'🌟 Outstanding!' if pct >= 90 else '💪 Keep practicing!'}"
+            await query.edit_message_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔄 Again", callback_data=f"mode_{subj}_{mode}")], [InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
             return
-        if data == "list_prev":
-            if lst["page"] > 0:
-                lst["page"] -= 1
-        elif data == "list_next":
-            if (lst["page"] + 1) * lst["per_page"] < len(lst["questions"]):
-                lst["page"] += 1
-        await send_list_page(query, context)
-        return
-
-    if data.startswith("show_answer|"):
-        _, mode, idx_str = data.split("|")
-        idx = int(idx_str)
-        lst = context.user_data.get("list")
-        if lst and idx < len(lst["answers"]):
-            answer = lst["answers"][idx]
-            await query.answer(text=answer[:200] if answer else "No answer", show_alert=True)
-        return
-
-async def send_quiz_question(query, context):
-    quiz = context.user_data.get("quiz")
-    if not quiz: return
-    idx = quiz["index"]
-    if idx >= quiz["total"]:
-        score = quiz["score"]
-        total = quiz["total"]
-        text = f"✅ Quiz finished!\nScore: {score}/{total} ({score/total*100:.1f}%)"
-        btns = [
-            [InlineKeyboardButton("🔁 Retake", callback_data=f"mode|obj|{context.user_data.get('subject')}")],
-            [InlineKeyboardButton("🔙 Back", callback_data=f"subj|{context.user_data.get('subject')}")],
-        ]
-        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(btns))
-        return
-    q = quiz["questions"][idx]
-    text = f"<b>Q{idx+1}/{quiz['total']}</b>: {q['text']}"
-    letters = ["A","B","C","D"]
-    btns = []
-    for i, opt in enumerate(q["options"]):
-        btns.append([InlineKeyboardButton(f"{letters[i]}. {opt}", callback_data=f"quiz_answer|{i}")])
-    btns.append([InlineKeyboardButton("⏹️ Quit", callback_data=f"subj|{context.user_data.get('subject')}")])
-    await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
-
-async def handle_quiz_answer(query, context, user_choice):
-    quiz = context.user_data.get("quiz")
-    if not quiz: return
-    current_q = quiz["questions"][quiz["index"]]
-    correct = current_q["correct"]
-    letters = ["A","B","C","D"]
-    is_correct = (user_choice == correct)
-    if is_correct:
-        quiz["score"] += 1
-        result = "🟢 Correct!"
-    else:
-        result = f"🔴 Wrong! Correct: <b>{letters[correct]}. {current_q['options'][correct]}</b>"
-    score_line = f"Score: {quiz['score']}/{quiz['index']+1}"
-    text = f"<b>Q{quiz['index']+1}</b>: {current_q['text']}\n\n{result}\n\n{score_line}"
-    btns = [[InlineKeyboardButton("➡️ Next", callback_data="nextq")]]
-    await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
-
-async def send_list_page(query, context):
-    lst = context.user_data.get("list")
-    if not lst: return
-    page = lst["page"]
-    per = lst["per_page"]
-    start = page * per
-    end = min(start + per, len(lst["questions"]))
-    total_pages = (len(lst["questions"])-1)//per + 1
-    header = f"<b>{lst['subject']}</b> – {'2 Marks' if lst['mode']=='short' else '5 Marks'} (Page {page+1}/{total_pages})\n\n"
-    btns = []
-    for i in range(start, end):
-        label = f"Q{i+1}. {lst['questions'][i][:40]}..."
-        btns.append([InlineKeyboardButton(label, callback_data=f"show_answer|{lst['mode']}|{i}")])
-    nav = []
-    if page > 0:
-        nav.append(InlineKeyboardButton("◀️ Prev", callback_data="list_prev"))
-    if end < len(lst["questions"]):
-        nav.append(InlineKeyboardButton("Next ▶️", callback_data="list_next"))
-    if nav:
-        btns.append(nav)
-    btns.append([InlineKeyboardButton("🔙 Back", callback_data=f"subj|{lst['subject']}")])
-    await query.edit_message_text(header, reply_markup=InlineKeyboardMarkup(btns), parse_mode="HTML")
+        q = questions[q_idx]
+        text = f"{info['emoji']} *{info['name']}*\n━━━━━━━━━━━━━━━━━\n*Q{q_idx+1}/{len(questions)}*\n\n❓ {q['q']}"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=options_keyboard(q["opts"], subj, q_idx))
+    elif mode == "s2":
+        questions = info["s2"]
+        if q_idx >= len(questions):
+            await query.edit_message_text("✅ सभी 2-Mark questions देख लिए! 👏", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
+            return
+        q = questions[q_idx]
+        text = f"{info['emoji']} *{info['name']} — 2 Mark*\n━━━━━━━━━━━━━━━━━\n*{q['q']}*\n\n📝 *उत्तर:*\n{q['a']}"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("➡️ Next", callback_data=f"next_{subj}_s2_{q_idx}"), InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
+    elif mode == "s5":
+        questions = info["s5"]
+        if q_idx >= len(questions):
+            await query.edit_message_text("✅ सभी 5-Mark questions देख लिए! 👏", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
+            return
+        q = questions[q_idx]
+        text = f"{info['emoji']} *{info['name']} — 5 Mark*\n━━━━━━━━━━━━━━━━━\n*{q['q']}*\n\n📖 *विस्तृत उत्तर:*\n{q['a']}"
+        await query.edit_message_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("➡️ Next", callback_data=f"next_{subj}_s5_{q_idx}"), InlineKeyboardButton("🏠 Menu", callback_data="home")]]))
 
 def main():
+    print("🌿 BSEB 2027 Bot Starting...")
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 BSEB 2027 Bot is running... Made by DEV")
-    app.run_polling()
+    print("✅ Bot Running!")
+    app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()
+# This will be replaced
