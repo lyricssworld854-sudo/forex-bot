@@ -315,11 +315,496 @@ HIN_S5 = [
 ]
 
 
+
+# ─── ENGLISH ─────────────────────────────────────────────
+ENG_OBJ = [
+    {"q": "Who is the author of 'The Last Lesson'?", "opts": ["Alphonse Daudet", "Anees Jung", "William Douglas", "Selma Lagerlof"], "ans": 0},
+    {"q": "Central theme of 'Lost Spring':", "opts": ["Poverty and exploitation", "Education", "Sports", "Science"], "ans": 0},
+    {"q": "In 'Deep Water', the author's fear was of:", "opts": ["Water", "Fire", "Heights", "Darkness"], "ans": 0},
+    {"q": "Who is the author of 'Indigo'?", "opts": ["Louis Fischer", "Mahatma Gandhi", "Jawaharlal Nehru", "Rabindranath Tagore"], "ans": 0},
+    {"q": "Who wrote 'My Mother at Sixty-Six'?", "opts": ["Kamala Das", "Pablo Neruda", "John Keats", "Robert Frost"], "ans": 0},
+    {"q": "'Keeping Quiet' is composed by:", "opts": ["Pablo Neruda", "Kamala Das", "Robert Frost", "John Keats"], "ans": 0},
+    {"q": "'A Thing of Beauty' provides us:", "opts": ["Joy forever", "Sadness", "Pain", "Wealth"], "ans": 0},
+    {"q": "Aunt Jennifer's tigers are:", "opts": ["embroidered", "real", "painted", "carved"], "ans": 0},
+    {"q": "He ____ to school daily.", "opts": ["goes", "go", "going", "gone"], "ans": 0},
+    {"q": "Passive of 'She writes a letter':", "opts": ["A letter is written by her", "A letter was written by her", "She is written a letter", "A letter writes her"], "ans": 0},
+    {"q": "Synonym of 'happy':", "opts": ["joyful", "sad", "angry", "tired"], "ans": 0},
+    {"q": "Antonym of 'brave':", "opts": ["coward", "bold", "courageous", "fearless"], "ans": 0},
+    {"q": "Indirect speech: He said, 'I am ill.':", "opts": ["He said that he was ill", "He said that I am ill", "He says he is ill", "He told he was ill"], "ans": 0},
+    {"q": "Figure of speech in 'Life is a dream':", "opts": ["Metaphor", "Simile", "Personification", "Hyperbole"], "ans": 0},
+    {"q": "Plural of 'child':", "opts": ["children", "childs", "childes", "childrens"], "ans": 0},
+    {"q": "Protagonist of 'The Tiger King':", "opts": ["Maharaja of Pratibandapuram", "Sir James", "The astrologer", "British officer"], "ans": 0},
+    {"q": "In 'The Third Level', it led to:", "opts": ["Galesburg, 1894", "New York, 2020", "London, 1900", "Paris, 1920"], "ans": 0},
+    {"q": "Article: ___ European country:", "opts": ["A", "An", "The", "No article"], "ans": 0},
+    {"q": "Superlative of 'good':", "opts": ["gooder", "better", "best", "most good"], "ans": 2},
+    {"q": "Modal for 'possibility':", "opts": ["must", "shall", "may", "will"], "ans": 2},
+    {"q": "Present Perfect: I have ___ there.", "opts": ["went", "gone", "go", "going"], "ans": 1},
+    {"q": "Idiom 'under the weather' means:", "opts": ["outside in rain", "feeling ill", "very happy", "working hard"], "ans": 1},
+    {"q": "Biography by oneself:", "opts": ["Biography", "Autobiography", "Memoir", "Diary"], "ans": 1},
+    {"q": "Figure of speech using 'like' or 'as':", "opts": ["Metaphor", "Simile", "Personification", "Hyperbole"], "ans": 1},
+    {"q": "Gerund in 'Swimming is good':", "opts": ["is", "good", "Swimming", "health"], "ans": 2},
+    {"q": "Correct sentence:", "opts": ["He is more taller", "He is tallest", "He is taller", "He is most tallest"], "ans": 2},
+    {"q": "'Yours faithfully' when:", "opts": ["You know the person", "You don't know", "Writing to friend", "Always"], "ans": 1},
+    {"q": "Compound sentence:", "opts": ["She sings.", "She sings and dances.", "She sings because happy.", "The girl who sings."], "ans": 1},
+    {"q": "Conjunction in 'tired, but I studied':", "opts": ["was", "tired", "but", "studied"], "ans": 2},
+    {"q": "The news __ good:", "opts": ["are", "is", "were", "have been"], "ans": 1},
+    {"q": "She ____ for two hours. (correct)", "opts": ["has been studying", "is studying", "studied", "studies"], "ans": 0},
+    {"q": "Literary period of Shakespeare:", "opts": ["Victorian", "Romantic", "Elizabethan", "Modern"], "ans": 2},
+    {"q": "'Ode to a Nightingale' by:", "opts": ["Wordsworth", "Keats", "Shelley", "Byron"], "ans": 1},
+    {"q": "Correct conditional:", "opts": ["If it rains, I will stay", "If it will rain, I stay", "If it rained, I will stay", "If it rain, I stay"], "ans": 0},
+    {"q": "Correct spelling:", "opts": ["accomodation", "accommodation", "accomadation", "acomodation"], "ans": 1},
+    {"q": "'Brevity is the soul of wit' — who said:", "opts": ["Hamlet", "Polonius", "Othello", "Macbeth"], "ans": 1},
+    {"q": "Idiom 'break the ice' means:", "opts": ["break something", "end awkwardness", "cool down", "make friends"], "ans": 1},
+    {"q": "Interjection in 'Wow, what a painting!':", "opts": ["what", "beautiful", "painting", "Wow"], "ans": 3},
+    {"q": "Which is NOT a tense:", "opts": ["Present Perfect", "Past Continuous", "Future Definite", "Simple Past"], "ans": 2},
+    {"q": "Word modifying a verb:", "opts": ["Adjective", "Adverb", "Noun", "Pronoun"], "ans": 1},
+    {"q": "'A Roadside Stand' is about:", "opts": ["rural-urban divide", "nature", "love", "travel"], "ans": 0},
+    {"q": "Homophone of 'right':", "opts": ["write", "rite", "wright", "all of these"], "ans": 3},
+    {"q": "Collective noun:", "opts": ["dog", "flock", "run", "beautiful"], "ans": 1},
+    {"q": "Good __ mathematics (preposition):", "opts": ["in", "at", "on", "for"], "ans": 1},
+    {"q": "Identify: 'Will you please help me?'", "opts": ["Declarative", "Interrogative", "Imperative", "Exclamatory"], "ans": 2},
+    {"q": "Full form of CV:", "opts": ["Career Vision", "Curriculum Vitae", "Creative Vision", "Career Value"], "ans": 1},
+    {"q": "Alliteration example:", "opts": ["She sells seashells", "As brave as lion", "Life is journey", "He ran quickly"], "ans": 0},
+    {"q": "Opposite of 'optimist':", "opts": ["realist", "pessimist", "idealist", "socialist"], "ans": 1},
+    {"q": "Looking forward to __ you:", "opts": ["meet", "meeting", "met", "meets"], "ans": 1},
+    {"q": "Proper noun:", "opts": ["city", "river", "Ganga", "mountain"], "ans": 2},
+    {"q": "Question tag for 'She is smart':", "opts": ["is she?", "isn't she?", "doesn't she?", "wasn't she?"], "ans": 1},
+    {"q": "'un-' + 'happy':", "opts": ["inhappy", "unhappy", "dishappy", "mishappy"], "ans": 1},
+    {"q": "Linking verb:", "opts": ["run", "sing", "seem", "jump"], "ans": 2},
+    {"q": "Correct spelling:", "opts": ["grammer", "grammar", "gramer", "gramar"], "ans": 1},
+    {"q": "Stream of consciousness — author:", "opts": ["Charles Dickens", "Virginia Woolf", "Thomas Hardy", "Jane Austen"], "ans": 1},
+    {"q": "'We' in objective case:", "opts": ["our", "ours", "us", "ourselves"], "ans": 2},
+    {"q": "'Protagonist' means:", "opts": ["villain", "main character", "narrator", "minor character"], "ans": 1},
+    {"q": "ABAB rhyme scheme:", "opts": ["lines 1,2 rhyme; 3,4", "lines 1,3 rhyme; 2,4", "all rhyme", "no rhyme"], "ans": 1},
+    {"q": "Study of meaning in language:", "opts": ["Phonology", "Syntax", "Semantics", "Morphology"], "ans": 2},
+    {"q": "Neither of the students __ present:", "opts": ["are", "is", "were", "have been"], "ans": 1},
+    {"q": "Prefix meaning 'against':", "opts": ["pro-", "anti-", "pre-", "post-"], "ans": 1},
+    {"q": "'Catch-22' situation:", "opts": ["easy solution", "no-win situation", "lucky", "difficult"], "ans": 1},
+    {"q": "Active voice: 'A letter was written by him':", "opts": ["He writes a letter", "He wrote a letter", "He is writing", "He will write"], "ans": 1},
+    {"q": "Haiku is:", "opts": ["14-line poem", "Japanese 3-line 5-7-5", "8-line poem", "Rhyming couplet"], "ans": 1},
+    {"q": "Direct speech: She said she was tired:", "opts": ["She said, 'I am tired.'", "She said, 'She is tired.'", "She said, 'I was tired.'", "She said, 'You are tired.'"], "ans": 0},
+    {"q": "Modal showing obligation:", "opts": ["can", "may", "must", "might"], "ans": 2},
+    {"q": "'mis-' means:", "opts": ["again", "wrongly", "not", "before"], "ans": 1},
+    {"q": "There __ many students:", "opts": ["is", "are", "was", "has been"], "ans": 1},
+    {"q": "NOT a type of essay:", "opts": ["Descriptive", "Argumentative", "Persuasive", "Imaginative"], "ans": 3},
+    {"q": "Infinitive: 'She wants to dance':", "opts": ["She", "wants", "to dance", "dance"], "ans": 2},
+    {"q": "By next year, she __ degree:", "opts": ["completes", "will complete", "will have completed", "completed"], "ans": 2},
+    {"q": "'The Road Not Taken' theme:", "opts": ["War", "Nature", "Individual choice", "Death"], "ans": 2},
+    {"q": "'Verbose' means:", "opts": ["silent", "using too many words", "brief", "poetic"], "ans": 1},
+    {"q": "Subject: 'Running every day keeps fit':", "opts": ["every day", "keeps", "Running every day", "you"], "ans": 2},
+    {"q": "He is __ his father:", "opts": ["alike", "like", "likely", "likewise"], "ans": 1},
+    {"q": "First person narrative uses:", "opts": ["he/she", "I/we", "you", "they"], "ans": 1},
+    {"q": "She ____ here since 2020:", "opts": ["works", "worked", "has been working", "is working"], "ans": 2},
+    {"q": "NOT a mood in grammar:", "opts": ["Indicative", "Subjunctive", "Imperative", "Descriptive"], "ans": 3},
+    {"q": "'Empathy' means:", "opts": ["lack of feeling", "understanding others' feelings", "sympathy", "apathy"], "ans": 1},
+    {"q": "I saw him __ (correct):", "opts": ["I have seen him yesterday", "I saw him yesterday", "I had seen him yesterday", "I see him yesterday"], "ans": 1},
+    {"q": "Alliteration:", "opts": ["She sells seashells", "As brave as lion", "Life is journey", "He ran quickly"], "ans": 0},
+    {"q": "Type: 'The more you practice, better you get':", "opts": ["Simple", "Compound", "Complex", "Negative"], "ans": 2},
+    {"q": "Dangling modifier:", "opts": ["Running fast, he caught bus", "Running fast, the bus was caught", "He ran to catch bus", "Bus was caught"], "ans": 1},
+    {"q": "Reflexive pronoun:", "opts": ["Personal", "Reflexive", "Demonstrative", "Relative"], "ans": 1},
+    {"q": "'Actions speak louder than words' means:", "opts": ["Talk more", "Actions more important", "Both equal", "Words matter more"], "ans": 1},
+    {"q": "Exclamatory sentence:", "opts": ["She is smart.", "Is she smart?", "Aha! I found it!", "Be quiet."], "ans": 2},
+    {"q": "Which is conjunction:", "opts": ["beautiful", "although", "quickly", "table"], "ans": 1},
+    {"q": "'Animal Farm' was written by:", "opts": ["Aldous Huxley", "George Orwell", "H.G. Wells", "Thomas Hardy"], "ans": 1},
+    {"q": "Sonnet has how many lines:", "opts": ["12", "14", "16", "18"], "ans": 1},
+    {"q": "Personification gives __ to non-human:", "opts": ["color", "shape", "human qualities", "sound"], "ans": 2},
+    {"q": "'I enjoy reading' — gerund or infinitive:", "opts": ["infinitive", "gerund", "participle", "verb"], "ans": 1},
+    {"q": "Concrete noun:", "opts": ["love", "happiness", "table", "anger"], "ans": 2},
+    {"q": "'A stitch in time saves nine' is:", "opts": ["Metaphor", "Idiom", "Proverb", "Simile"], "ans": 2},
+    {"q": "Syllables in 'photograph':", "opts": ["2", "3", "4", "5"], "ans": 1},
+]
+
+ENG_S2 = [
+    {"q": "1. Why did William Douglas develop fear of water? (Deep Water)", "a": "As a child, a big boy threw Douglas into YMCA pool. He nearly drowned — sinking to bottom repeatedly. This traumatic experience created lifelong fear of water. He overcame it through professional swimming lessons and determination."},
+    {"q": "2. Condition of bangle makers in Firozabad? (Lost Spring)", "a": "Bangle makers worked in dark, dingy rooms near furnaces. Children worked instead of going to school. Risk of blindness due to glass dust. Trapped in debt and poverty — a vicious cycle of exploitation."},
+    {"q": "3. Why did peddler sign as Captain von Stahle? (The Rattrap)", "a": "Edla treated him with kindness, believing he was a Captain. Her goodness transformed him — he felt ashamed of theft. He returned stolen money, signing as 'Captain von Stahle' to honor her trust. Shows inner transformation through compassion."},
+    {"q": "4. What did Gandhi do for Champaran sharecroppers? (Indigo)", "a": "Gandhi organized civil disobedience. He investigated grievances, collected evidence, negotiated with British. Won 25% refund for farmers. Established schools in villages. India's first successful civil disobedience movement."},
+    {"q": "5. Poet's mother's appearance in 'My Mother at Sixty-Six'.", "a": "Mother's face: ashen like corpse, pale as late winter's moon. Mouth open, eyes closed. The familiar childhood fear of losing mother returned to the poet. Reflects aging and fear of separation."},
+    {"q": "6. What does poet ask in 'Keeping Quiet'?", "a": "Pablo Neruda asks everyone to stop all activity for one moment. Not speak any language. Not move arms so much. Purpose: create stillness and mutual understanding. Message: silence prevents war and harm."},
+    {"q": "7. Why is a thing of beauty joy forever? (A Thing of Beauty)", "a": "According to Keats, beauty never fades from memory. It removes sadness and gives hope. Examples: sun, moon, trees, flowers, rivers. Beauty uplifts the human spirit — hence 'a joy forever'."},
+    {"q": "8. What are Aunt Jennifer's tigers doing?", "a": "Tigers are prancing across embroidered screen. Bright topaz, fearless, not afraid of men. Moving with ease under trees. Symbolism: represent freedom Aunt Jennifer desires but cannot have due to oppressive marriage."},
+    {"q": "9. Format of report writing.", "a": "1. Headline — catchy
+2. Byline — By [Reporter]
+3. Place, Date
+4. Opening — 5W1H
+5. Body — details
+6. Conclusion
+Language: Third person, Past tense, Factual"},
+    {"q": "10. Theme of 'The Third Level'.", "a": "Theme: Escape from stress. Third level represents wish to return to simpler past (1894). Charley uses imagination as escape. Story explores thin line between reality and fantasy."},
+    {"q": "11. Change voice: 'The boy is flying a kite.'", "a": "Active: The boy is flying a kite.
+Passive: A kite is being flown by the boy.
+Formula: Object + is/am/are + being + V3 + by + Subject"},
+    {"q": "12. Write letter to editor about stray dogs.", "a": "To,
+The Editor,
+[Newspaper]
+Sir,
+I wish to draw attention to menace of stray dogs. Several people bitten recently.
+I urge municipal authorities for immediate action.
+Yours faithfully,
+[Name]"},
+    {"q": "13. Explain: 'Actions speak louder than words.'", "a": "Meaning: What we do is more important than what we say.
+Anyone can make promises. True character shown by actions. A helpful deed is better than kind words."},
+    {"q": "14. Types of sentences with examples.", "a": "Simple: She sings.
+Compound: She sings and dances.
+Complex: She sings because she is happy.
+Declarative, Interrogative, Imperative, Exclamatory."},
+    {"q": "15. Conditional sentences with types.", "a": "Type 0: If you heat ice, it melts.
+Type 1: If it rains, I will stay.
+Type 2: If I were rich, I would help.
+Type 3: If I had studied, I would have passed."},
+    {"q": "16. What is Precis Writing?", "a": "Summary in 1/3 length. Read twice, identify main ideas, write in own words, third person, give title. No direct speech."},
+    {"q": "17. Use of Modals.", "a": "Can: ability, Could: past ability
+May: permission, Might: possibility
+Must: obligation, Should: advice
+Would: conditional, Shall: formal future"},
+    {"q": "18. Character of rattrap peddler.", "a": "Poor, homeless, philosophical (sees world as rattrap). Initially dishonest — steals from crofter. Transformed by Edla's kindness. Returns money, signs as Captain. Theme: goodness transforms people."},
+    {"q": "19. Draft notice for blood donation camp.", "a": "NOTICE
+XYZ School | [Date]
+BLOOD DONATION CAMP
+All students above 18 invited. Date: [date], School Hall, 10AM-2PM.
+[Name]
+Head Boy/Girl"},
+    {"q": "20. Message of 'The Last Lesson'.", "a": "Never take language and culture for granted. M. Hamel shows value of mother tongue. Patriotism and cultural pride. 'Language is the key to prison of enslaved people.'"},
+    {"q": "21. 'The Road Not Taken' by Robert Frost.", "a": "Theme: Individual choices in life. Speaker chooses less-traveled road. Symbolism: roads = life choices. Message: our choices define future. Have courage to be different."},
+    {"q": "22. Gerunds and Infinitives.", "a": "Gerund (V+ing): Swimming is healthy. I enjoy reading.
+Infinitive (to+V1): I go to study. Happy to help.
+Verbs+gerund: enjoy, avoid. Verbs+infinitive: want, decide."},
+    {"q": "23. Degrees of Comparison.", "a": "Positive: tall. Comparative: taller. Superlative: tallest.
+Irregular: good-better-best, bad-worse-worst.
+1 syllable: -er/-est. 2+ syllables: more/most."},
+    {"q": "24. Write formal email format.", "a": "To: [email]
+Subject: [specific]
+Dear Sir/Madam,
+I am writing to [purpose].
+[Content]
+Yours sincerely,
+[Name, Designation]"},
+    {"q": "25. Stream of consciousness.", "a": "Literary technique depicting continuous flow of thoughts. Features: inner monologue, non-linear, psychological realism. Authors: Virginia Woolf (Mrs. Dalloway), James Joyce (Ulysses)."},
+    {"q": "26. Subject-Verb Agreement.", "a": "Singular subject → singular verb: The dog barks.
+Plural → plural: The dogs bark.
+Collective: usually singular. Either/Neither: singular.
+News/Furniture: singular."},
+    {"q": "27. Direct and Indirect Speech.", "a": "Direct: He said, 'I am happy.'
+Indirect: He said that he was happy.
+Rules: Remove quotes, add 'that', change pronouns and tenses."},
+    {"q": "28. Character of Dr. Sadao in 'The Enemy'.", "a": "Dedicated doctor, patriotic but humane. Saves American soldier despite risk. Conflict: duty vs medical oath. Message: humanity transcends nationalism."},
+    {"q": "29. Speech on 'Clean India, Green India'.", "a": "Respected audience,
+Swachh Bharat Abhiyan launched 2014. Actions: avoid plastic, plant trees, proper waste disposal. Gandhi: 'Cleanliness is next to Godliness.' Let us make India clean and green!
+Thank you!"},
+    {"q": "30. Active and Passive Voice rules.", "a": "Active: Subject does action — She writes.
+Passive: Object becomes subject — A letter is written.
+Formulas:
+Simple Present: is/am/are + V3
+Simple Past: was/were + V3
+Future: will + be + V3"},
+]
+
+ENG_S5 = [
+    {"q": "1. Describe Douglas's experience in 'Deep Water' and how he overcame fear.", "a": "Young Douglas thrown into YMCA pool by big boy. Nearly drowned — sinking repeatedly. Traumatized for years.
+Overcoming: Hired professional instructor. Practiced gradually — legs, arms, breathing. Tested in rivers. Conquered fear through determination.
+Message: Fear can be overcome through courage. 'In death there is life.'"},
+    {"q": "2. Analyse 'Lost Spring' — poverty and exploitation.", "a": "Saheb: ragpicker from Bangladesh — lost spring (fields). Works at tea stall — loses freedom. Dream: play tennis.
+Mukesh: bangle maker — hazardous conditions, blindness risk. Dream: mechanic.
+Exploitation: child labor, debt trap, sahukars, police.
+Theme: Spring = hope lost to poverty. Must break chain of exploitation."},
+    {"q": "3. Character sketch of rattrap peddler.", "a": "Shabby, poor, philosophical — sees world as rattrap.
+Moral weakness: steals 30 kronors. Gets lost = trapped like rat!
+Transformation: Edla's kindness and dignity changes him. Returns money, signs as 'Captain von Stahle'.
+Theme: Compassion can transform even morally fallen person."},
+    {"q": "4. Theme of 'Keeping Quiet' and relevance today.", "a": "Theme: Peace through stillness.
+Poet asks: stop all activity, no language, no movement, no engines.
+Result: understanding, end to wars, harmony with nature.
+Relevance: Wars, terrorism, environmental destruction. Social media noise — we need silence and reflection.
+Conclusion: Pause, reflect, find peace within."},
+    {"q": "5. Essay: 'Importance of Education in Modern India'.", "a": "Nelson Mandela: 'Education is most powerful weapon.'
+NEP 2020 — revolutionary reforms. 77% literacy.
+Importance: Development, social change, critical thinking, women empowerment.
+Challenges: Rural-urban divide, drop-out rates.
+Solutions: Digital classrooms, skill-based education.
+Conclusion: Quality education for every child must be India's mission."},
+    {"q": "6. Report on 'Science Exhibition in Your School'.", "a": "ANNUAL SCIENCE EXHIBITION
+XYZ School | [Date]
+Over 200 students with 85 projects. First prize: solar water purifier (Class 12). Earthquake predictor amazed visitors. AI applications demonstrated.
+Chief Guest praised creativity. Principal congratulated participants.
+Conclusion: Indian students ready to lead world in science."},
+    {"q": "7. Discuss 'Aunt Jennifer's Tigers' — plight of women.", "a": "Surface: Aunt Jennifer embroiders tigers while in difficult marriage.
+Tigers: bright, fearless, free — represent her desired freedom.
+Aunt Jennifer: fingers fluttering, 'weight of wedding band' — oppressed.
+Irony: Tigers free; Aunt Jennifer trapped. Even after death, 'ringed with ordeals'.
+Theme: Patriarchal oppression. Women must express themselves freely."},
+    {"q": "8. Letter to Municipal Commissioner about poor drainage.", "a": "To,
+Municipal Commissioner,
+[Address]
+Subject: Poor Drainage in [Area]
+Respected Sir,
+Water logging occurs every rainfall. Mosquitoes, impassable roads, unhygienic conditions.
+Requests: Desilting, proper drainage construction, regular maintenance.
+Yours faithfully,
+[Name, Address]"},
+    {"q": "9. Explain poetic devices in 'My Mother at Sixty-Six'.", "a": "Simile: 'face ashen like corpse', 'pale as winter moon'
+Imagery: 'young trees sprinting', 'merry children spilling'
+Transferred Epithet: 'familiar ache'
+Repetition: 'smile and smile and smile' — masked grief
+Symbolism: winter moon = decline; young trees = hope
+Theme: Fear of losing aging mother. Love and separation."},
+    {"q": "10. Article: 'Role of Youth in Nation Building'.", "a": "India: 65% below 35 — our greatest asset.
+Contributions:
+1. Education: develop skills and values
+2. Innovation: startups, research
+3. Social responsibility: vote, volunteer
+4. Character: integrity, hard work
+5. Environment: fight climate change
+Mandela: 'Education is most powerful weapon.'
+Conclusion: Pledge to be responsible citizens!"},
+]
+
+# ─── MATHEMATICS ─────────────────────────────────────────
+MAT_OBJ = [
+    {"q": "f(x) = x²+1, f(-1) =", "opts": ["2", "1", "0", "-1"], "ans": 0},
+    {"q": "sin⁻¹(1/2) =", "opts": ["π/6", "π/3", "π/4", "π/2"], "ans": 0},
+    {"q": "A=[[1,2],[3,4]], |A| =", "opts": ["-2", "2", "10", "-10"], "ans": 0},
+    {"q": "d/dx(sin x) =", "opts": ["cos x", "-cos x", "sin x", "-sin x"], "ans": 0},
+    {"q": "∫x dx =", "opts": ["x²/2+C", "x²+C", "2x²+C", "x³/3+C"], "ans": 0},
+    {"q": "∫₀¹ x² dx =", "opts": ["1/3", "1/2", "1", "2"], "ans": 0},
+    {"q": "f(x)=x² निम्नतम है:", "opts": ["x=0 पर", "x=1 पर", "x=-1 पर", "x=2 पर"], "ans": 0},
+    {"q": "d/dx(eˣ) =", "opts": ["eˣ", "xeˣ", "eˣ/x", "1/x"], "ans": 0},
+    {"q": "d/dx(log x) =", "opts": ["1/x", "x", "eˣ", "log x"], "ans": 0},
+    {"q": "∫cos x dx =", "opts": ["sin x+C", "-sin x+C", "cos x+C", "-cos x+C"], "ans": 0},
+    {"q": "î·ĵ =", "opts": ["0", "1", "-1", "k̂"], "ans": 0},
+    {"q": "î×ĵ =", "opts": ["k̂", "0", "1", "-k̂"], "ans": 0},
+    {"q": "सिक्के पर चित की प्रायिकता:", "opts": ["1/2", "1/3", "1/4", "1"], "ans": 0},
+    {"q": "पासे पर सम संख्या की प्रायिकता:", "opts": ["1/2", "1/3", "1/6", "2/3"], "ans": 0},
+    {"q": "P(A|B) =", "opts": ["P(A∩B)/P(B)", "P(A∩B)", "P(A)", "P(B)/P(A∩B)"], "ans": 0},
+    {"q": "sin²θ+cos²θ =", "opts": ["0", "1", "2", "-1"], "ans": 1},
+    {"q": "d/dx(xⁿ) =", "opts": ["nxⁿ", "nx^(n-1)", "x^(n-1)/n", "(n-1)xⁿ"], "ans": 1},
+    {"q": "e⁰ =", "opts": ["0", "1", "e", "∞"], "ans": 1},
+    {"q": "f(x)=x², f'(x) =", "opts": ["x", "2x", "x²", "2x²"], "ans": 1},
+    {"q": "P(A∪B) जब P(A)=0.4,P(B)=0.5,P(A∩B)=0.2:", "opts": ["0.7", "0.9", "0.1", "0.3"], "ans": 0},
+    {"q": "nC₀ =", "opts": ["n", "0", "1", "n!"], "ans": 2},
+    {"q": "nPr =", "opts": ["n!/(n-r)!", "n!/r!", "n!/(r!(n-r)!)", "r!/n!"], "ans": 0},
+    {"q": "AP का n वाँ पद:", "opts": ["a+(n-1)d", "a+nd", "a-(n-1)d", "nd"], "ans": 0},
+    {"q": "GP अनन्त पदों का योग (|r|<1):", "opts": ["a/(1-r)", "a/(1+r)", "a(1-r)", "ar"], "ans": 0},
+    {"q": "रेखा y=mx+c का ढाल:", "opts": ["c", "m", "x", "y"], "ans": 1},
+    {"q": "lim(x→0) sinx/x =", "opts": ["0", "1", "∞", "-1"], "ans": 1},
+    {"q": "3×2 आव्यूह में तत्त्व:", "opts": ["3", "2", "5", "6"], "ans": 3},
+    {"q": "∫1/x dx =", "opts": ["x+C", "log|x|+C", "1/x²+C", "-1/x+C"], "ans": 1},
+    {"q": "d/dx(tan x) =", "opts": ["sec x", "sec²x", "cosec²x", "-cosec²x"], "ans": 1},
+    {"q": "A⁻¹ तब जब:", "opts": ["|A|=0", "|A|≠0", "A=I", "A=0"], "ans": 1},
+    {"q": "समतलीय सदिशों में A·(B×C):", "opts": ["1", "|A||B||C|", "0", "∞"], "ans": 2},
+    {"q": "लम्बवत् सदिशों का डॉट गुणनफल:", "opts": ["|A||B|", "0", "1", "-1"], "ans": 1},
+    {"q": "LPP में इष्टतम हल:", "opts": ["किसी भी बिंदु", "मूल बिंदु", "कोने के बिंदु", "मध्य बिंदु"], "ans": 2},
+    {"q": "f''(c)>0 तो x=c पर:", "opts": ["उच्चतम", "निम्नतम", "विभक्ति", "अपरिभाषित"], "ans": 1},
+    {"q": "द्विपद बंटन का माध्य:", "opts": ["np", "npq", "√(npq)", "p/n"], "ans": 0},
+    {"q": "∫sec²x dx =", "opts": ["sec x+C", "tan x+C", "-cot x+C", "sec x tan x+C"], "ans": 1},
+    {"q": "∫tan x dx =", "opts": ["sec²x+C", "log|cos x|+C", "-log|cos x|+C", "log|sec x|+C"], "ans": 2},
+    {"q": "cos(A+B) =", "opts": ["cosAcosB+sinAsinB", "cosAcosB-sinAsinB", "sinAcosB+cosAsinB", "sinAcosB-cosAsinB"], "ans": 1},
+    {"q": "0! =", "opts": ["0", "1", "अपरिभाषित", "∞"], "ans": 1},
+    {"q": "sin(-θ) =", "opts": ["sinθ", "-sinθ", "cosθ", "-cosθ"], "ans": 1},
+    {"q": "d/dx(sin⁻¹x) =", "opts": ["1/√(1-x²)", "-1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)"], "ans": 0},
+    {"q": "d/dx(tan⁻¹x) =", "opts": ["1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)", "1/√(1+x²)"], "ans": 1},
+    {"q": "|3 2; 1 4| =", "opts": ["10", "14", "11", "12"], "ans": 0},
+    {"q": "x-अक्ष का समीकरण:", "opts": ["x=0", "y=0", "z=0", "x=y"], "ans": 1},
+    {"q": "सममित आव्यूह में:", "opts": ["aᵢⱼ=aⱼᵢ", "aᵢⱼ=-aⱼᵢ", "aᵢⱼ=0", "aᵢⱼ=1"], "ans": 0},
+    {"q": "MVT में f'(c) =", "opts": ["f(b)-f(a)", "f(b)+f(a)", "[f(b)-f(a)]/(b-a)", "f(a)/f(b)"], "ans": 2},
+    {"q": "∫₀^π sin x dx =", "opts": ["0", "1", "2", "π"], "ans": 2},
+    {"q": "dy/dx=y का हल:", "opts": ["y=x+C", "y=Ceˣ", "y=eˣ+C", "y=Cx"], "ans": 1},
+    {"q": "समतल ax+by+cz+d=0 का अभिलम्ब:", "opts": ["(d,0,0)", "(a,b,c)", "(b,c,d)", "(a,b,d)"], "ans": 1},
+    {"q": "दिशा कोज्याएँ: l²+m²+n² =", "opts": ["0", "1", "2", "3"], "ans": 1},
+    {"q": "A×A =", "opts": ["|A|²", "A²", "0", "2A"], "ans": 2},
+    {"q": "f'(x)>0 तो f वर्धमान:", "opts": ["हाँ", "नहीं", "कभी-कभी", "कभी नहीं"], "ans": 0},
+    {"q": "परवलय y²=4ax का फोकस:", "opts": ["(0,a)", "(a,0)", "(-a,0)", "(0,-a)"], "ans": 1},
+    {"q": "वृत्त की उत्केन्द्रता:", "opts": ["0", "1", ">1", "<1"], "ans": 0},
+    {"q": "दीर्घवृत्त की उत्केन्द्रता:", "opts": ["e=0", "e=1", "0<e<1", "e>1"], "ans": 2},
+    {"q": "अतिपरवलय की उत्केन्द्रता:", "opts": ["e=0", "e=1", "0<e<1", "e>1"], "ans": 3},
+    {"q": "f(x)=√x का प्रान्त:", "opts": ["R", "R-{0}", "[0,∞)", "(0,∞)"], "ans": 2},
+    {"q": "sinx का परिसर:", "opts": ["R", "[0,1]", "[-1,1]", "(0,1)"], "ans": 2},
+    {"q": "[a b; c d] का सहखण्डज:", "opts": ["[d -b; -c a]", "[a c; b d]", "[d b; c a]", "[-d b; c -a]"], "ans": 0},
+    {"q": "श्रृंखला नियम:", "opts": ["f'(x)·g'(x)", "f'(g(x))·g'(x)", "f(g'(x))", "f'(x)/g'(x)"], "ans": 1},
+    {"q": "f'(c)=0, f''(c)<0 तो:", "opts": ["निम्नतम", "उच्चतम", "विभक्ति", "अपरिभाषित"], "ans": 1},
+    {"q": "0 ≤ P(E) ≤", "opts": ["0", "0.5", "1", "∞"], "ans": 2},
+    {"q": "n वस्तुओं की व्यवस्था:", "opts": ["n", "n²", "n!", "(n-1)!"], "ans": 2},
+    {"q": "समान्तर माध्य of a,b:", "opts": ["a+b", "(a+b)/2", "√(ab)", "2ab/(a+b)"], "ans": 1},
+    {"q": "गुणोत्तर माध्य of a,b:", "opts": ["(a+b)/2", "√(ab)", "2ab/(a+b)", "a+b"], "ans": 1},
+    {"q": "AP के n पदों का योग:", "opts": ["GP", "AP", "HP", "AGP"], "ans": 1},
+    {"q": "स्वतंत्र घटनाओं के लिए P(A∩B):", "opts": ["P(A)+P(B)", "P(A)-P(B)", "P(A)·P(B)", "P(A)/P(B)"], "ans": 2},
+    {"q": "विषम-सममित आव्यूह:", "opts": ["aᵢⱼ=aⱼᵢ", "aᵢⱼ=-aⱼᵢ", "A=Aᵀ", "A=I"], "ans": 1},
+    {"q": "∫dx/(1+x²) =", "opts": ["sin⁻¹x+C", "tan⁻¹x+C", "cos⁻¹x+C", "sec⁻¹x+C"], "ans": 1},
+    {"q": "∫dx/√(1-x²) =", "opts": ["sin⁻¹x+C", "tan⁻¹x+C", "cos⁻¹x+C", "-cos⁻¹x+C"], "ans": 0},
+    {"q": "dy/dx+Py=Q का IF:", "opts": ["e^P", "e^∫P dx", "e^Q", "P/Q"], "ans": 1},
+    {"q": "बेज प्रमेय:", "opts": ["योग प्रायिकता", "सप्रतिबंध", "गुणन", "स्वतंत्र"], "ans": 1},
+    {"q": "σ = ?", "opts": ["σ²", "√variance", "Σxi/n", "Σfi·xi"], "ans": 1},
+    {"q": "sin 30° =", "opts": ["√3/2", "1/2", "1/√2", "1"], "ans": 1},
+    {"q": "cos 60° =", "opts": ["√3/2", "1/2", "1/√2", "0"], "ans": 1},
+    {"q": "tan 45° =", "opts": ["0", "1/√2", "1", "√3"], "ans": 2},
+    {"q": "sin 90° =", "opts": ["0", "1/2", "√3/2", "1"], "ans": 3},
+    {"q": "cos(2θ) =", "opts": ["2sinθcosθ", "cos²θ-sin²θ", "1-2sin²θ", "(B) और (C) दोनों"], "ans": 3},
+    {"q": "A×B=0 जब:", "opts": ["लम्बवत्", "समान्तर", "इकाई", "शून्य"], "ans": 1},
+    {"q": "दो बिंदुओं के बीच दूरी:", "opts": ["(x₂-x₁)+(y₂-y₁)", "√[(x₂-x₁)²+(y₂-y₁)²]", "(x₂-x₁)²+(y₂-y₁)²", "√(x₂²+y₂²)"], "ans": 1},
+    {"q": "x^x का अवकलन:", "opts": ["x^x", "x^(x-1)", "x^x(1+logx)", "x·x^(x-1)"], "ans": 2},
+    {"q": "रोले: f'(c) =", "opts": ["1", "0", "f(a)", "f(b)"], "ans": 1},
+    {"q": "(a+b)^n का व्यापक पद:", "opts": ["nCr·a^r·b^(n-r)", "nCr·a^(n-r)·b^r", "nCr·a^n·b^n", "nCr·a^n/b^r"], "ans": 1},
+    {"q": "तीन बिंदुओं की समरेखता:", "opts": ["|A|=0", "|A|≠0", "|A|=1", "|A|=-1"], "ans": 0},
+    {"q": "f(x)=|x|, x=0 पर:", "opts": ["अवकलनीय", "अवकलनीय नहीं", "केवल दाईं", "केवल बाईं"], "ans": 1},
+    {"q": "sinx का अधिकतम मान:", "opts": ["0", "π/2", "1", "∞"], "ans": 2},
+    {"q": "y=f(x) से x=a to b क्षेत्रफल:", "opts": ["∫f(x)dx", "∫ₐᵇf(x)dx", "f(b)-f(a)", "f'(x)"], "ans": 1},
+    {"q": "Binomial: (a+b)^n में nC₀ =", "opts": ["0", "1", "n", "n!"], "ans": 1},
+    {"q": "f(x) अवकलनीय → f(x):", "opts": ["हमेशा संतत", "कभी संतत नहीं", "कभी-कभी", "अपरिभाषित"], "ans": 0},
+    {"q": "इकाई आव्यूह I का सारणिक:", "opts": ["0", "1", "-1", "n"], "ans": 1},
+    {"q": "समान्तर रेखाओं की दिशा:", "opts": ["लम्बवत्", "समान", "अलग", "विपरीत"], "ans": 1},
+    {"q": "सदिश a=2î+3ĵ+4k̂ का परिमाण:", "opts": ["√29", "29", "√20", "9"], "ans": 0},
+    {"q": "∫₀^(π/2) sinx dx =", "opts": ["0", "1", "2", "π/2"], "ans": 1},
+    {"q": "d/dx(cos x) =", "opts": ["sin x", "-sin x", "cos x", "-cos x"], "ans": 1},
+]
+
+MAT_S2 = [
+    {"q": "1. एकैकी एवं आच्छादक फलनों में अन्तर।", "a": "एकैकी: f(x₁)=f(x₂) → x₁=x₂
+आच्छादक: codomain का हर element image है
+Bijective = दोनों
+उदा: f(x)=2x+1 bijective है R→R पर"},
+    {"q": "2. आव्यूह A=[[2,3],[1,2]] का व्युत्क्रम।", "a": "|A|=2×2-3×1=1
+adj(A)=[[2,-3],[-1,2]]
+A⁻¹=[[2,-3],[-1,2]]
+जाँच: A·A⁻¹=I ✓"},
+    {"q": "3. गुणनफल नियम सिद्ध कीजिए।", "a": "d/dx[fg]=f'g+fg'
+सिद्धान्त: lim से
+= f(x)g'(x)+g(x)f'(x)
+उदा: d/dx[x²sinx]=2x sinx+x²cosx"},
+    {"q": "4. f(x)=x³-3x के चरम बिन्दु।", "a": "f'(x)=3x²-3=3(x-1)(x+1)
+x=1,-1
+f''(1)=6>0 → निम्नतम, f(1)=-2
+f''(-1)=-6<0 → उच्चतम, f(-1)=2"},
+    {"q": "5. ∫x sinx dx का मान।", "a": "u=x, v=sinx
+∫x sinx dx = x(-cosx)-∫(-cosx)dx
+=-x cosx + sinx + C"},
+    {"q": "6. रोले एवं मध्यमान प्रमेय।", "a": "रोले: f(a)=f(b) → ∃c: f'(c)=0
+MVT: ∃c: f'(c)=[f(b)-f(a)]/(b-a)
+ज्यामितीय: जीवा का ढाल = स्पर्श रेखा का ढाल"},
+    {"q": "7. सारणिक के गुणधर्म।", "a": "(1)|Aᵀ|=|A| (2)समान पंक्ति→0
+(3)k गुणा→k|A| (4)पंक्ति बदलने पर चिह्न
+(5)|AB|=|A||B| (6)पंक्ति जोड़→|A| same"},
+    {"q": "8. प्रायिकता का योग प्रमेय।", "a": "P(A∪B)=P(A)+P(B)-P(A∩B)
+परस्पर अपवर्जी: P(A∩B)=0
+उदा: 0.3+0.4-0.1=0.6"},
+    {"q": "9. ∫₁² x dx =", "a": "[x²/2]₁² = 4/2-1/2 = 3/2 = 1.5"},
+    {"q": "10. बेज प्रमेय।", "a": "P(Aᵢ|B)=P(Aᵢ)·P(B|Aᵢ)/Σ P(Aⱼ)·P(B|Aⱼ)
+उदा: Box I: 3R,4W; Box II: 4R,3W
+P(I|R)=(1/2×3/7)/(1/2×3/7+1/2×4/7)=3/7"},
+    {"q": "11. LPP के घटक और विधि।", "a": "घटक: चर, उद्देश्य फलन Z=ax+by, अवरोध, x,y≥0
+विधि: सुसंगत क्षेत्र → कोने के बिंदु → Z का मान → इष्टतम"},
+    {"q": "12. ∫eˣ sinx dx =", "a": "I = eˣsinx - ∫eˣcosx dx
+= eˣsinx - eˣcosx - I
+2I = eˣ(sinx-cosx)
+I = eˣ(sinx-cosx)/2 + C"},
+    {"q": "13. अवकल समीकरण का क्रम और घात।", "a": "क्रम: उच्चतम अवकलज का क्रम
+घात: उच्चतम अवकलज की घात
+dy/dx=y → क्रम=1, घात=1, हल: y=Ceˣ"},
+    {"q": "14. स्थिति सदिश और एकांक सदिश।", "a": "स्थिति सदिश: →OP=xî+yĵ+zk̂, |OP|=√(x²+y²+z²)
+एकांक सदिश: â=→a/|→a|, परिमाण=1
+î,ĵ,k̂ एकांक सदिश"},
+    {"q": "15. क्रमचय और संचय में अंतर।", "a": "क्रमचय nPr: क्रम मायने, n!/(n-r)!
+संचय nCr: क्रम नहीं, n!/[r!(n-r)!]
+nPr = r! × nCr
+उदा: 5P3=60, 5C3=10"},
+    {"q": "16. द्वितीय अवकलज परीक्षण।", "a": "f'(x)=0 → क्रांतिक बिंदु c
+f''(c)>0 → निम्नतम
+f''(c)<0 → उच्चतम
+f''(c)=0 → अनिर्णायक"},
+    {"q": "17. निश्चित समाकलन के गुणधर्म।", "a": "(1)∫ₐᵇ=-∫ᵦᵃ (2)∫ₐᵃ=0
+(3)∫ₐᵇ=∫ₐᶜ+∫ᶜᵇ
+(4)∫ₐᵇf(x)=∫ₐᵇf(a+b-x)
+(5)सम फलन: ∫₋ₐᵃ=2∫₀ᵃ"},
+    {"q": "18. समतल का समीकरण।", "a": "सामान्य: ax+by+cz+d=0
+सदिश: →r·→n=d
+अन्तःखण्ड: x/a+y/b+z/c=1
+दूरी: |ax₁+by₁+cz₁+d|/√(a²+b²+c²)"},
+    {"q": "19. द्विपद बंटन।", "a": "P(X=r)=nCr·pʳ·(1-p)^(n-r)
+माध्य=np
+प्रसरण=npq
+उदा: n=10,p=0.5 → μ=5, σ²=2.5"},
+    {"q": "20. वर्धमान और ह्रासमान फलन।", "a": "वर्धमान: f'(x)>0
+ह्रासमान: f'(x)<0
+f(x)=x²: x>0 पर वर्धमान, x<0 पर ह्रासमान"},
+    {"q": "21. प्रथम कोटि रैखिक अवकल समीकरण।", "a": "dy/dx+Py=Q
+IF=e^∫P dx
+d/dx[y·IF]=Q·IF
+y·IF=∫Q·IF dx+C
+उदा: dy/dx+y=eˣ → IF=eˣ → y=eˣ/2+Ce⁻ˣ"},
+    {"q": "22. सप्रतिबंध प्रायिकता।", "a": "P(A|B)=P(A∩B)/P(B)
+गुणन: P(A∩B)=P(B)·P(A|B)
+स्वतंत्र: P(A|B)=P(A)
+P(A∩B)=P(A)·P(B)"},
+    {"q": "23. x^x का अवकलन।", "a": "y=x^x → log y=x log x
+(1/y)dy/dx=1+log x
+dy/dx=x^x(1+log x)"},
+    {"q": "24. दो रेखाओं में न्यूनतम दूरी।", "a": "समान्तर: d=|(→a₂-→a₁)×→b|/|→b|
+विकर्ण: d=|(→a₂-→a₁)·(→b₁×→b₂)|/|→b₁×→b₂|"},
+    {"q": "25. क्रेमर नियम।", "a": "D=|A|, D₁,D₂ = आव्यूह
+x=D₁/D, y=D₂/D (D≠0)
+D=0,D₁=D₂=0 → अनंत हल
+D=0, कोई Dᵢ≠0 → हल नहीं"},
+    {"q": "26. समाकलन से क्षेत्रफल: y=x², 0 से 3।", "a": "A=∫₀³x² dx=[x³/3]₀³=27/3=9 वर्ग इकाई
+सूत्र: A=|∫ₐᵇf(x)dx|"},
+    {"q": "27. तुल्यता संबंध।", "a": "तुल्यता: स्वतुल्य+सममित+संक्रामक
+उदा: 'समान आयु' — तीनों शर्तें ✓"},
+    {"q": "28. मानक विचलन।", "a": "σ=√[Σ(xᵢ-x̄)²/n]
+प्रसरण=σ²
+उदा: 2,4,6 → x̄=4, σ²=8/3"},
+    {"q": "29. sin⁻¹x+cos⁻¹x=π/2 सिद्ध।", "a": "sin⁻¹x=θ → x=sinθ
+cos⁻¹x=π/2-θ (क्योंकि sin(π/2-θ)=x)
+∴ sin⁻¹x+cos⁻¹x=θ+(π/2-θ)=π/2 ✓"},
+    {"q": "30. रेखा का सदिश और कार्तीय समीकरण।", "a": "बिंदु(x₁,y₁,z₁), दिशा(a,b,c):
+सदिश: →r=→a+λ→b
+कार्तीय: (x-x₁)/a=(y-y₁)/b=(z-z₁)/c"},
+]
+
+MAT_S5 = [
+    {"q": "1. sinx का प्रथम सिद्धान्त से अवकलज।", "a": "f'(x)=lim[sin(x+h)-sinx]/h
+=lim[2cos(x+h/2)sin(h/2)]/h
+=cos(x+h/2)·[sin(h/2)/(h/2)]
+h→0: cosx·1 = cosx ✓"},
+    {"q": "2. आव्यूह विधि से 2x+3y=5, x+2y=3 हल।", "a": "A=[[2,3],[1,2]], B=[[5],[3]]
+|A|=1, A⁻¹=[[2,-3],[-1,2]]
+X=A⁻¹B=[[1],[1]]
+x=1, y=1 ✓"},
+    {"q": "3. f(x)=x³-6x²+9x+15 के उच्चतम/निम्नतम।", "a": "f'(x)=3x²-12x+9=3(x-1)(x-3)
+x=1: f''(1)=-6<0 → उच्चतम, f(1)=19
+x=3: f''(3)=6>0 → निम्नतम, f(3)=15"},
+    {"q": "4. dy/dx+2y=e^(-x) हल।", "a": "IF=e^(2x)
+d/dx[y·e^(2x)]=eˣ
+y·e^(2x)=eˣ+C
+y=e^(-x)+Ce^(-2x) ✓"},
+    {"q": "5. बेज प्रमेय — सिद्धान्त और उदाहरण।", "a": "P(Aᵢ|B)=P(Aᵢ)P(B|Aᵢ)/ΣP(Aⱼ)P(B|Aⱼ)
+I:3R,4W; II:4R,3W; P(I)=P(II)=1/2
+P(I|R)=(3/14)/(3/14+4/14)=3/7"},
+    {"q": "6. LPP — कुर्सी और मेज समस्या।", "a": "Z=100x+300y (max)
+2x+y≤40, x+3y≤45, x,y≥0
+कोने: O(0,0)=0, A(20,0)=2000
+B(15,10)=4500, C(0,15)=4500
+Z_max=₹4500"},
+    {"q": "7. अवकलन नियम।", "a": "श्रृंखला: d/dx[f(g(x))]=f'(g(x))·g'(x)
+गुणनफल: d/dx[fg]=f'g+fg'
+भागफल: d/dx[f/g]=(f'g-fg')/g²"},
+    {"q": "8. ∫₀^(π/2) log(sinx) dx।", "a": "I=∫₀^(π/2) log(sinx)dx
+गुणधर्म: I=∫₀^(π/2) log(cosx)dx
+2I=∫log(sin2x/2)dx
+I=-(π/2)log2"},
+    {"q": "9. 3D ज्यामिति — रेखा और समतल।", "a": "रेखा: →r=→a+λ→b, (x-x₁)/a=(y-y₁)/b=(z-z₁)/c
+समतल: ax+by+cz+d=0
+कोण (रेखा-समतल): sinθ=|→b·→n|/|→b||→n|
+कोण (दो समतल): cosθ=|→n₁·→n₂|/|→n₁||→n₂|"},
+    {"q": "10. वृत्त x²+y²=a² का क्षेत्रफल।", "a": "A=4∫₀ᵃ√(a²-x²)dx
+=[x√(a²-x²)/2+a²/2·sin⁻¹(x/a)]₀ᵃ·4
+=4×πa²/4=πa² ✓"},
+]
+
+
 SUBJECTS = {
     "physics":   {"name": "⚛️ Physics",   "emoji": "⚛️", "obj": PHY_OBJ, "s2": PHY_S2, "s5": PHY_S5},
     "chemistry": {"name": "🧪 Chemistry", "emoji": "🧪", "obj": CHE_OBJ, "s2": CHE_S2, "s5": CHE_S5},
     "biology":   {"name": "🧬 Biology",   "emoji": "🧬", "obj": BIO_OBJ, "s2": BIO_S2, "s5": BIO_S5},
     "hindi":     {"name": "📚 Hindi",     "emoji": "📚", "obj": HIN_OBJ, "s2": HIN_S2, "s5": HIN_S5},
+    "english":   {"name": "🔤 English",   "emoji": "🔤", "obj": ENG_OBJ, "s2": ENG_S2, "s5": ENG_S5},
+    "maths":     {"name": "📐 Maths",     "emoji": "📐", "obj": MAT_OBJ, "s2": MAT_S2, "s5": MAT_S5},
 }
 
 user_state = {}
@@ -330,6 +815,8 @@ def main_menu_keyboard():
          InlineKeyboardButton("🧪 Chemistry", callback_data="subj_chemistry")],
         [InlineKeyboardButton("🧬 Biology", callback_data="subj_biology"),
          InlineKeyboardButton("📚 Hindi", callback_data="subj_hindi")],
+        [InlineKeyboardButton("🔤 English", callback_data="subj_english"),
+         InlineKeyboardButton("📐 Maths", callback_data="subj_maths")],
         [InlineKeyboardButton("📊 My Score", callback_data="score"),
          InlineKeyboardButton("ℹ️ Help", callback_data="help")],
     ])
@@ -361,10 +848,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         f"🌿 *PDF BY DEV — BSEB 2027 Quiz Bot*\n\n"
         f"नमस्ते {user.first_name}! 🙏\n\n"
-        f"*Subjects:*\n"
-        f"⚛️ Physics | 🧪 Chemistry | 🧬 Biology | 📚 Hindi\n\n"
+        f"*6 Subjects:*\n"
+        f"⚛️ Physics | 🧪 Chemistry | 🧬 Biology\n"
+        f"📚 Hindi | 🔤 English | 📐 Maths\n\n"
         f"*Modes:*\n"
-        f"📝 Objective (100Q) | ✏️ 2-Mark (30Q) | 📖 5-Mark (10Q) | 🔀 Mix\n\n"
+        f"📝 Objective (100Q) | ✏️ 2-Mark (30Q)\n"
+        f"📖 5-Mark (10Q) | 🔀 Random Mix\n\n"
         f"Subject चुनो 👇"
     )
     await update.message.reply_text(text, parse_mode="Markdown", reply_markup=main_menu_keyboard())
@@ -376,7 +865,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
 
     if data == "home":
-        await query.edit_message_text("🌿 *PDF BY DEV — BSEB 2027*\n\nSubject चुनो 👇", parse_mode="Markdown", reply_markup=main_menu_keyboard())
+        await query.edit_message_text("🌿 *MADE BY DEV — BSEB 2027*\n\nSubject चुनो 👇", parse_mode="Markdown", reply_markup=main_menu_keyboard())
         return
 
     if data == "help":
