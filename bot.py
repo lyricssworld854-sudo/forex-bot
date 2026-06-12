@@ -865,7 +865,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
 
     if data == "home":
-        await query.edit_message_text("🌿 *MADE BY DEV — BSEB 2027*\n\nSubject चुनो 👇", parse_mode="Markdown", reply_markup=main_menu_keyboard())
+        await query.edit_message_text("🌿 *PDF BY DEV — BSEB 2027*\n\nSubject चुनो 👇", parse_mode="Markdown", reply_markup=main_menu_keyboard())
         return
 
     if data == "help":
