@@ -423,139 +423,41 @@ ENG_S2 = [
     {"q": "6. What does poet ask in 'Keeping Quiet'?", "a": "Pablo Neruda asks everyone to stop all activity for one moment. Not speak any language. Not move arms so much. Purpose: create stillness and mutual understanding. Message: silence prevents war and harm."},
     {"q": "7. Why is a thing of beauty joy forever? (A Thing of Beauty)", "a": "According to Keats, beauty never fades from memory. It removes sadness and gives hope. Examples: sun, moon, trees, flowers, rivers. Beauty uplifts the human spirit — hence 'a joy forever'."},
     {"q": "8. What are Aunt Jennifer's tigers doing?", "a": "Tigers are prancing across embroidered screen. Bright topaz, fearless, not afraid of men. Moving with ease under trees. Symbolism: represent freedom Aunt Jennifer desires but cannot have due to oppressive marriage."},
-    {"q": "9. Format of report writing.", "a": "1. Headline — catchy
-2. Byline — By [Reporter]
-3. Place, Date
-4. Opening — 5W1H
-5. Body — details
-6. Conclusion
-Language: Third person, Past tense, Factual"},
+    {"q": "9. Format of report writing.", "a": "1. Headline — catchy\n2. Byline — By [Reporter]\n3. Place, Date\n4. Opening — 5W1H\n5. Body — details\n6. Conclusion\nLanguage: Third person, Past tense, Factual"},
     {"q": "10. Theme of 'The Third Level'.", "a": "Theme: Escape from stress. Third level represents wish to return to simpler past (1894). Charley uses imagination as escape. Story explores thin line between reality and fantasy."},
-    {"q": "11. Change voice: 'The boy is flying a kite.'", "a": "Active: The boy is flying a kite.
-Passive: A kite is being flown by the boy.
-Formula: Object + is/am/are + being + V3 + by + Subject"},
-    {"q": "12. Write letter to editor about stray dogs.", "a": "To,
-The Editor,
-[Newspaper]
-Sir,
-I wish to draw attention to menace of stray dogs. Several people bitten recently.
-I urge municipal authorities for immediate action.
-Yours faithfully,
-[Name]"},
-    {"q": "13. Explain: 'Actions speak louder than words.'", "a": "Meaning: What we do is more important than what we say.
-Anyone can make promises. True character shown by actions. A helpful deed is better than kind words."},
-    {"q": "14. Types of sentences with examples.", "a": "Simple: She sings.
-Compound: She sings and dances.
-Complex: She sings because she is happy.
-Declarative, Interrogative, Imperative, Exclamatory."},
-    {"q": "15. Conditional sentences with types.", "a": "Type 0: If you heat ice, it melts.
-Type 1: If it rains, I will stay.
-Type 2: If I were rich, I would help.
-Type 3: If I had studied, I would have passed."},
+    {"q": "11. Change voice: 'The boy is flying a kite.'", "a": "Active: The boy is flying a kite.\nPassive: A kite is being flown by the boy.\nFormula: Object + is/am/are + being + V3 + by + Subject"},
+    {"q": "12. Write letter to editor about stray dogs.", "a": "To,\nThe Editor,\n[Newspaper]\nSir,\nI wish to draw attention to menace of stray dogs. Several people bitten recently.\nI urge municipal authorities for immediate action.\nYours faithfully,\n[Name]"},
+    {"q": "13. Explain: 'Actions speak louder than words.'", "a": "Meaning: What we do is more important than what we say.\nAnyone can make promises. True character shown by actions. A helpful deed is better than kind words."},
+    {"q": "14. Types of sentences with examples.", "a": "Simple: She sings.\nCompound: She sings and dances.\nComplex: She sings because she is happy.\nDeclarative, Interrogative, Imperative, Exclamatory."},
+    {"q": "15. Conditional sentences with types.", "a": "Type 0: If you heat ice, it melts.\nType 1: If it rains, I will stay.\nType 2: If I were rich, I would help.\nType 3: If I had studied, I would have passed."},
     {"q": "16. What is Precis Writing?", "a": "Summary in 1/3 length. Read twice, identify main ideas, write in own words, third person, give title. No direct speech."},
-    {"q": "17. Use of Modals.", "a": "Can: ability, Could: past ability
-May: permission, Might: possibility
-Must: obligation, Should: advice
-Would: conditional, Shall: formal future"},
+    {"q": "17. Use of Modals.", "a": "Can: ability, Could: past ability\nMay: permission, Might: possibility\nMust: obligation, Should: advice\nWould: conditional, Shall: formal future"},
     {"q": "18. Character of rattrap peddler.", "a": "Poor, homeless, philosophical (sees world as rattrap). Initially dishonest — steals from crofter. Transformed by Edla's kindness. Returns money, signs as Captain. Theme: goodness transforms people."},
-    {"q": "19. Draft notice for blood donation camp.", "a": "NOTICE
-XYZ School | [Date]
-BLOOD DONATION CAMP
-All students above 18 invited. Date: [date], School Hall, 10AM-2PM.
-[Name]
-Head Boy/Girl"},
+    {"q": "19. Draft notice for blood donation camp.", "a": "NOTICE\nXYZ School | [Date]\nBLOOD DONATION CAMP\nAll students above 18 invited. Date: [date], School Hall, 10AM-2PM.\n[Name]\nHead Boy/Girl"},
     {"q": "20. Message of 'The Last Lesson'.", "a": "Never take language and culture for granted. M. Hamel shows value of mother tongue. Patriotism and cultural pride. 'Language is the key to prison of enslaved people.'"},
     {"q": "21. 'The Road Not Taken' by Robert Frost.", "a": "Theme: Individual choices in life. Speaker chooses less-traveled road. Symbolism: roads = life choices. Message: our choices define future. Have courage to be different."},
-    {"q": "22. Gerunds and Infinitives.", "a": "Gerund (V+ing): Swimming is healthy. I enjoy reading.
-Infinitive (to+V1): I go to study. Happy to help.
-Verbs+gerund: enjoy, avoid. Verbs+infinitive: want, decide."},
-    {"q": "23. Degrees of Comparison.", "a": "Positive: tall. Comparative: taller. Superlative: tallest.
-Irregular: good-better-best, bad-worse-worst.
-1 syllable: -er/-est. 2+ syllables: more/most."},
-    {"q": "24. Write formal email format.", "a": "To: [email]
-Subject: [specific]
-Dear Sir/Madam,
-I am writing to [purpose].
-[Content]
-Yours sincerely,
-[Name, Designation]"},
+    {"q": "22. Gerunds and Infinitives.", "a": "Gerund (V+ing): Swimming is healthy. I enjoy reading.\nInfinitive (to+V1): I go to study. Happy to help.\nVerbs+gerund: enjoy, avoid. Verbs+infinitive: want, decide."},
+    {"q": "23. Degrees of Comparison.", "a": "Positive: tall. Comparative: taller. Superlative: tallest.\nIrregular: good-better-best, bad-worse-worst.\n1 syllable: -er/-est. 2+ syllables: more/most."},
+    {"q": "24. Write formal email format.", "a": "To: [email]\nSubject: [specific]\nDear Sir/Madam,\nI am writing to [purpose].\n[Content]\nYours sincerely,\n[Name, Designation]"},
     {"q": "25. Stream of consciousness.", "a": "Literary technique depicting continuous flow of thoughts. Features: inner monologue, non-linear, psychological realism. Authors: Virginia Woolf (Mrs. Dalloway), James Joyce (Ulysses)."},
-    {"q": "26. Subject-Verb Agreement.", "a": "Singular subject → singular verb: The dog barks.
-Plural → plural: The dogs bark.
-Collective: usually singular. Either/Neither: singular.
-News/Furniture: singular."},
-    {"q": "27. Direct and Indirect Speech.", "a": "Direct: He said, 'I am happy.'
-Indirect: He said that he was happy.
-Rules: Remove quotes, add 'that', change pronouns and tenses."},
+    {"q": "26. Subject-Verb Agreement.", "a": "Singular subject → singular verb: The dog barks.\nPlural → plural: The dogs bark.\nCollective: usually singular. Either/Neither: singular.\nNews/Furniture: singular."},
+    {"q": "27. Direct and Indirect Speech.", "a": "Direct: He said, 'I am happy.'\nIndirect: He said that he was happy.\nRules: Remove quotes, add 'that', change pronouns and tenses."},
     {"q": "28. Character of Dr. Sadao in 'The Enemy'.", "a": "Dedicated doctor, patriotic but humane. Saves American soldier despite risk. Conflict: duty vs medical oath. Message: humanity transcends nationalism."},
-    {"q": "29. Speech on 'Clean India, Green India'.", "a": "Respected audience,
-Swachh Bharat Abhiyan launched 2014. Actions: avoid plastic, plant trees, proper waste disposal. Gandhi: 'Cleanliness is next to Godliness.' Let us make India clean and green!
-Thank you!"},
-    {"q": "30. Active and Passive Voice rules.", "a": "Active: Subject does action — She writes.
-Passive: Object becomes subject — A letter is written.
-Formulas:
-Simple Present: is/am/are + V3
-Simple Past: was/were + V3
-Future: will + be + V3"},
+    {"q": "29. Speech on 'Clean India, Green India'.", "a": "Respected audience,\nSwachh Bharat Abhiyan launched 2014. Actions: avoid plastic, plant trees, proper waste disposal. Gandhi: 'Cleanliness is next to Godliness.' Let us make India clean and green!\nThank you!"},
+    {"q": "30. Active and Passive Voice rules.", "a": "Active: Subject does action — She writes.\nPassive: Object becomes subject — A letter is written.\nFormulas:\nSimple Present: is/am/are + V3\nSimple Past: was/were + V3\nFuture: will + be + V3"},
 ]
 
 ENG_S5 = [
-    {"q": "1. Describe Douglas's experience in 'Deep Water' and how he overcame fear.", "a": "Young Douglas thrown into YMCA pool by big boy. Nearly drowned — sinking repeatedly. Traumatized for years.
-Overcoming: Hired professional instructor. Practiced gradually — legs, arms, breathing. Tested in rivers. Conquered fear through determination.
-Message: Fear can be overcome through courage. 'In death there is life.'"},
-    {"q": "2. Analyse 'Lost Spring' — poverty and exploitation.", "a": "Saheb: ragpicker from Bangladesh — lost spring (fields). Works at tea stall — loses freedom. Dream: play tennis.
-Mukesh: bangle maker — hazardous conditions, blindness risk. Dream: mechanic.
-Exploitation: child labor, debt trap, sahukars, police.
-Theme: Spring = hope lost to poverty. Must break chain of exploitation."},
-    {"q": "3. Character sketch of rattrap peddler.", "a": "Shabby, poor, philosophical — sees world as rattrap.
-Moral weakness: steals 30 kronors. Gets lost = trapped like rat!
-Transformation: Edla's kindness and dignity changes him. Returns money, signs as 'Captain von Stahle'.
-Theme: Compassion can transform even morally fallen person."},
-    {"q": "4. Theme of 'Keeping Quiet' and relevance today.", "a": "Theme: Peace through stillness.
-Poet asks: stop all activity, no language, no movement, no engines.
-Result: understanding, end to wars, harmony with nature.
-Relevance: Wars, terrorism, environmental destruction. Social media noise — we need silence and reflection.
-Conclusion: Pause, reflect, find peace within."},
-    {"q": "5. Essay: 'Importance of Education in Modern India'.", "a": "Nelson Mandela: 'Education is most powerful weapon.'
-NEP 2020 — revolutionary reforms. 77% literacy.
-Importance: Development, social change, critical thinking, women empowerment.
-Challenges: Rural-urban divide, drop-out rates.
-Solutions: Digital classrooms, skill-based education.
-Conclusion: Quality education for every child must be India's mission."},
-    {"q": "6. Report on 'Science Exhibition in Your School'.", "a": "ANNUAL SCIENCE EXHIBITION
-XYZ School | [Date]
-Over 200 students with 85 projects. First prize: solar water purifier (Class 12). Earthquake predictor amazed visitors. AI applications demonstrated.
-Chief Guest praised creativity. Principal congratulated participants.
-Conclusion: Indian students ready to lead world in science."},
-    {"q": "7. Discuss 'Aunt Jennifer's Tigers' — plight of women.", "a": "Surface: Aunt Jennifer embroiders tigers while in difficult marriage.
-Tigers: bright, fearless, free — represent her desired freedom.
-Aunt Jennifer: fingers fluttering, 'weight of wedding band' — oppressed.
-Irony: Tigers free; Aunt Jennifer trapped. Even after death, 'ringed with ordeals'.
-Theme: Patriarchal oppression. Women must express themselves freely."},
-    {"q": "8. Letter to Municipal Commissioner about poor drainage.", "a": "To,
-Municipal Commissioner,
-[Address]
-Subject: Poor Drainage in [Area]
-Respected Sir,
-Water logging occurs every rainfall. Mosquitoes, impassable roads, unhygienic conditions.
-Requests: Desilting, proper drainage construction, regular maintenance.
-Yours faithfully,
-[Name, Address]"},
-    {"q": "9. Explain poetic devices in 'My Mother at Sixty-Six'.", "a": "Simile: 'face ashen like corpse', 'pale as winter moon'
-Imagery: 'young trees sprinting', 'merry children spilling'
-Transferred Epithet: 'familiar ache'
-Repetition: 'smile and smile and smile' — masked grief
-Symbolism: winter moon = decline; young trees = hope
-Theme: Fear of losing aging mother. Love and separation."},
-    {"q": "10. Article: 'Role of Youth in Nation Building'.", "a": "India: 65% below 35 — our greatest asset.
-Contributions:
-1. Education: develop skills and values
-2. Innovation: startups, research
-3. Social responsibility: vote, volunteer
-4. Character: integrity, hard work
-5. Environment: fight climate change
-Mandela: 'Education is most powerful weapon.'
-Conclusion: Pledge to be responsible citizens!"},
+    {"q": "1. Describe Douglas's experience in 'Deep Water' and how he overcame fear.", "a": "Young Douglas thrown into YMCA pool by big boy. Nearly drowned — sinking repeatedly. Traumatized for years.\nOvercoming: Hired professional instructor. Practiced gradually — legs, arms, breathing. Tested in rivers. Conquered fear through determination.\nMessage: Fear can be overcome through courage. 'In death there is life.'"},
+    {"q": "2. Analyse 'Lost Spring' — poverty and exploitation.", "a": "Saheb: ragpicker from Bangladesh — lost spring (fields). Works at tea stall — loses freedom. Dream: play tennis.\nMukesh: bangle maker — hazardous conditions, blindness risk. Dream: mechanic.\nExploitation: child labor, debt trap, sahukars, police.\nTheme: Spring = hope lost to poverty. Must break chain of exploitation."},
+    {"q": "3. Character sketch of rattrap peddler.", "a": "Shabby, poor, philosophical — sees world as rattrap.\nMoral weakness: steals 30 kronors. Gets lost = trapped like rat!\nTransformation: Edla's kindness and dignity changes him. Returns money, signs as 'Captain von Stahle'.\nTheme: Compassion can transform even morally fallen person."},
+    {"q": "4. Theme of 'Keeping Quiet' and relevance today.", "a": "Theme: Peace through stillness.\nPoet asks: stop all activity, no language, no movement, no engines.\nResult: understanding, end to wars, harmony with nature.\nRelevance: Wars, terrorism, environmental destruction. Social media noise — we need silence and reflection.\nConclusion: Pause, reflect, find peace within."},
+    {"q": "5. Essay: 'Importance of Education in Modern India'.", "a": "Nelson Mandela: 'Education is most powerful weapon.'\nNEP 2020 — revolutionary reforms. 77% literacy.\nImportance: Development, social change, critical thinking, women empowerment.\nChallenges: Rural-urban divide, drop-out rates.\nSolutions: Digital classrooms, skill-based education.\nConclusion: Quality education for every child must be India's mission."},
+    {"q": "6. Report on 'Science Exhibition in Your School'.", "a": "ANNUAL SCIENCE EXHIBITION\nXYZ School | [Date]\nOver 200 students with 85 projects. First prize: solar water purifier (Class 12). Earthquake predictor amazed visitors. AI applications demonstrated.\nChief Guest praised creativity. Principal congratulated participants.\nConclusion: Indian students ready to lead world in science."},
+    {"q": "7. Discuss 'Aunt Jennifer's Tigers' — plight of women.", "a": "Surface: Aunt Jennifer embroiders tigers while in difficult marriage.\nTigers: bright, fearless, free — represent her desired freedom.\nAunt Jennifer: fingers fluttering, 'weight of wedding band' — oppressed.\nIrony: Tigers free; Aunt Jennifer trapped. Even after death, 'ringed with ordeals'.\nTheme: Patriarchal oppression. Women must express themselves freely."},
+    {"q": "8. Letter to Municipal Commissioner about poor drainage.", "a": "To,\nMunicipal Commissioner,\n[Address]\nSubject: Poor Drainage in [Area]\nRespected Sir,\nWater logging occurs every rainfall. Mosquitoes, impassable roads, unhygienic conditions.\nRequests: Desilting, proper drainage construction, regular maintenance.\nYours faithfully,\n[Name, Address]"},
+    {"q": "9. Explain poetic devices in 'My Mother at Sixty-Six'.", "a": "Simile: 'face ashen like corpse', 'pale as winter moon'\nImagery: 'young trees sprinting', 'merry children spilling'\nTransferred Epithet: 'familiar ache'\nRepetition: 'smile and smile and smile' — masked grief\nSymbolism: winter moon = decline; young trees = hope\nTheme: Fear of losing aging mother. Love and separation."},
+    {"q": "10. Article: 'Role of Youth in Nation Building'.", "a": "India: 65% below 35 — our greatest asset.\nContributions:\n1. Education: develop skills and values\n2. Innovation: startups, research\n3. Social responsibility: vote, volunteer\n4. Character: integrity, hard work\n5. Environment: fight climate change\nMandela: 'Education is most powerful weapon.'\nConclusion: Pledge to be responsible citizens!"},
 ]
 
 # ─── MATHEMATICS ─────────────────────────────────────────
@@ -657,144 +559,49 @@ MAT_OBJ = [
 ]
 
 MAT_S2 = [
-    {"q": "1. एकैकी एवं आच्छादक फलनों में अन्तर।", "a": "एकैकी: f(x₁)=f(x₂) → x₁=x₂
-आच्छादक: codomain का हर element image है
-Bijective = दोनों
-उदा: f(x)=2x+1 bijective है R→R पर"},
-    {"q": "2. आव्यूह A=[[2,3],[1,2]] का व्युत्क्रम।", "a": "|A|=2×2-3×1=1
-adj(A)=[[2,-3],[-1,2]]
-A⁻¹=[[2,-3],[-1,2]]
-जाँच: A·A⁻¹=I ✓"},
-    {"q": "3. गुणनफल नियम सिद्ध कीजिए।", "a": "d/dx[fg]=f'g+fg'
-सिद्धान्त: lim से
-= f(x)g'(x)+g(x)f'(x)
-उदा: d/dx[x²sinx]=2x sinx+x²cosx"},
-    {"q": "4. f(x)=x³-3x के चरम बिन्दु।", "a": "f'(x)=3x²-3=3(x-1)(x+1)
-x=1,-1
-f''(1)=6>0 → निम्नतम, f(1)=-2
-f''(-1)=-6<0 → उच्चतम, f(-1)=2"},
-    {"q": "5. ∫x sinx dx का मान।", "a": "u=x, v=sinx
-∫x sinx dx = x(-cosx)-∫(-cosx)dx
-=-x cosx + sinx + C"},
-    {"q": "6. रोले एवं मध्यमान प्रमेय।", "a": "रोले: f(a)=f(b) → ∃c: f'(c)=0
-MVT: ∃c: f'(c)=[f(b)-f(a)]/(b-a)
-ज्यामितीय: जीवा का ढाल = स्पर्श रेखा का ढाल"},
-    {"q": "7. सारणिक के गुणधर्म।", "a": "(1)|Aᵀ|=|A| (2)समान पंक्ति→0
-(3)k गुणा→k|A| (4)पंक्ति बदलने पर चिह्न
-(5)|AB|=|A||B| (6)पंक्ति जोड़→|A| same"},
-    {"q": "8. प्रायिकता का योग प्रमेय।", "a": "P(A∪B)=P(A)+P(B)-P(A∩B)
-परस्पर अपवर्जी: P(A∩B)=0
-उदा: 0.3+0.4-0.1=0.6"},
+    {"q": "1. एकैकी एवं आच्छादक फलनों में अन्तर।", "a": "एकैकी: f(x₁)=f(x₂) → x₁=x₂\nआच्छादक: codomain का हर element image है\nBijective = दोनों\nउदा: f(x)=2x+1 bijective है R→R पर"},
+    {"q": "2. आव्यूह A=[[2,3],[1,2]] का व्युत्क्रम।", "a": "|A|=2×2-3×1=1\nadj(A)=[[2,-3],[-1,2]]\nA⁻¹=[[2,-3],[-1,2]]\nजाँच: A·A⁻¹=I ✓"},
+    {"q": "3. गुणनफल नियम सिद्ध कीजिए।", "a": "d/dx[fg]=f'g+fg'\nसिद्धान्त: lim से\n= f(x)g'(x)+g(x)f'(x)\nउदा: d/dx[x²sinx]=2x sinx+x²cosx"},
+    {"q": "4. f(x)=x³-3x के चरम बिन्दु।", "a": "f'(x)=3x²-3=3(x-1)(x+1)\nx=1,-1\nf''(1)=6>0 → निम्नतम, f(1)=-2\nf''(-1)=-6<0 → उच्चतम, f(-1)=2"},
+    {"q": "5. ∫x sinx dx का मान।", "a": "u=x, v=sinx\n∫x sinx dx = x(-cosx)-∫(-cosx)dx\n=-x cosx + sinx + C"},
+    {"q": "6. रोले एवं मध्यमान प्रमेय।", "a": "रोले: f(a)=f(b) → ∃c: f'(c)=0\nMVT: ∃c: f'(c)=[f(b)-f(a)]/(b-a)\nज्यामितीय: जीवा का ढाल = स्पर्श रेखा का ढाल"},
+    {"q": "7. सारणिक के गुणधर्म।", "a": "(1)|Aᵀ|=|A| (2)समान पंक्ति→0\n(3)k गुणा→k|A| (4)पंक्ति बदलने पर चिह्न\n(5)|AB|=|A||B| (6)पंक्ति जोड़→|A| same"},
+    {"q": "8. प्रायिकता का योग प्रमेय।", "a": "P(A∪B)=P(A)+P(B)-P(A∩B)\nपरस्पर अपवर्जी: P(A∩B)=0\nउदा: 0.3+0.4-0.1=0.6"},
     {"q": "9. ∫₁² x dx =", "a": "[x²/2]₁² = 4/2-1/2 = 3/2 = 1.5"},
-    {"q": "10. बेज प्रमेय।", "a": "P(Aᵢ|B)=P(Aᵢ)·P(B|Aᵢ)/Σ P(Aⱼ)·P(B|Aⱼ)
-उदा: Box I: 3R,4W; Box II: 4R,3W
-P(I|R)=(1/2×3/7)/(1/2×3/7+1/2×4/7)=3/7"},
-    {"q": "11. LPP के घटक और विधि।", "a": "घटक: चर, उद्देश्य फलन Z=ax+by, अवरोध, x,y≥0
-विधि: सुसंगत क्षेत्र → कोने के बिंदु → Z का मान → इष्टतम"},
-    {"q": "12. ∫eˣ sinx dx =", "a": "I = eˣsinx - ∫eˣcosx dx
-= eˣsinx - eˣcosx - I
-2I = eˣ(sinx-cosx)
-I = eˣ(sinx-cosx)/2 + C"},
-    {"q": "13. अवकल समीकरण का क्रम और घात।", "a": "क्रम: उच्चतम अवकलज का क्रम
-घात: उच्चतम अवकलज की घात
-dy/dx=y → क्रम=1, घात=1, हल: y=Ceˣ"},
-    {"q": "14. स्थिति सदिश और एकांक सदिश।", "a": "स्थिति सदिश: →OP=xî+yĵ+zk̂, |OP|=√(x²+y²+z²)
-एकांक सदिश: â=→a/|→a|, परिमाण=1
-î,ĵ,k̂ एकांक सदिश"},
-    {"q": "15. क्रमचय और संचय में अंतर।", "a": "क्रमचय nPr: क्रम मायने, n!/(n-r)!
-संचय nCr: क्रम नहीं, n!/[r!(n-r)!]
-nPr = r! × nCr
-उदा: 5P3=60, 5C3=10"},
-    {"q": "16. द्वितीय अवकलज परीक्षण।", "a": "f'(x)=0 → क्रांतिक बिंदु c
-f''(c)>0 → निम्नतम
-f''(c)<0 → उच्चतम
-f''(c)=0 → अनिर्णायक"},
-    {"q": "17. निश्चित समाकलन के गुणधर्म।", "a": "(1)∫ₐᵇ=-∫ᵦᵃ (2)∫ₐᵃ=0
-(3)∫ₐᵇ=∫ₐᶜ+∫ᶜᵇ
-(4)∫ₐᵇf(x)=∫ₐᵇf(a+b-x)
-(5)सम फलन: ∫₋ₐᵃ=2∫₀ᵃ"},
-    {"q": "18. समतल का समीकरण।", "a": "सामान्य: ax+by+cz+d=0
-सदिश: →r·→n=d
-अन्तःखण्ड: x/a+y/b+z/c=1
-दूरी: |ax₁+by₁+cz₁+d|/√(a²+b²+c²)"},
-    {"q": "19. द्विपद बंटन।", "a": "P(X=r)=nCr·pʳ·(1-p)^(n-r)
-माध्य=np
-प्रसरण=npq
-उदा: n=10,p=0.5 → μ=5, σ²=2.5"},
-    {"q": "20. वर्धमान और ह्रासमान फलन।", "a": "वर्धमान: f'(x)>0
-ह्रासमान: f'(x)<0
-f(x)=x²: x>0 पर वर्धमान, x<0 पर ह्रासमान"},
-    {"q": "21. प्रथम कोटि रैखिक अवकल समीकरण।", "a": "dy/dx+Py=Q
-IF=e^∫P dx
-d/dx[y·IF]=Q·IF
-y·IF=∫Q·IF dx+C
-उदा: dy/dx+y=eˣ → IF=eˣ → y=eˣ/2+Ce⁻ˣ"},
-    {"q": "22. सप्रतिबंध प्रायिकता।", "a": "P(A|B)=P(A∩B)/P(B)
-गुणन: P(A∩B)=P(B)·P(A|B)
-स्वतंत्र: P(A|B)=P(A)
-P(A∩B)=P(A)·P(B)"},
-    {"q": "23. x^x का अवकलन।", "a": "y=x^x → log y=x log x
-(1/y)dy/dx=1+log x
-dy/dx=x^x(1+log x)"},
-    {"q": "24. दो रेखाओं में न्यूनतम दूरी।", "a": "समान्तर: d=|(→a₂-→a₁)×→b|/|→b|
-विकर्ण: d=|(→a₂-→a₁)·(→b₁×→b₂)|/|→b₁×→b₂|"},
-    {"q": "25. क्रेमर नियम।", "a": "D=|A|, D₁,D₂ = आव्यूह
-x=D₁/D, y=D₂/D (D≠0)
-D=0,D₁=D₂=0 → अनंत हल
-D=0, कोई Dᵢ≠0 → हल नहीं"},
-    {"q": "26. समाकलन से क्षेत्रफल: y=x², 0 से 3।", "a": "A=∫₀³x² dx=[x³/3]₀³=27/3=9 वर्ग इकाई
-सूत्र: A=|∫ₐᵇf(x)dx|"},
-    {"q": "27. तुल्यता संबंध।", "a": "तुल्यता: स्वतुल्य+सममित+संक्रामक
-उदा: 'समान आयु' — तीनों शर्तें ✓"},
-    {"q": "28. मानक विचलन।", "a": "σ=√[Σ(xᵢ-x̄)²/n]
-प्रसरण=σ²
-उदा: 2,4,6 → x̄=4, σ²=8/3"},
-    {"q": "29. sin⁻¹x+cos⁻¹x=π/2 सिद्ध।", "a": "sin⁻¹x=θ → x=sinθ
-cos⁻¹x=π/2-θ (क्योंकि sin(π/2-θ)=x)
-∴ sin⁻¹x+cos⁻¹x=θ+(π/2-θ)=π/2 ✓"},
-    {"q": "30. रेखा का सदिश और कार्तीय समीकरण।", "a": "बिंदु(x₁,y₁,z₁), दिशा(a,b,c):
-सदिश: →r=→a+λ→b
-कार्तीय: (x-x₁)/a=(y-y₁)/b=(z-z₁)/c"},
+    {"q": "10. बेज प्रमेय।", "a": "P(Aᵢ|B)=P(Aᵢ)·P(B|Aᵢ)/Σ P(Aⱼ)·P(B|Aⱼ)\nउदा: Box I: 3R,4W; Box II: 4R,3W\nP(I|R)=(1/2×3/7)/(1/2×3/7+1/2×4/7)=3/7"},
+    {"q": "11. LPP के घटक और विधि।", "a": "घटक: चर, उद्देश्य फलन Z=ax+by, अवरोध, x,y≥0\nविधि: सुसंगत क्षेत्र → कोने के बिंदु → Z का मान → इष्टतम"},
+    {"q": "12. ∫eˣ sinx dx =", "a": "I = eˣsinx - ∫eˣcosx dx\n= eˣsinx - eˣcosx - I\n2I = eˣ(sinx-cosx)\nI = eˣ(sinx-cosx)/2 + C"},
+    {"q": "13. अवकल समीकरण का क्रम और घात।", "a": "क्रम: उच्चतम अवकलज का क्रम\nघात: उच्चतम अवकलज की घात\ndy/dx=y → क्रम=1, घात=1, हल: y=Ceˣ"},
+    {"q": "14. स्थिति सदिश और एकांक सदिश।", "a": "स्थिति सदिश: →OP=xî+yĵ+zk̂, |OP|=√(x²+y²+z²)\nएकांक सदिश: â=→a/|→a|, परिमाण=1\nî,ĵ,k̂ एकांक सदिश"},
+    {"q": "15. क्रमचय और संचय में अंतर।", "a": "क्रमचय nPr: क्रम मायने, n!/(n-r)!\nसंचय nCr: क्रम नहीं, n!/[r!(n-r)!]\nnPr = r! × nCr\nउदा: 5P3=60, 5C3=10"},
+    {"q": "16. द्वितीय अवकलज परीक्षण।", "a": "f'(x)=0 → क्रांतिक बिंदु c\nf''(c)>0 → निम्नतम\nf''(c)<0 → उच्चतम\nf''(c)=0 → अनिर्णायक"},
+    {"q": "17. निश्चित समाकलन के गुणधर्म।", "a": "(1)∫ₐᵇ=-∫ᵦᵃ (2)∫ₐᵃ=0\n(3)∫ₐᵇ=∫ₐᶜ+∫ᶜᵇ\n(4)∫ₐᵇf(x)=∫ₐᵇf(a+b-x)\n(5)सम फलन: ∫₋ₐᵃ=2∫₀ᵃ"},
+    {"q": "18. समतल का समीकरण।", "a": "सामान्य: ax+by+cz+d=0\nसदिश: →r·→n=d\nअन्तःखण्ड: x/a+y/b+z/c=1\nदूरी: |ax₁+by₁+cz₁+d|/√(a²+b²+c²)"},
+    {"q": "19. द्विपद बंटन।", "a": "P(X=r)=nCr·pʳ·(1-p)^(n-r)\nमाध्य=np\nप्रसरण=npq\nउदा: n=10,p=0.5 → μ=5, σ²=2.5"},
+    {"q": "20. वर्धमान और ह्रासमान फलन।", "a": "वर्धमान: f'(x)>0\nह्रासमान: f'(x)<0\nf(x)=x²: x>0 पर वर्धमान, x<0 पर ह्रासमान"},
+    {"q": "21. प्रथम कोटि रैखिक अवकल समीकरण।", "a": "dy/dx+Py=Q\nIF=e^∫P dx\nd/dx[y·IF]=Q·IF\ny·IF=∫Q·IF dx+C\nउदा: dy/dx+y=eˣ → IF=eˣ → y=eˣ/2+Ce⁻ˣ"},
+    {"q": "22. सप्रतिबंध प्रायिकता।", "a": "P(A|B)=P(A∩B)/P(B)\nगुणन: P(A∩B)=P(B)·P(A|B)\nस्वतंत्र: P(A|B)=P(A)\nP(A∩B)=P(A)·P(B)"},
+    {"q": "23. x^x का अवकलन।", "a": "y=x^x → log y=x log x\n(1/y)dy/dx=1+log x\ndy/dx=x^x(1+log x)"},
+    {"q": "24. दो रेखाओं में न्यूनतम दूरी।", "a": "समान्तर: d=|(→a₂-→a₁)×→b|/|→b|\nविकर्ण: d=|(→a₂-→a₁)·(→b₁×→b₂)|/|→b₁×→b₂|"},
+    {"q": "25. क्रेमर नियम।", "a": "D=|A|, D₁,D₂ = आव्यूह\nx=D₁/D, y=D₂/D (D≠0)\nD=0,D₁=D₂=0 → अनंत हल\nD=0, कोई Dᵢ≠0 → हल नहीं"},
+    {"q": "26. समाकलन से क्षेत्रफल: y=x², 0 से 3।", "a": "A=∫₀³x² dx=[x³/3]₀³=27/3=9 वर्ग इकाई\nसूत्र: A=|∫ₐᵇf(x)dx|"},
+    {"q": "27. तुल्यता संबंध।", "a": "तुल्यता: स्वतुल्य+सममित+संक्रामक\nउदा: 'समान आयु' — तीनों शर्तें ✓"},
+    {"q": "28. मानक विचलन।", "a": "σ=√[Σ(xᵢ-x̄)²/n]\nप्रसरण=σ²\nउदा: 2,4,6 → x̄=4, σ²=8/3"},
+    {"q": "29. sin⁻¹x+cos⁻¹x=π/2 सिद्ध।", "a": "sin⁻¹x=θ → x=sinθ\ncos⁻¹x=π/2-θ (क्योंकि sin(π/2-θ)=x)\n∴ sin⁻¹x+cos⁻¹x=θ+(π/2-θ)=π/2 ✓"},
+    {"q": "30. रेखा का सदिश और कार्तीय समीकरण।", "a": "बिंदु(x₁,y₁,z₁), दिशा(a,b,c):\nसदिश: →r=→a+λ→b\nकार्तीय: (x-x₁)/a=(y-y₁)/b=(z-z₁)/c"},
 ]
 
 MAT_S5 = [
-    {"q": "1. sinx का प्रथम सिद्धान्त से अवकलज।", "a": "f'(x)=lim[sin(x+h)-sinx]/h
-=lim[2cos(x+h/2)sin(h/2)]/h
-=cos(x+h/2)·[sin(h/2)/(h/2)]
-h→0: cosx·1 = cosx ✓"},
-    {"q": "2. आव्यूह विधि से 2x+3y=5, x+2y=3 हल।", "a": "A=[[2,3],[1,2]], B=[[5],[3]]
-|A|=1, A⁻¹=[[2,-3],[-1,2]]
-X=A⁻¹B=[[1],[1]]
-x=1, y=1 ✓"},
-    {"q": "3. f(x)=x³-6x²+9x+15 के उच्चतम/निम्नतम।", "a": "f'(x)=3x²-12x+9=3(x-1)(x-3)
-x=1: f''(1)=-6<0 → उच्चतम, f(1)=19
-x=3: f''(3)=6>0 → निम्नतम, f(3)=15"},
-    {"q": "4. dy/dx+2y=e^(-x) हल।", "a": "IF=e^(2x)
-d/dx[y·e^(2x)]=eˣ
-y·e^(2x)=eˣ+C
-y=e^(-x)+Ce^(-2x) ✓"},
-    {"q": "5. बेज प्रमेय — सिद्धान्त और उदाहरण।", "a": "P(Aᵢ|B)=P(Aᵢ)P(B|Aᵢ)/ΣP(Aⱼ)P(B|Aⱼ)
-I:3R,4W; II:4R,3W; P(I)=P(II)=1/2
-P(I|R)=(3/14)/(3/14+4/14)=3/7"},
-    {"q": "6. LPP — कुर्सी और मेज समस्या।", "a": "Z=100x+300y (max)
-2x+y≤40, x+3y≤45, x,y≥0
-कोने: O(0,0)=0, A(20,0)=2000
-B(15,10)=4500, C(0,15)=4500
-Z_max=₹4500"},
-    {"q": "7. अवकलन नियम।", "a": "श्रृंखला: d/dx[f(g(x))]=f'(g(x))·g'(x)
-गुणनफल: d/dx[fg]=f'g+fg'
-भागफल: d/dx[f/g]=(f'g-fg')/g²"},
-    {"q": "8. ∫₀^(π/2) log(sinx) dx।", "a": "I=∫₀^(π/2) log(sinx)dx
-गुणधर्म: I=∫₀^(π/2) log(cosx)dx
-2I=∫log(sin2x/2)dx
-I=-(π/2)log2"},
-    {"q": "9. 3D ज्यामिति — रेखा और समतल।", "a": "रेखा: →r=→a+λ→b, (x-x₁)/a=(y-y₁)/b=(z-z₁)/c
-समतल: ax+by+cz+d=0
-कोण (रेखा-समतल): sinθ=|→b·→n|/|→b||→n|
-कोण (दो समतल): cosθ=|→n₁·→n₂|/|→n₁||→n₂|"},
-    {"q": "10. वृत्त x²+y²=a² का क्षेत्रफल।", "a": "A=4∫₀ᵃ√(a²-x²)dx
-=[x√(a²-x²)/2+a²/2·sin⁻¹(x/a)]₀ᵃ·4
-=4×πa²/4=πa² ✓"},
+    {"q": "1. sinx का प्रथम सिद्धान्त से अवकलज।", "a": "f'(x)=lim[sin(x+h)-sinx]/h\n=lim[2cos(x+h/2)sin(h/2)]/h\n=cos(x+h/2)·[sin(h/2)/(h/2)]\nh→0: cosx·1 = cosx ✓"},
+    {"q": "2. आव्यूह विधि से 2x+3y=5, x+2y=3 हल।", "a": "A=[[2,3],[1,2]], B=[[5],[3]]\n|A|=1, A⁻¹=[[2,-3],[-1,2]]\nX=A⁻¹B=[[1],[1]]\nx=1, y=1 ✓"},
+    {"q": "3. f(x)=x³-6x²+9x+15 के उच्चतम/निम्नतम।", "a": "f'(x)=3x²-12x+9=3(x-1)(x-3)\nx=1: f''(1)=-6<0 → उच्चतम, f(1)=19\nx=3: f''(3)=6>0 → निम्नतम, f(3)=15"},
+    {"q": "4. dy/dx+2y=e^(-x) हल।", "a": "IF=e^(2x)\nd/dx[y·e^(2x)]=eˣ\ny·e^(2x)=eˣ+C\ny=e^(-x)+Ce^(-2x) ✓"},
+    {"q": "5. बेज प्रमेय — सिद्धान्त और उदाहरण।", "a": "P(Aᵢ|B)=P(Aᵢ)P(B|Aᵢ)/ΣP(Aⱼ)P(B|Aⱼ)\nI:3R,4W; II:4R,3W; P(I)=P(II)=1/2\nP(I|R)=(3/14)/(3/14+4/14)=3/7"},
+    {"q": "6. LPP — कुर्सी और मेज समस्या।", "a": "Z=100x+300y (max)\n2x+y≤40, x+3y≤45, x,y≥0\nकोने: O(0,0)=0, A(20,0)=2000\nB(15,10)=4500, C(0,15)=4500\nZ_max=₹4500"},
+    {"q": "7. अवकलन नियम।", "a": "श्रृंखला: d/dx[f(g(x))]=f'(g(x))·g'(x)\nगुणनफल: d/dx[fg]=f'g+fg'\nभागफल: d/dx[f/g]=(f'g-fg')/g²"},
+    {"q": "8. ∫₀^(π/2) log(sinx) dx।", "a": "I=∫₀^(π/2) log(sinx)dx\nगुणधर्म: I=∫₀^(π/2) log(cosx)dx\n2I=∫log(sin2x/2)dx\nI=-(π/2)log2"},
+    {"q": "9. 3D ज्यामिति — रेखा और समतल।", "a": "रेखा: →r=→a+λ→b, (x-x₁)/a=(y-y₁)/b=(z-z₁)/c\nसमतल: ax+by+cz+d=0\nकोण (रेखा-समतल): sinθ=|→b·→n|/|→b||→n|\nकोण (दो समतल): cosθ=|→n₁·→n₂|/|→n₁||→n₂|"},
+    {"q": "10. वृत्त x²+y²=a² का क्षेत्रफल।", "a": "A=4∫₀ᵃ√(a²-x²)dx\n=[x√(a²-x²)/2+a²/2·sin⁻¹(x/a)]₀ᵃ·4\n=4×πa²/4=πa² ✓"},
 ]
 
 
