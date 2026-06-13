@@ -16,8 +16,12 @@
 import telebot
 import json
 import os
+import logging
 
-BOT_TOKEN = "8792779625:AAEyyDTvoO1jTqgvha6GKvO2u64AwJGPFBw"
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8792779625:AAEyyDTvoO1jTqgvha6GKvO2u64AwJGPFBw")
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -1467,8 +1471,4 @@ def cb_mode(call):
     # mode_{subject}_{mode}
     parts = call.data.split("_", 2)
     subject = parts[1]
-    mode = parts[2]
-
-    total = len(QB[subject][mode if mode != "short" else "short"])
-    if mode == "obj":
-        total 
+  
