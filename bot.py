@@ -1,15 +1,15 @@
 import os, json, random
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
-from anthropic import AsyncAnthropic
+import google.generativeai as genai
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "8792779625:AAEyyDTvoO1jTqgvha6GKvO2u64AwJGPFBw")
 DATA_FILE = "bseb_data.json"
 
-# ─── AI CHAT (DeepSeek API - Anthropic compatible) ───────
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
-AI_MODEL = "deepseek-v4-flash"
-ai_client = AsyncAnthropic(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com/anthropic") if DEEPSEEK_API_KEY else None
+# ─── AI CHAT (Google Gemini) ─────────────────────────────────
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+genai.configure(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
+gemini_model = genai.GenerativeModel('gemini-1.5-flash') if GEMINI_API_KEY else None
 
 PHY_OBJ = [
 {"q":"विद्युत क्षेत्र की SI इकाई:","opts":["N/C","C/N","V·m","J/C"],"ans":0},
@@ -1047,24 +1047,19 @@ async def ai_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
     if not user_text:
         return
-    if not ai_client:
+    if not gemini_model:
         await update.message.reply_text(
             "⚠️ AI feature अभी सेटअप नहीं है।\n"
-            "Railway पर DEEPSEEK_API_KEY environment variable add करें।"
+            "Railway पर GEMINI_API_KEY environment variable add करें।"
         )
         return
     await ctx.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
     try:
-        resp = await ai_client.messages.create(
-            model=AI_MODEL,
-            max_tokens=1024,
-            system=(
-                "तुम BSEB Class 12 student की मदद करने वाले एक हिंदी/English AI सहायक हो। "
-                "किसी भी सवाल का सही, साफ और संक्षिप्त जवाब दो — चाहे वह पढ़ाई से जुड़ा हो या कुछ भी और।"
-            ),
-            messages=[{"role": "user", "content": user_text}],
+        # Gemini expects a prompt. We'll use a system-like instruction in the first turn.
+        response = gemini_model.generate_content(
+            f"तुम BSEB Class 12 student की मदद करने वाले एक हिंदी/English AI सहायक हो। किसी भी सवाल का सही, साफ और संक्षिप्त जवाब दो — चाहे वह पढ़ाई से जुड़ा हो या कुछ भी और।\n\nप्रश्न: {user_text}"
         )
-        answer = "".join(block.text for block in resp.content if block.type == "text").strip()
+        answer = response.text.strip()
         if not answer:
             answer = "माफ़ करना, मुझे जवाब नहीं मिल पाया। दोबारा पूछो।"
     except Exception as e:
@@ -1073,7 +1068,7 @@ async def ai_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(answer[i:i+4000])
 
 def main():
-    print("🌟 BSEB Bot starting...")
+    print("🌟 BSEB Bot starting with Google Gemini...")
     app=Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start",cmd_start))
     app.add_handler(CommandHandler("help",cmd_start))
