@@ -6,10 +6,10 @@ from anthropic import AsyncAnthropic
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "8792779625:AAEyyDTvoO1jTqgvha6GKvO2u64AwJGPFBw")
 DATA_FILE = "bseb_data.json"
 
-# ─── AI CHAT (Claude API) ─────────────────────────────────
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-AI_MODEL = "claude-haiku-4-5-20251001"   # सस्ता और तेज़ मॉडल
-ai_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
+# ─── AI CHAT (DeepSeek API - Anthropic compatible) ───────
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+AI_MODEL = "deepseek-v4-flash"
+ai_client = AsyncAnthropic(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com/anthropic") if DEEPSEEK_API_KEY else None
 
 PHY_OBJ = [
 {"q":"विद्युत क्षेत्र की SI इकाई:","opts":["N/C","C/N","V·m","J/C"],"ans":0},
@@ -1050,7 +1050,7 @@ async def ai_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if not ai_client:
         await update.message.reply_text(
             "⚠️ AI feature अभी सेटअप नहीं है।\n"
-            "Railway पर ANTHROPIC_API_KEY environment variable add करें।"
+            "Railway पर DEEPSEEK_API_KEY environment variable add करें।"
         )
         return
     await ctx.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
